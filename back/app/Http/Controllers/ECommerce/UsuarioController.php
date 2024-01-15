@@ -18,6 +18,21 @@ class UsuarioController extends Controller
         $this->usuarioService = $UsuarioService;
     }
 
+    public function registro ( Request $request ) {
+        try {
+            return $this->usuarioService->registro( $request->all() );
+        } catch ( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error interno'
+                ],
+                500
+            );
+        }
+    }
+
     public function login( Request $request ) {
         try {
             return $this->usuarioService->login( $request->all() );

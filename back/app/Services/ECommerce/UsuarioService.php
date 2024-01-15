@@ -4,6 +4,7 @@ namespace App\Services\ECommerce;
 
 use App\Repositories\ECommerce\UsuarioRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UsuarioService
 {
@@ -14,6 +15,30 @@ class UsuarioService
     )
     {
         $this->usuarioRepository = $UsuarioRepository;
+    }
+
+    public function registro ( $datosUsuario ) {
+        $validaCorreo = $this->usuarioRepository->validarCorreoExistente($datosUsuario['correo']);
+
+        if ($validaCorreo > 0) {
+            return response()->json(
+                [
+                    'mensaje' => 'Upss! Al parecer ya existe un Usuario con el mismo correo. Por favor validar la información',
+                    'status' => 409
+                ],
+                200
+            );
+        }
+
+        $this->usuarioRepository->registrarUsuario($datosUsuario);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se registraron tus datos con éxito',
+                'status' => 200
+            ],
+            200
+        );
     }
 
     public function login( $credenciales ){
