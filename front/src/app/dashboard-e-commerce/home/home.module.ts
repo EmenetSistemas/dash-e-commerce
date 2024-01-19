@@ -5,6 +5,7 @@ import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { InicioComponent } from "./modules/inicio/inicio.component";
 import { ProductosPendientesComponent } from './modules/productos-pendientes/productos-pendientes.component';
+import { DatatableComponent } from './components/datatable/datatable.component';
 
 @NgModule({
     imports:[
@@ -15,7 +16,8 @@ import { ProductosPendientesComponent } from './modules/productos-pendientes/pro
     ],
     declarations: [
         InicioComponent,
-        ProductosPendientesComponent
+        ProductosPendientesComponent,
+        DatatableComponent
     ]
 })
 

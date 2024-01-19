@@ -753,14 +753,14 @@ h6 {
 }
 
 .sidebar-nav .sidebar-nav .nav-content a {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  transition: 0.3;
-  padding: 10px 0 10px 40px;
-  transition: 0.3s;
-  margin-left: 30px;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	font-weight: 600;
+	transition: 0.3;
+	padding: 10px 0 10px 40px;
+	transition: 0.3s;
+	margin-left: 30px;
 }
 
 /*--------------------------------------------------------------
@@ -1236,4 +1236,28 @@ h6 {
 	text-align: center;
 	font-size: 13px;
 	color: #012970;
+}
+
+.t-bold {
+	font-weight: bold !important;
+}
+
+.card-w-title {
+	margin-top: 17px !important;
+}
+
+.botonera {
+	margin-top: 20px;
+	width: 100%;
+	height: auto;
+	margin-left: -5px !important;
+	margin-right: -5px !important;
+}
+
+.botonera .btn {
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 120px;
 }

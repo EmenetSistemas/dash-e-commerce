@@ -8,13 +8,12 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductosService {
 	private url = environment.api;
-	private url_server = environment.api_server;
 
 	constructor(
 		private http: HttpClient
 	) { }
 
-	public obtenerProductosServidor(): Observable<any> {
-		return this.http.get<any>(this.url_server + '/obtenerProductosServidor');
+	public obtenerProductosPendientes(): Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerProductosPendientes');
 	}
 }

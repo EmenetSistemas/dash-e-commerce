@@ -3,24 +3,25 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Services\ECommerce\UsuarioService;
-use Illuminate\Http\Request;
+use App\Services\Dashboard\ProductoService;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class UsuarioController extends Controller
+class ProductoController extends Controller
 {
-    protected $usuarioService;
+    protected $productoService;
 
     public function __construct(
-        UsuarioService $UsuarioService
+        ProductoService $ProductoService
     )
     {
-        $this->usuarioService = $UsuarioService;    
+        $this->productoService = $ProductoService;
     }
 
-    public function obtenerInformacionUsuarioPorToken( Request $request ){
+    public function obtenerProductosPendientes(){
         try{
-            return $this->usuarioService->obtenerInformacionUsuarioPorToken( $request->all() );
+            return $this->productoService->obtenerProductosPendientes();
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
