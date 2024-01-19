@@ -23,26 +23,34 @@ class UsuarioService
         if ($validaCorreo > 0) {
             return response()->json(
                 [
-                    'mensaje' => 'Upss! Al parecer ya existe un Usuario con el mismo correo. Por favor validar la información',
+                    'mensaje' => 'Upss! Al parecer ya existe una cuenta vinculada a este correo. Por favor validar la información',
                     'status' => 409
                 ],
                 200
             );
         }
 
-        $this->usuarioRepository->registrarUsuario($datosUsuario);
+        DB::beginTransaction();
+            $data = $this->usuarioRepository->registrarUsuario($datosUsuario);
+            $this->usuarioRepository->registrarDireccion($datosUsuario, $data['pk']);
+            $this->usuarioRepository->registrarMetodoPago($datosUsuario, $data['pk']);
+        DB::commit();
 
         return response()->json(
             [
-                'mensaje' => 'Se registraron tus datos con éxito',
+                'data' => [
+                    'token' => $data['token']
+                ],
+                'mensaje' => 'Se registraron sus datos con éxito. Bienvenido a Emenet Shop.',
                 'status' => 200
             ],
             200
         );
     }
 
-    public function login( $credenciales ){
+    public function login ( $credenciales ) {
         $usuario = $this->usuarioRepository->validarExistenciaUsuario( $credenciales['correo'], $credenciales['password'] );
+
         if(is_null($usuario)){
             return response()->json(
                 [
@@ -78,6 +86,52 @@ class UsuarioService
                     'token' => $token
                 ],
                 'mensaje' => 'Bienvenido a Emenet Shop',
+                'status' => 200
+            ],
+            200
+        );
+    }
+
+    public function obtenerDatosSesion ( $data ) {
+        $datosSesion = $this->usuarioRepository->obtenerDatosSesion($data['token']);
+
+        if (count($datosSesion) == 0 ? true : false) {
+            return response()->json(
+                [
+                    'data' => [],
+                    'mensaje' => 'No se encontró infromación',
+                    'status' => 204
+                ],
+                200
+            );
+        }
+
+        $data = [
+            'nombre' => $datosSesion[0]->nombre,
+            'aPaterno' => $datosSesion[0]->aPaterno,
+            'aMaterno' => $datosSesion[0]->aMaterno,
+            'telefono' => $datosSesion[0]->telefono,
+            'correo' => $datosSesion[0]->correo,
+            'direccion' => [
+                'calle' => $datosSesion[0]->calle,
+                'noExterior' => $datosSesion[0]->noExterior,
+                'localidad' => $datosSesion[0]->localidad,
+                'municipio' => $datosSesion[0]->municipio,
+                'estado' => $datosSesion[0]->estado,
+                'cp' => $datosSesion[0]->cp,
+                'referencias' => $datosSesion[0]->referencias,
+            ],
+            'metodoPago' => [
+                'emisor' => $datosSesion[0]->emisor,
+                'tipo' => $datosSesion[0]->tipo,
+                'noTarjeta' => $datosSesion[0]->noTarjeta
+            ]
+        ];
+
+        return response()->json(
+            [
+                'data' => $data,
+                'mensaje' => 'Se consultó su información con éxito',
                 'status' => 200
             ],
             200

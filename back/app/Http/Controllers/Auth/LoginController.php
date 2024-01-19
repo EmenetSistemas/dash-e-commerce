@@ -1,41 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\ECommerce;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\ECommerce\UsuarioService;
+use App\Services\Auth\LoginService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class UsuarioController extends Controller
+class LoginController extends Controller
 {
-    protected $usuarioService;
+    protected $loginService;
 
     public function __construct(
-        UsuarioService $UsuarioService
+        LoginService $LoginService
     )
     {
-        $this->usuarioService = $UsuarioService;
-    }
-
-    public function registro ( Request $request ) {
-        try {
-            return $this->usuarioService->registro( $request->all() );
-        } catch ( \Throwable $error ) {
-            Log::alert($error);
-            return response()->json(
-                [
-                    'error' => $error,
-                    'mensaje' => 'Ocurrió un error interno'
-                ],
-                500
-            );
-        }
+        $this->loginService = $LoginService;
     }
 
     public function login( Request $request ) {
         try {
-            return $this->usuarioService->login( $request->all() );
+            return $this->loginService->login( $request->all() );
         } catch ( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
@@ -48,15 +33,30 @@ class UsuarioController extends Controller
         }
     }
 
-    public function obtenerDatosSesion( Request $request ) {
-        try {
-            return $this->usuarioService->obtenerDatosSesion( $request->all() );
+    public function auth( Request $request ){
+        try{
+            return $this->loginService->auth( $request->all());
         } catch ( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
                 [
                     'error' => $error,
-                    'mensaje' => 'Ocurrió un error interno'
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ],
+                500                
+            );
+        }
+    }
+
+    public function logout( Request $request ){
+        try{
+            return $this->loginService->logout( $request->all());
+        } catch ( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar'
                 ],
                 500
             );

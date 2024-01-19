@@ -19,6 +19,9 @@ class TblUsuariosTienda extends Model
 	    'aMaterno',
 	    'telefono',
 	    'correo',
-	    'password'
+	    'password',
+        'token',
+        'status',
+	    'activo'
     ];
 }
