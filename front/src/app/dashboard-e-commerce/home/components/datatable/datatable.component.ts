@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { ModalService } from 'src/app/services/modal/modal.service';
+import { ModificacionProductoComponent } from '../../modules/productos/modificacion-producto/modificacion-producto.component';
 
 @Component({
 	selector: 'app-datatable',
@@ -27,7 +29,8 @@ export class DatatableComponent implements OnInit, OnChanges {
 	private url = environment.api;
 
 	constructor(
-		private mensajes: MensajesService
+		private mensajes: MensajesService,
+		private modalService : ModalService
 	) { }
 
 	ngOnInit(): void {
@@ -45,7 +48,14 @@ export class DatatableComponent implements OnInit, OnChanges {
 	}
 
 	abrirModalModificacion(idDetalle: number, idModal: string) {
-
+		const dataModal = {
+			idDetalle : idDetalle
+		};
+		switch (idModal) {
+			case 'modificacionProducto':
+				this.modalService.abrirModalConComponente(ModificacionProductoComponent, dataModal);
+			break;
+		}
 	}
 
 	abrirModalDetalle(idDetalle: number, idModal: string) {

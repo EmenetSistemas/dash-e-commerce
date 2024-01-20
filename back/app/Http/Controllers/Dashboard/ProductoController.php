@@ -19,9 +19,24 @@ class ProductoController extends Controller
         $this->productoService = $ProductoService;
     }
 
-    public function obtenerProductosPendientes(){
+    public function obtenerProductosPendientes () {
         try{
             return $this->productoService->obtenerProductosPendientes();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerdetalleProducto ($pkProducto) {
+        try{
+            return $this->productoService->obtenerdetalleProducto($pkProducto);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(

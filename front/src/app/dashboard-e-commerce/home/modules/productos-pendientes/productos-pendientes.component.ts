@@ -24,7 +24,7 @@ export class ProductosPendientesComponent implements OnInit {
 		},
 		"identificador_mbp" : {
 			"updateColumn" : true,
-			"value" : "identificador_mbp",
+			"value" : "id",
 			"idModal" : "modificacionProducto"
 		},
 	};

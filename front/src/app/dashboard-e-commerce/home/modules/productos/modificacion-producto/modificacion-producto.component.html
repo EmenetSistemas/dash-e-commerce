@@ -1,0 +1,60 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Modificación de Producto</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Producto</li>
+                <li class="breadcrumb-item active">Modificación</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body card-w-title">
+            <form autocomplete="off">
+                <form class="row g-3" [formGroup]="formProducto" autocomplete="off">
+                    <div class="col-lg-10">
+                        <label for="nombreProducto" class="form-label required">Nombre:</label>
+                        <input type="text" class="form-control" formControlName="nombreProducto" id="nombreProducto" placeholder="Nombre">
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="stockProducto" class="form-label">Stock:</label>
+                        <input type="text" class="form-control" formControlName="stockProducto" id="stockProducto" placeholder="Stock">
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="precioProducto" class="form-label">Precio:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" formControlName="precioProducto" id="precioProducto" placeholder="Precio" [value]="(detalleProducto?.precio ?? 0) | number:'1.2-2'">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="descuento" class="form-label">Descuento %:</label>
+                        <input type="text" class="form-control" formControlName="descuento" id="descuento" placeholder="Descuento">
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="apartadoProducto" class="form-label required">Apartado:</label>
+                        <select formControlName="apartadoProducto" id="apartadoProducto" class="form-select">
+                            <option value="">Elija un apartado</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="categoriaProducto" class="form-label">Categoría:</label>
+                        <select formControlName="categoriaProducto" id="categoriaProducto" class="form-select">
+                            <option value="">Elija una categoría</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="descripcionProducto" class="form-label">Descripción producto:</label>
+                        <textarea formControlName="descripcionProducto" id="referencias" placeholder="Descripción producto" class="form-control" style="height: 65px;"></textarea>
+                    </div>
+                </form>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="text-align: center;">
+    <button type="button" class="btn btn-primary"><b>Modificar Producto</b></button>
+    <button type="button" class="btn btn-danger" (click)="cancelarModificacion()"><b>Cancelar</b></button>
+</div>

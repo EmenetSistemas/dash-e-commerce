@@ -44,4 +44,19 @@ class ProductoService
             200
         );
     }
+
+    public function obtenerdetalleProducto ($pkProducto) {
+        $this->actualizarProductos();
+        $detalleProducto = $this->productoRepository->obtenerProductosPendientes($pkProducto);
+
+        return response()->json(
+            [
+                'data' => [
+                    'detalleProducto' => $detalleProducto
+                ],
+                'mensaje' => 'Se obtuvo el detalle del producto con éxito'
+            ],
+            200
+        );
+    }
 }

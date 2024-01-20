@@ -11,6 +11,7 @@ Route::post('/dashboard/usuarios/obtenerInformacionUsuarioPorToken', 'App\Http\C
 
 // porductos dash
 Route::get('/dashboard/productos/obtenerProductosPendientes', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductosPendientes');
+Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerdetalleProducto');
 
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');

@@ -1261,3 +1261,30 @@ h6 {
 	padding-right: 15px;
 	width: 120px;
 }
+
+.card, .modal-content {
+	border: none !important;
+	border-radius: 5px !important;
+	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1) !important;
+}
+
+.modal-footer {
+	background-color: #fff !important;
+	z-index: 999 !important;
+	margin-top: -25px;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	align-content: center !important;
+}
+
+form label {
+	font-weight: 600 !important;
+	color: rgba(1, 41, 112, 0.6) !important;
+}
+
+.required:after {
+	content: '*';
+	color: red;
+	margin-left: 5px;
+}

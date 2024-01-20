@@ -13,7 +13,11 @@ export class ProductosService {
 		private http: HttpClient
 	) { }
 
-	public obtenerProductosPendientes(): Observable<any> {
+	public obtenerProductosPendientes () : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/productos/obtenerProductosPendientes');
+	}
+
+	public obtenerDetalleProducto ( idProducto : number ) : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerdetalleProducto/'+idProducto);
 	}
 }

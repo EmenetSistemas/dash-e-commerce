@@ -36,7 +36,7 @@ class ProductoRepository
         $registro->save();
     }
 
-    public function obtenerProductosPendientes () {
+    public function obtenerProductosPendientes ($pkProducto = 0) {
         $query = TblProductos::select(
                                   'tblProductos.pkTblProducto as id',
                                   'tblProductos.identificador_mbp as identificador_mbp',
@@ -54,7 +54,12 @@ class ProductoRepository
                                   'tblProductos.stock as stock',
                              )
                              ->leftJoin('CatApartados', 'CatApartados.pkCatApartado', 'tblProductos.fkCatApartado')
-                             ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria');
+                             ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria')
+                             ->whereNull('tblProductos.nombre');
+
+        if ($pkProducto != 0) {
+            $query->where('tblProductos.pkTblProducto', $pkProducto);
+        }
 
         return $query->get();
     }
