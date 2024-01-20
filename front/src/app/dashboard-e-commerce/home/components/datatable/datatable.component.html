@@ -1,0 +1,145 @@
+<div class="card overflow-auto">
+    <div class="card-body">
+        <br>
+        <div class="d-flex justify-content-center">
+            <div class="btn-group" role="group">
+                <button class="btn btn-light" disabled="true">Mostrar</button>
+                <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage"
+                    (ngModelChange)="onItemsPerPageChange()">
+                    <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+                </select>
+                <button class="btn btn-light" disabled="true">Registros</button>
+            </div>
+        </div>
+
+        <br>
+        <div class="table-continer">
+            <table class="table data-table-border custom-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th *ngFor="let columna of getColumnKeys()" scope="col" (click)="sortColumn(columna)"
+                            (click)="onItemsPerPageChange()" style="vertical-align: middle;">
+                            {{ columnasTabla[columna] }}
+                            <span
+                                *ngIf="sortBy === columna && !sortDesc && !tableConfig[columna]?.checkColumn">&#9650;</span>
+                            <span
+                                *ngIf="sortBy === columna && sortDesc && !tableConfig[columna]?.checkColumn">&#9660;</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="inputs" *ngFor="let columna of getColumnKeys()">
+                            <input *ngIf="!tableConfig[columna]?.checkColumn && !tableConfig[columna]?.selectColumn"
+                                type="search" class="form-control" [placeholder]="columnasTabla[columna]"
+                                [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
+                            <select *ngIf="tableConfig[columna]?.selectColumn" class="form-select"
+                                [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
+                                <option value="">Todos</option>
+                                <option *ngFor="let option of tableConfig[columna].selectOptions" [value]="option">{{
+                                    option }}</option>
+                                <option *ngIf="tableConfig[columna]?.showEmptyOption" value="null">Sin información
+                                </option>
+                            </select>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="paginatedItems.length > 0; else sinInfo">
+                        <tr *ngFor="let item of paginatedItems">
+                            <td *ngFor="let columna of getColumnKeys()" class="check-column">
+                                <ng-container *ngIf="tableConfig[columna]?.checkColumn; else update">
+                                    <label
+                                        class="form-check form-switch d-flex justify-content-center align-items-center check-column-item">
+                                        <input type="checkbox" class="form-check-input"
+                                            [value]="item[tableConfig[columna].value]"
+                                            [checked]="isCheckboxSelected(item[tableConfig[columna].value])"
+                                            (change)="toggleCheckboxSelection($event, item[tableConfig[columna].value])">
+                                    </label>
+                                </ng-container>
+                                <ng-template #update>
+                                    <ng-container *ngIf="tableConfig[columna]?.updateColumn; else detail">
+                                        <div class="link-modal"
+                                            (click)="abrirModalModificacion(item[tableConfig[columna].value], tableConfig[columna].idModal)">
+                                            <span>{{ item[columna] ?? 'Sin información'}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #detail>
+                                    <ng-container *ngIf="tableConfig[columna]?.detailColumn; else pdf">
+                                        <div class="link-modal"
+                                            (click)="abrirModalDetalle(item[tableConfig[columna].value], tableConfig[columna].idModal)">
+                                            <span>{{ item[columna] ?? 'Sin información'}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #pdf>
+                                    <ng-container *ngIf="tableConfig[columna]?.pdfColumn; else money">
+                                        <div class="link-modal"
+                                            (click)="descargarPdf(item[tableConfig[columna].value], tableConfig[columna].rutaPdf)">
+                                            <span>{{ item[columna] ?? 'Sin información'}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #money>
+                                    <ng-container *ngIf="tableConfig[columna]?.moneyColumn; else deafult">
+                                        <span [ngStyle]="getTableColumnStyle(columna, item)">{{ item[columna] != null ? '$ '
+                                            + (item[columna] | number:'1.2-2') : 'Sin información' }}</span>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #deafult>
+                                    <span>{{ item[columna] ?? 'Sin información'}}</span>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-template #sinInfo>
+                        <tr>
+                            <td [attr.colspan]="getColumnKeys().length" align="center">
+                                No hay información para mostrar
+                            </td>
+                        </tr>                        
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="d-flex justify-content-center" style="margin-bottom: -15px;">
+            <ul class="pagination">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" (click)="goToPage(1)" aria-label="First">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="visually-hidden">First</span>
+                    </a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" (click)="goToPage(currentPage - 1)" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of pagesArray">
+                    <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" (click)="goToPage(currentPage + 1)" aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" (click)="goToPage(totalPages)" aria-label="Last">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="visually-hidden">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="col-sm-12 text-center">
+            <span *ngIf="datosTabla.length > 0">
+                <br>
+                Mostrando registros del {{ getStartIndex() }} al {{ getEndIndex() }} de un total de {{ datosTabla.length
+                }} registros
+            </span>
+        </div>
+    </div>
+</div>

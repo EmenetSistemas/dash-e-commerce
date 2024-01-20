@@ -4,6 +4,7 @@ namespace App\Repositories\ECommerce;
 
 use App\Models\TblDirecciones;
 use App\Models\TblMetodosPago;
+use App\Models\TblSesionesAdmin;
 use App\Models\TblUsuariosTienda;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -101,5 +102,13 @@ class UsuarioRepository
                                   ->where('tblUsuariosTienda.token', $token);
 
         return $query->get() ?? [];
+    }
+
+    public function obtenerInformacionUsuarioPorToken( $token ){
+        $usuario = TblSesionesAdmin::select('tblUsuariosAdmin.*')
+                                   ->join('tblUsuariosAdmin', 'tblUsuariosAdmin.pkTblUsuarioAdmin', 'tblSesionesAdmin.fkTblUsuarioAdmin')
+							       ->where('tblSesionesAdmin.token', '=', $token);
+
+        return $usuario->get();
     }
 }

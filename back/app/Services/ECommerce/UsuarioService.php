@@ -137,4 +137,8 @@ class UsuarioService
             200
         );
     }
+
+    public function obtenerInformacionUsuarioPorToken( $token ){
+        return $this->usuarioRepository->obtenerInformacionUsuarioPorToken( $token['token'] );
+    }
 }

@@ -11,6 +11,7 @@ import { HomeComponent } from './dashboard-e-commerce/home/home.component';
 import { NavbarComponent } from './dashboard-e-commerce/home/components/navbar/navbar.component';
 import { HomeModule } from './dashboard-e-commerce/home/home.module';
 import { SidenavComponent } from './dashboard-e-commerce/home/components/sidenav/sidenav.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SidenavComponent } from './dashboard-e-commerce/home/components/sidenav
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    HomeModule
+    HomeModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

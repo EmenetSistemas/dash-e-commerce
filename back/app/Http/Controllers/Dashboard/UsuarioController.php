@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Services\Dashboard\UsuarioService;
+use App\Services\ECommerce\UsuarioService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class UsuarioController extends Controller
 {
-    protected $usuariosService;
+    protected $usuarioService;
 
     public function __construct(
-        UsuarioService $UsuariosService
+        UsuarioService $UsuarioService
     )
     {
-        $this->usuariosService = $UsuariosService;    
+        $this->usuarioService = $UsuarioService;    
     }
 
     public function obtenerInformacionUsuarioPorToken( Request $request ){
         try{
-            return $this->usuariosService->obtenerInformacionUsuarioPorToken( $request->all() );
+            return $this->usuarioService->obtenerInformacionUsuarioPorToken( $request->all() );
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
