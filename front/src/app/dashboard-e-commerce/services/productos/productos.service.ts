@@ -20,4 +20,8 @@ export class ProductosService {
 	public obtenerDetalleProducto ( idProducto : number ) : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/productos/obtenerdetalleProducto/'+idProducto);
 	}
+
+	public obtenerCategoriasApartados () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerCategoriasApartados');
+	}
 }

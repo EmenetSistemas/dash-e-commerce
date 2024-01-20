@@ -48,4 +48,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerCategoriasApartados () {
+        try{
+            return $this->productoService->obtenerCategoriasApartados();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Repositories\Dashboard;
 
+use App\Models\CatApartados;
+use App\Models\CatCategorias;
 use App\Models\TblProductos;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -63,4 +66,27 @@ class ProductoRepository
 
         return $query->get();
     }
+
+    public function obtenerCategorias () {
+        $query = CatCategorias::select(
+                                  'pkCatCategoria as id',
+                                  'nombre',
+                                  'descripcion'
+                              );
+
+        return $query->get();
+    }
+
+    public function obtenerApartadosCategoria($pkCategoria) {
+        $query = CatApartados::select(
+                'pkCatApartado as id',
+                'fkCatCategoria',
+                'nombre',
+                DB::raw('false as checked')
+            )
+            ->where('fkCatCategoria', $pkCategoria);
+    
+        return $query->get();
+    }
+    
 }

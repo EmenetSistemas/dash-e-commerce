@@ -77,3 +77,7 @@ thead {
 .link-modal {
     text-align: center;
 }
+
+.card {
+    margin-bottom: -20px !important;
+}

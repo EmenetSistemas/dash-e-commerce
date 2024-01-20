@@ -1243,7 +1243,7 @@ h6 {
 }
 
 .card-w-title {
-	margin-top: 17px !important;
+	margin-top: 20px !important;
 }
 
 .botonera {
@@ -1287,4 +1287,16 @@ form label {
 	content: '*';
 	color: red;
 	margin-left: 5px;
+}
+
+#borderedTabJustified {
+	margin-top: -10px !important;
+}
+
+[class*="col-"] {
+	float: left !important;
+}
+
+.div-w-padding {
+	padding: 15px !important;
 }

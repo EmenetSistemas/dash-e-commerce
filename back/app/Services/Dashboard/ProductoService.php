@@ -59,4 +59,22 @@ class ProductoService
             200
         );
     }
+
+    public function obtenerCategoriasApartados () {
+        $categoriasApartados = $this->productoRepository->obtenerCategorias();
+
+        foreach ($categoriasApartados as $categoria) {
+            $categoria->apartados = $this->productoRepository->obtenerApartadosCategoria($categoria->id);
+        }
+
+        return response()->json(
+            [
+                'data' => [
+                    'categoriasApartados' => $categoriasApartados
+                ],
+                'mensaje' => 'Se obtuvieron las categorías con sus apartados'
+            ],
+            200
+        );
+    }
 }
