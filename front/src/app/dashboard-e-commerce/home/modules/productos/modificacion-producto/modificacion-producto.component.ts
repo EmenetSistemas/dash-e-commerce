@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
 import FGenerico from 'src/app/dashboard-e-commerce/shared/util/funciones-genericas';
+import { DataService } from 'src/app/services/data/data.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 
@@ -56,7 +57,8 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		private mensajes : MensajesService,
 		private apiProductos : ProductosService,
 		private fb : FormBuilder,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
+		private dataService : DataService
 	) {
 		super();
 	}
@@ -75,16 +77,16 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 
 	private crearFormProducto(): void {
 		this.formProducto = this.fb.group({
-			nombreProducto: [null, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú ]*')]],
-			stockProducto: [{ value: null, disabled: true }, []],
-			precioProducto: [{ value: null, disabled: true }, []],
-			descuento: [null, [Validators.pattern('[0-9]*')]],
-			apartadoProducto: ['', [Validators.required]],
-			categoriaProducto: [{ value: '', disabled: true }, []],
-			imagenProducto : [, [Validators.required]],
-			descripcionProducto: [{ value: null, disabled: true }, []],
-			tituloCaracteristica : [null, []],
-			descripcionCaracteristica : [null, []],
+			nombreProducto			  : [null, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
+			stockProducto			  : [{ value: null, disabled: true }, []],
+			precioProducto			  : [{ value: null, disabled: true }, []],
+			descuento				  : [null, [Validators.pattern('[0-9]*')]],
+			apartadoProducto		  : ['', [Validators.required]],
+			categoriaProducto		  : [{ value: '', disabled: true }, []],
+			imagenProducto			  : [, [Validators.required]],
+			descripcionProducto		  : [{ value: null, disabled: true }, [Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
+			tituloCaracteristica	  : [null, []],
+			descripcionCaracteristica : [null, []]
 		});
 	}
 	
@@ -159,6 +161,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 
 		this.apiProductos.modificarProducto(this.formProducto.value).subscribe(
 			respuesta => {
+				this.dataService.realizarClickConsultaPorductos.emit();
 				this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');

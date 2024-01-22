@@ -40,7 +40,36 @@ class ProductoRepository
         $registro->save();
     }
 
-    public function obtenerProductosPendientes ($pkProducto = 0) {
+    public function obtenerProductos ($variante = 'pendientes') {
+        $query = TblProductos::select(
+                                  'tblProductos.pkTblProducto as id',
+                                  'tblProductos.identificador_mbp as identificador_mbp',
+                                  'tblProductos.nombre as nombre',
+                                  'tblProductos.imagen as imagen',
+                                  'tblProductos.precio as precio',
+                                  'tblProductos.descuento as descuento',
+                                  'CatCategorias.nombre as categoria',
+                                  'CatCategorias.pkCatCategoria as idCategoria',
+                                  'CatApartados.nombre as apartado',
+                                  'CatApartados.pkCatApartado as idApartado',
+                                  'tblProductos.calificacion as calificacion',
+                                  'tblProductos.calificaciones as calificaciones',
+                                  'tblProductos.descripcion as descripcion',
+                                  'tblProductos.stock as stock',
+                             )
+                             ->leftJoin('CatApartados', 'CatApartados.pkCatApartado', 'tblProductos.fkCatApartado')
+                             ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria');
+
+        if ($variante == 'pendientes') {
+            $query->whereNull('tblProductos.nombre');
+        } else {
+            $query->whereNotNull('tblProductos.nombre');
+        }
+
+        return $query->get();
+    }
+
+    public function obtenerdetalleProducto ($pkProducto) {
         $query = TblProductos::select(
                                   'tblProductos.pkTblProducto as id',
                                   'tblProductos.identificador_mbp as identificador_mbp',
@@ -59,12 +88,8 @@ class ProductoRepository
                              )
                              ->leftJoin('CatApartados', 'CatApartados.pkCatApartado', 'tblProductos.fkCatApartado')
                              ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria')
-                             ->whereNull('tblProductos.nombre');
-
-        if ($pkProducto != 0) {
-            $query->where('tblProductos.pkTblProducto', $pkProducto);
-        }
-
+                             ->where('tblProductos.pkTblProducto', $pkProducto);
+    
         return $query->get();
     }
 

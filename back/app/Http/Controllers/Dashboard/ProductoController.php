@@ -19,9 +19,9 @@ class ProductoController extends Controller
         $this->productoService = $ProductoService;
     }
 
-    public function obtenerProductosPendientes () {
+    public function obtenerProductos ($variante) {
         try{
-            return $this->productoService->obtenerProductosPendientes();
+            return $this->productoService->obtenerProductos($variante);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(

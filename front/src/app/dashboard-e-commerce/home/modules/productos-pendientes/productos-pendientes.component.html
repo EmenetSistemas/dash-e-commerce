@@ -1,9 +1,9 @@
 <div class="pagetitle">
-    <h1>Productos pendientes</h1>
+    <h1>Productos {{this.datosMostrar == 'pendientes' ? 'pendientes' : 'en tienda'}}</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Productos</a></li>
-            <li class="breadcrumb-item active">Pendientes</li>
+            <li class="breadcrumb-item active">{{this.datosMostrar == 'pendientes' ? 'Pendientes' : 'En tienda'}}</li>
         </ol>
     </nav>
 </div>
@@ -11,7 +11,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-body card-w-title botonera">
-            <button class="btn btn-primary t-bold" (click)="obtenerProductosPendientes()">Obtener</button>
+            <button class="btn btn-primary t-bold" (click)="obtenerProductos()">Obtener</button>
             <button class="btn btn-success t-bold">Excel</button>
             <button class="btn btn-danger t-bold" (click)="limpiarTabla()">Limpiar</button>
         </div>
