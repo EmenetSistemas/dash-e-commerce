@@ -78,6 +78,16 @@ class ProductoService
         );
     }
 
+    public function modificarProducto ($producto) {
+        $this->productoRepository->modificarProducto($producto);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó el producto con éxito'
+            ],
+            200
+        );
+    }
     public function registrarCaracteristicaProducto ($caracteristica) {
         $this->productoRepository->registrarCaracteristicaProducto($caracteristica);
 

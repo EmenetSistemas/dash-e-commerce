@@ -64,6 +64,21 @@ class ProductoController extends Controller
         }
     }
 
+    public function modificarProducto (Request $request) {
+        try{
+            return $this->productoService->modificarProducto( $request->all() );
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
     public function registrarCaracteristicaProducto (Request $request) {
         try{
             return $this->productoService->registrarCaracteristicaProducto( $request->all() );

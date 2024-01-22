@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
 import FGenerico from 'src/app/dashboard-e-commerce/shared/util/funciones-genericas';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
@@ -18,7 +19,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 	protected detalleProducto : any;
 	protected apartados : any = [];
 	protected categoriasApartados : any = [];
-	protected imagenSeleccionada: File | any = null;
+	protected imagenSeleccionada: any = null;
 
 	protected mostrarUpdate : boolean = false;
 	private idCaracteristicaMod : number = 0;
@@ -54,7 +55,8 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		private modalService : ModalService,
 		private mensajes : MensajesService,
 		private apiProductos : ProductosService,
-		private fb : FormBuilder
+		private fb : FormBuilder,
+		private sanitizer: DomSanitizer
 	) {
 		super();
 	}
@@ -77,8 +79,9 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 			stockProducto: [{ value: null, disabled: true }, []],
 			precioProducto: [{ value: null, disabled: true }, []],
 			descuento: [null, [Validators.pattern('[0-9]*')]],
-			apartadoProducto: ['', []],
+			apartadoProducto: ['', [Validators.required]],
 			categoriaProducto: [{ value: '', disabled: true }, []],
+			imagenProducto : [, [Validators.required]],
 			descripcionProducto: [{ value: null, disabled: true }, []],
 			tituloCaracteristica : [null, []],
 			descripcionCaracteristica : [null, []],
@@ -135,9 +138,32 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		const inputElement = event.target as HTMLInputElement;
 		this.imagenSeleccionada = (inputElement.files && inputElement.files.length > 0) ? inputElement.files[0] : null;
 	}
+	  
+	protected urlImagen(): SafeUrl {
+		return this.imagenSeleccionada ? this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.imagenSeleccionada)) : '';
+	}	  
 
-	protected urlImagen () : string {
-		return URL.createObjectURL(this.imagenSeleccionada);
+	protected modificarProducto () : void {
+		if (this.formProducto.invalid) {
+			this.mensajes.mensajeGenerico('Aún hay campos vacíos o que no cumplen con la estructura correcta.', 'warning', 'Los campos requeridos están marcados con un *');
+			return;
+		}
+
+		if (this.listaCaracteristicas.length == 0) {
+			this.mensajes.mensajeGenerico('Se debe registrar al menos una característica del producto.', 'warning', 'Características producto');
+			return;
+		}
+
+		this.mensajes.mensajeEsperar();
+		this.formProducto.value.pkProducto = this.idDetalle;
+
+		this.apiProductos.modificarProducto(this.formProducto.value).subscribe(
+			respuesta => {
+				this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	protected registrarCaracteristicaProducto () : void {

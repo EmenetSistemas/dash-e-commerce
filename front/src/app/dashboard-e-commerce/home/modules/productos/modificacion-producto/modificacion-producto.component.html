@@ -30,7 +30,7 @@
                         <div class="col-lg-10">
                             <label for="nombreProducto" class="form-label required">Nombre:</label>
                             <input type="text" class="form-control" formControlName="nombreProducto" id="nombreProducto"
-                                placeholder="Nombre">
+                                placeholder="Nombre" (keypress)="soloTexto($event)" maxlength="255">
                         </div>
                         <div class="col-lg-2">
                             <label for="stockProducto" class="form-label">Stock:</label>
@@ -49,7 +49,7 @@
                         <div class="col-lg-2">
                             <label for="descuento" class="form-label">Descuento %:</label>
                             <input type="text" class="form-control" formControlName="descuento" id="descuento"
-                                placeholder="Descuento">
+                                placeholder="Descuento" (keypress)="soloNumeros($event)" maxlength="2">
                         </div>
                         <div class="col-lg-4">
                             <label for="apartadoProducto" class="form-label required">Apartado:</label>
@@ -71,12 +71,12 @@
                         <div class="col-lg-8">
                             <label for="descripcionProducto" class="form-label">Descripción producto:</label>
                             <textarea formControlName="descripcionProducto" id="referencias"
-                                placeholder="Descripción producto" class="form-control"></textarea>
+                                placeholder="Descripción producto" class="form-control" (keypress)="soloTexto($event)"></textarea>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label for="imagen" class="form-label required">Imagen:</label>
-                                <input type="file" class="form-control" id="imagen" (change)="onFileChange($event)"
+                                <label for="imagenProducto" class="form-label required">Imagen:</label>
+                                <input type="file" class="form-control" formControlName="imagenProducto" id="imagenProducto" (change)="onFileChange($event)"
                                     accept="image/*" required>
                             </div>
 
@@ -142,6 +142,6 @@
 </div>
 
 <div class="modal-footer" style="text-align: center;">
-    <button type="button" class="btn btn-primary"><b>Modificar Producto</b></button>
+    <button type="button" class="btn btn-primary" (click)="modificarProducto()"><b>Modificar Producto</b></button>
     <button type="button" class="btn btn-danger" (click)="cancelarModificacion()"><b>Cerrar</b></button>
 </div>

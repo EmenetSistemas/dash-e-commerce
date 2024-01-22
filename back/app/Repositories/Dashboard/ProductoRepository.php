@@ -90,6 +90,16 @@ class ProductoRepository
         return $query->get();
     }
 
+    public function modificarProducto ($producto) {
+        TblProductos::where('pkTblProducto', $producto['pkProducto'])
+                    ->update([
+                        'nombre' => $producto['nombreProducto'],
+                        'imagen' => $producto['imagenProducto'],
+                        'descuento' => $producto['descuento'],
+                        'fkCatApartado' => $producto['apartadoProducto']
+                    ]);
+    }
+
     public function registrarCaracteristicaProducto ($caracteristica) {
         $registro = new TblCaracteristicasProducto();
         $registro->fkTblProducto = $caracteristica['fkTblProducto'];

@@ -25,6 +25,10 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/dashboard/productos/obtenerCategoriasApartados');
 	}
 
+	public modificarProducto (data : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/productos/modificarProducto', data);
+	}
+
 	public registrarCaracteristicaProducto (caracteristica : any) : Observable<any> {
 		return this.http.post<any>(this.url + '/dashboard/productos/registrarCaracteristicaProducto', caracteristica);
 	}
