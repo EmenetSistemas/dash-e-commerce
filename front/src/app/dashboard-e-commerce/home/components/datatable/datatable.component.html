@@ -20,15 +20,13 @@
                         <th *ngFor="let columna of getColumnKeys()" scope="col" (click)="sortColumn(columna)"
                             (click)="onItemsPerPageChange()" style="vertical-align: middle;">
                             {{ columnasTabla[columna] }}
-                            <span
-                                *ngIf="sortBy === columna && !sortDesc && !tableConfig[columna]?.checkColumn">&#9650;</span>
-                            <span
-                                *ngIf="sortBy === columna && sortDesc && !tableConfig[columna]?.checkColumn">&#9660;</span>
+                            <span *ngIf="sortBy === columna && !sortDesc && !tableConfig[columna]?.noFilter">&#9650;</span>
+                            <span *ngIf="sortBy === columna && sortDesc && !tableConfig[columna]?.noFilter">&#9660;</span>
                         </th>
                     </tr>
                     <tr>
                         <th class="inputs" *ngFor="let columna of getColumnKeys()">
-                            <input *ngIf="!tableConfig[columna]?.checkColumn && !tableConfig[columna]?.selectColumn"
+                            <input *ngIf="!tableConfig[columna]?.noFilter && !tableConfig[columna]?.selectColumn"
                                 type="search" class="form-control" [placeholder]="columnasTabla[columna]"
                                 [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
                             <select *ngIf="tableConfig[columna]?.selectColumn" class="form-select"
@@ -46,7 +44,7 @@
                     <ng-container *ngIf="paginatedItems.length > 0; else sinInfo">
                         <tr *ngFor="let item of paginatedItems">
                             <td *ngFor="let columna of getColumnKeys()" class="check-column">
-                                <ng-container *ngIf="tableConfig[columna]?.checkColumn; else update">
+                                <ng-container *ngIf="tableConfig[columna]?.checkColumn; else actionColumn">
                                     <label
                                         class="form-check form-switch d-flex justify-content-center align-items-center check-column-item">
                                         <input type="checkbox" class="form-check-input"
@@ -55,6 +53,24 @@
                                             (change)="toggleCheckboxSelection($event, item[tableConfig[columna].value])">
                                     </label>
                                 </ng-container>
+                                <ng-template #actionColumn>
+                                    <ng-container *ngIf="tableConfig[columna]?.actionFilter; else update">
+                                        <section class="d-flex justify-content-center align-items-center check-column-item">
+                                            <div class="btn-group dropstart" role="group">
+                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-gear-wide"></i>
+                                                </button>
+                                                <ul class="dropdown-menu t-center">
+                                                    <li *ngFor="let action of tableConfig[columna]?.actions" class="{{action.bg}}">
+                                                        <a class="dropdown-item t-bold" href="javascript:void(0)" (click)="emitirIdAccion(action.nombre, item[tableConfig[columna].value])">
+                                                            <i class="bi {{action.icon}} me-1"></i> {{action.titulo}}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </section>
+                                    </ng-container>
+                                </ng-template>
                                 <ng-template #update>
                                     <ng-container *ngIf="tableConfig[columna]?.updateColumn; else detail">
                                         <div class="link-modal"

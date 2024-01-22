@@ -20,13 +20,32 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 	protected categoriasApartados : any = [];
 	protected imagenSeleccionada: File | any = null;
 
+	protected mostrarUpdate : boolean = false;
+	private idCaracteristicaMod : number = 0;
+
 	protected columnasCaracteristicas : any = {
 		'titulo' 		: 'Título',
-		'descripcion' 	: 'Descripción'
+		'descripcion' 	: 'Descripción',
+		'actions' 		: 'Acciones'
 	};
 	protected tableConfig : any = {
-		"titulo" : {
-			"detailColumn" : true
+		"actions" : {
+			"noFilter" : true,
+			"actionFilter" : true,
+			"actions" : [
+				{
+					"nombre" : 'update',
+					"titulo" : 'Editar',
+					"icon" : 'bi-exclamation-triangle',
+					"bg" : 'warning'
+				}, {
+					"nombre" : 'delete',
+					"titulo" : 'Eliminar',
+					"icon" : 'bi-exclamation-octagon',
+					"bg" : 'danger'
+				}
+			],
+			"value" : "id"
 		}
 	};
 	protected listaCaracteristicas : any[] = [];
@@ -44,8 +63,10 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		this.mensajes.mensajeEsperar();
 		this.crearFormProducto();
 		await Promise.all([
+			this.obtenerCategoriasApartados(),
 			this.obtenerDetalleProducto(),
-			this.obtenerCategoriasApartados()
+			this.obtenerCaracteristicasProducto()
+
 		]);
 		this.mensajes.cerrarMensajes();
 	}
@@ -60,7 +81,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 			categoriaProducto: [{ value: '', disabled: true }, []],
 			descripcionProducto: [{ value: null, disabled: true }, []],
 			tituloCaracteristica : [null, []],
-			descripcionCaracteristica : [null, []]
+			descripcionCaracteristica : [null, []],
 		});
 	}
 	
@@ -80,6 +101,16 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 			respuesta => {
 				this.detalleProducto = respuesta.data.detalleProducto[0];
 				this.cargarFormProducto();
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
+	}
+
+	private async obtenerCaracteristicasProducto () : Promise<void> {
+		return this.apiProductos.obtenerCaracteristicasProducto(this.idDetalle).toPromise().then(
+			respuesta => {
+				this.listaCaracteristicas = respuesta.data.caracteristicasProducto;
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}
@@ -109,7 +140,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		return URL.createObjectURL(this.imagenSeleccionada);
 	}
 
-	protected agregarCaracteristica () : void {
+	protected registrarCaracteristicaProducto () : void {
 		const titulo = this.formProducto.get('tituloCaracteristica')?.value;
 		const descripcion = this.formProducto.get('descripcionCaracteristica')?.value;
 
@@ -118,18 +149,110 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 			return;
 		}
 
-		this.listaCaracteristicas = [
-			...this.listaCaracteristicas,
-			{
-				titulo : titulo,
-				descripcion : descripcion
-			}
-		];
+		const validaCaract = this.listaCaracteristicas.filter(caract => caract.titulo.replace(/\s+/g, '').toLowerCase() == titulo.replace(/\s+/g, '').toLowerCase());
+		if (validaCaract.length > 0) {
+			this.mensajes.mensajeGenerico('Al parecer ya existe una característica con el mismo nombre, se debe ocupar uno diferente', 'warning', 'Característica existente');
+			return;
+		}
+		
+		this.mensajes.mensajeEsperar();
 
+		const caracteristica = {
+			fkTblProducto : this.idDetalle,
+			titulo : titulo,
+			descripcion : descripcion
+		};
+
+		this.apiProductos.registrarCaracteristicaProducto(caracteristica).subscribe(
+			respuesta => {
+				this.obtenerCaracteristicasProducto().then(() => {
+					this.formProducto.get('tituloCaracteristica')?.setValue(null);
+					this.formProducto.get('descripcionCaracteristica')?.setValue(null);
+
+					this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
+				});
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
+	}
+
+	protected realizarAccion (data : any) : void {
+		switch (data.action) {
+			case 'update':
+				this.idCaracteristicaMod = data.idAccion;
+				const dataActualizar = this.listaCaracteristicas.find(caracteristica => caracteristica.id == data.idAccion);
+				this.mostrarUpdate = true;
+				this.formProducto.get('tituloCaracteristica')?.setValue(dataActualizar.titulo);
+				this.formProducto.get('descripcionCaracteristica')?.setValue(dataActualizar.descripcion);
+			break;
+			case 'delete':
+				this.mensajes.mensajeConfirmacionCustom('Está por elminiar una característica del producto ¿Desea continar con la acción?', 'question', 'Eliminar característica').then(
+					respuesta => {
+						if (respuesta.isConfirmed) {
+							this.mensajes.mensajeEsperar();
+
+							this.apiProductos.eliminarCaracteristicaProducto(data.idAccion).subscribe(
+								respuesta => {
+									this.obtenerCaracteristicasProducto().then(() => {
+										this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
+									});
+								}, error => {
+									this.mensajes.mensajeGenerico('error', 'error');
+								}
+							);
+						}
+					}
+				);
+			break;
+		}
+	}
+
+	protected actualizarCaracteristicaProducto () {
+		const titulo = this.formProducto.get('tituloCaracteristica')?.value;
+		const descripcion = this.formProducto.get('descripcionCaracteristica')?.value;
+
+		if (this.is_empty(titulo) || this.is_empty(descripcion)) {
+			this.mensajes.mensajeGenerico('Se debe colocar un título y su respectiva descripción para modificar la característica', 'warning', 'Modificar característica');
+			return;
+		}
+
+		const validaCaract = this.listaCaracteristicas.filter(caract => caract.titulo.replace(/\s+/g, '').toLowerCase() == titulo.replace(/\s+/g, '').toLowerCase() && caract.id != this.idCaracteristicaMod);
+		if (validaCaract.length > 0) {
+			this.mensajes.mensajeGenerico('Al parecer ya existe una característica con el mismo nombre, se debe ocupar uno diferente', 'warning', 'Característica existente');
+			return;
+		}
+
+		this.mensajes.mensajeConfirmacionCustom('Está por actualizar una característica ¿Desea continar con la acción?', 'question', 'Actualizar característica').then(
+			respuesta => {
+				if (respuesta.isConfirmed) {
+					this.mensajes.mensajeEsperar();
+					const caracteristicaUpdate = {
+						id : this.idCaracteristicaMod,
+						titulo : titulo,
+						descripcion : descripcion
+					};
+
+					this.apiProductos.actualizarCaracteristicaProducto(caracteristicaUpdate).subscribe(
+						respuesta => {
+							this.obtenerCaracteristicasProducto().then(() => {
+								this.ocultarModificacionCaracteristica();
+								this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
+							});
+						}, error => {
+							this.mensajes.mensajeGenerico('error', 'error');
+						}
+					);
+					return;
+				}
+			}
+		);
+	}
+
+	protected ocultarModificacionCaracteristica () {
+		this.mostrarUpdate = false;
 		this.formProducto.get('tituloCaracteristica')?.setValue(null);
 		this.formProducto.get('descripcionCaracteristica')?.setValue(null);
-
-		this.mensajes.mensajeGenericoToast('Se agregó la característica con éxito', 'success');
 	}
 
 	protected cancelarModificacion () : void {

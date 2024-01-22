@@ -13,6 +13,11 @@ Route::post('/dashboard/usuarios/obtenerInformacionUsuarioPorToken', 'App\Http\C
 Route::get('/dashboard/productos/obtenerProductosPendientes', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductosPendientes');
 Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerdetalleProducto');
 Route::get('/dashboard/productos/obtenerCategoriasApartados', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasApartados');
+    //caracteristicas
+    Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');
+    Route::get('/dashboard/productos/obtenerCaracteristicasProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCaracteristicasProducto');
+    Route::post('/dashboard/productos/actualizarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCaracteristicaProducto');
+    Route::get('/dashboard/productos/eliminarCaracteristicaProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@eliminarCaracteristicaProducto');
 
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');

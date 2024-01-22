@@ -97,29 +97,43 @@
                 <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel"
                     aria-labelledby="profile-tab">
                     <form class="row g-3" autocomplete="off" [formGroup]="formProducto">
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="listaCaracteristicas.length == 0">
                             <i class="bi bi-exclamation-triangle me-1"></i>
                             Se debe registrar al menos una característica del producto
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+
+                        <!--Registro de nueva caracteristica-->
                         <div class="col-lg-4">
                             <label for="tituloCaracteristica" class="form-label required">Título:</label>
                             <input type="text" class="form-control" formControlName="tituloCaracteristica"
-                                id="tituloCaracteristica" placeholder="Título" (keypress)="soloTexto($event)">
+                                id="tituloCaracteristica" placeholder="Título" (keypress)="soloTexto($event)" maxlength="255">
                         </div>
                         <div class="col-lg-6">
                             <label for="descripcionCaracteristica" class="form-label required">Descripción:</label>
                             <textarea formControlName="descripcionCaracteristica" id="descripcionCaracteristica"
                                 placeholder="Descripción" class="form-control" rows="1"></textarea>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="descripcionCaracteristica" class="form-label">&nbsp;</label>
-                            <button class="btn btn-primary form-control t-bold"
-                                (click)="agregarCaracteristica()">+</button>
+                        <div class="col-lg-2" *ngIf="!mostrarUpdate">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-primary form-control t-bold" (click)="registrarCaracteristicaProducto()"><i
+                                    class="bi bi-plus-circle"></i></button>
+                        </div>
+                        <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-warning form-control t-bold"
+                                (click)="actualizarCaracteristicaProducto()"><i
+                                    class="bi bi-arrow-clockwise"></i></button>
+                        </div>
+                        <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-danger form-control t-bold"
+                                (click)="ocultarModificacionCaracteristica()"><i class="bi bi-x-lg"></i></button>
                         </div>
 
                         <app-datatable [columnasTabla]="columnasCaracteristicas" [tableConfig]="tableConfig"
-                            [datosTabla]="listaCaracteristicas"></app-datatable>
+                            [datosTabla]="listaCaracteristicas"
+                            (actionSelected)="realizarAccion($event)"></app-datatable>
                     </form>
                 </div>
             </div>
@@ -129,5 +143,5 @@
 
 <div class="modal-footer" style="text-align: center;">
     <button type="button" class="btn btn-primary"><b>Modificar Producto</b></button>
-    <button type="button" class="btn btn-danger" (click)="cancelarModificacion()"><b>Cancelar</b></button>
+    <button type="button" class="btn btn-danger" (click)="cancelarModificacion()"><b>Cerrar</b></button>
 </div>

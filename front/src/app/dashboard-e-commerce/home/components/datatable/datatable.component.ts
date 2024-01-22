@@ -14,6 +14,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 	@Input() datosTabla: any = [];
 	@Input() tableConfig: any = [];
 	@Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
+	@Output() actionSelected: EventEmitter<any> = new EventEmitter<any>();
 
 	protected selectedCheckboxes: any[] = [];
 
@@ -184,10 +185,18 @@ export class DatatableComponent implements OnInit, OnChanges {
 		return null;
 	}
 
-	emitirDatos(): void {
+	protected emitirDatos(): void {
 		const data = {
 			selectedOptions: this.selectedCheckboxes
 		};
 		this.selectionChange.emit(data);
+	}
+
+	protected emitirIdAccion ( action : string, idAccion : number ) : void {
+		const data = {
+			action : action,
+			idAccion : idAccion
+		};
+		this.actionSelected.emit(data);
 	}
 }

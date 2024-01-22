@@ -1300,3 +1300,8 @@ form label {
 .div-w-padding {
 	padding: 15px !important;
 }
+
+.t-center {
+	text-align: center !important;
+	align-items: center !important;
+}

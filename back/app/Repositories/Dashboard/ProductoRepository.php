@@ -4,6 +4,7 @@ namespace App\Repositories\Dashboard;
 
 use App\Models\CatApartados;
 use App\Models\CatCategorias;
+use App\Models\TblCaracteristicasProducto;
 use App\Models\TblProductos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -88,5 +89,40 @@ class ProductoRepository
     
         return $query->get();
     }
+
+    public function registrarCaracteristicaProducto ($caracteristica) {
+        $registro = new TblCaracteristicasProducto();
+        $registro->fkTblProducto = $caracteristica['fkTblProducto'];
+        $registro->titulo        = $caracteristica['titulo'];
+        $registro->descripcion   = $caracteristica['descripcion'];
+        $registro->save();
+        return;
+    }
     
+    public function obtenerCaracteristicasProducto ($pkProdcuto) {
+        $query = TblCaracteristicasProducto::select(
+                                               'pkTblCaracteristicaProducto as id',
+                                               'titulo',
+                                               'descripcion'
+                                           )
+                                           ->where('fkTblProducto', $pkProdcuto)
+                                           ->orderBy('titulo', 'asc');
+        
+        return $query->get();
+    }
+
+    public function actualizarCaracteristicaProducto ($caracteristica) {
+        TblCaracteristicasProducto::where('pkTblCaracteristicaProducto', $caracteristica['id'])
+                                  ->update([
+                                      'titulo' => $caracteristica['titulo'],
+                                      'descripcion' => $caracteristica['descripcion']
+                                  ]);
+        return;
+    }
+
+    public function eliminarCaracteristicaProducto ($pkProdcuto) {
+        TblCaracteristicasProducto::where('pkTblCaracteristicaProducto', $pkProdcuto)
+                                  ->delete();
+        return;
+    }
 }

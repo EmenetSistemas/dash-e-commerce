@@ -81,3 +81,11 @@ thead {
 .card {
     margin-bottom: -20px !important;
 }
+
+.warning {
+    background-color: wheat;
+}
+
+.danger {
+    background-color: #FFE0D9;
+}

@@ -77,4 +77,51 @@ class ProductoService
             200
         );
     }
+
+    public function registrarCaracteristicaProducto ($caracteristica) {
+        $this->productoRepository->registrarCaracteristicaProducto($caracteristica);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se agregó la característica con éxito'
+            ],
+            200
+        );
+    }
+    
+    public function obtenerCaracteristicasProducto ($pkProdcuto) {
+        $caracteristicasProducto = $this->productoRepository->obtenerCaracteristicasProducto($pkProdcuto);
+        
+        return response()->json(
+            [
+                'data' => [
+                    'caracteristicasProducto' => $caracteristicasProducto
+                ],
+                'mensaje' => 'Se obtuvieron las características del producto'
+            ],
+            200
+        );
+    }
+    
+    public function actualizarCaracteristicaProducto ($caracteristica) {
+        $this->productoRepository->actualizarCaracteristicaProducto($caracteristica);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó la característica con éxito'
+            ],
+            200
+        );
+    }
+
+    public function eliminarCaracteristicaProducto ($pkProdcuto) {
+        $this->productoRepository->eliminarCaracteristicaProducto($pkProdcuto);
+        
+        return response()->json(
+            [
+                'mensaje' => 'Se eliminó la característica con éxiito'
+            ],
+            200
+        );
+    }
 }
