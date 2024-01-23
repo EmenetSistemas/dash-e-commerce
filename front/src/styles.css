@@ -1238,6 +1238,22 @@ h6 {
 	color: #012970;
 }
 
+.modal-footer {
+	background-color: #fff !important;
+	z-index: 1000 !important;
+	margin-top: -30px;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	align-content: center !important;
+	margin-top: -15px;
+	text-align: center !important;
+	flex-shrink: 0 !important;
+	position: sticky !important;
+	bottom: 0 !important;
+	background-color: #ffffff !important;
+}
+
 .t-bold {
 	font-weight: bold !important;
 }
@@ -1262,20 +1278,16 @@ h6 {
 	width: 120px;
 }
 
-.card, .modal-content {
+.card,
+.modal-content {
 	border: none !important;
 	border-radius: 5px !important;
 	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1) !important;
 }
 
-.modal-footer {
-	background-color: #fff !important;
-	z-index: 999 !important;
-	margin-top: -25px;
-	display: flex !important;
-	justify-content: center !important;
-	align-items: center !important;
-	align-content: center !important;
+.modal-content {
+	overflow-y: auto !important;
+	max-height: 90vh !important;
 }
 
 form label {

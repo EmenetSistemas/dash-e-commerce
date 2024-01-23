@@ -13,8 +13,8 @@ export class ProductosService {
 		private http: HttpClient
 	) { }
 
-	public obtenerProductosPendientes () : Observable<any> {
-		return this.http.get<any>(this.url + '/dashboard/productos/obtenerProductosPendientes');
+	public obtenerProductos (datosMostrar : string) : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerProductos/'+datosMostrar);
 	}
 
 	public obtenerDetalleProducto ( idProducto : number ) : Observable<any> {
@@ -23,6 +23,10 @@ export class ProductosService {
 
 	public obtenerCategoriasApartados () : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/productos/obtenerCategoriasApartados');
+	}
+
+	public modificarProducto (data : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/productos/modificarProducto', data);
 	}
 
 	public registrarCaracteristicaProducto (caracteristica : any) : Observable<any> {

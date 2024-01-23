@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Services\Dashboard\ProductoService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class ProductoController extends Controller
@@ -19,9 +18,9 @@ class ProductoController extends Controller
         $this->productoService = $ProductoService;
     }
 
-    public function obtenerProductosPendientes () {
+    public function obtenerProductos ($variante) {
         try{
-            return $this->productoService->obtenerProductosPendientes();
+            return $this->productoService->obtenerProductos($variante);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
@@ -52,6 +51,21 @@ class ProductoController extends Controller
     public function obtenerCategoriasApartados () {
         try{
             return $this->productoService->obtenerCategoriasApartados();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function modificarProducto (Request $request) {
+        try{
+            return $this->productoService->modificarProducto( $request->all() );
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(

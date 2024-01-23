@@ -16,4 +16,8 @@ export class UsuariosService {
 	public obtenerInformacionUsuarioPorToken(token: any): Observable<any> {
 		return this.http.post<any>(this.url + '/dashboard/usuarios/obtenerInformacionUsuarioPorToken', { token });
 	}
+
+	public obtenerCantidadUsuariosTienda() : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/usuarios/obtenerCantidadUsuariosTienda');
+	}
 }

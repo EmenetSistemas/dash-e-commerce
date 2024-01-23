@@ -141,4 +141,8 @@ class UsuarioService
     public function obtenerInformacionUsuarioPorToken( $token ){
         return $this->usuarioRepository->obtenerInformacionUsuarioPorToken( $token['token'] );
     }
+
+    public function obtenerCantidadUsuariosTienda(){
+        return $this->usuarioRepository->obtenerCantidadUsuariosTienda();
+    }
 }

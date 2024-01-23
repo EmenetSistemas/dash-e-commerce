@@ -11,10 +11,10 @@ export const HomeRoutes: Routes = [
             {
                 path: 'inicio',
                 component: InicioComponent
-            },{
-                path: 'productosPendientes',
+            }, {
+                path: 'productos/:datos',
                 component: ProductosPendientesComponent
-            },
+            }
         ]
     }
 ];

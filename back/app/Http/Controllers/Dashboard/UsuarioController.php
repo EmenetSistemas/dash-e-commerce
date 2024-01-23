@@ -32,4 +32,19 @@ class UsuarioController extends Controller
             );
         }
     }
+
+    public function obtenerCantidadUsuariosTienda(){
+        try{
+            return $this->usuarioService->obtenerCantidadUsuariosTienda();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

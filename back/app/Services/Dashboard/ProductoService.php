@@ -30,9 +30,9 @@ class ProductoService
         DB::commit();
     }
 
-    public function obtenerProductosPendientes () {
+    public function obtenerProductos ($variante) {
         $this->actualizarProductos();
-        $productosPendientes = $this->productoRepository->obtenerProductosPendientes();
+        $productosPendientes = $this->productoRepository->obtenerProductos($variante);
 
         return response()->json(
             [
@@ -47,7 +47,7 @@ class ProductoService
 
     public function obtenerdetalleProducto ($pkProducto) {
         $this->actualizarProductos();
-        $detalleProducto = $this->productoRepository->obtenerProductosPendientes($pkProducto);
+        $detalleProducto = $this->productoRepository->obtenerdetalleProducto($pkProducto);
 
         return response()->json(
             [
@@ -78,6 +78,16 @@ class ProductoService
         );
     }
 
+    public function modificarProducto ($producto) {
+        $this->productoRepository->modificarProducto($producto);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó el producto con éxito'
+            ],
+            200
+        );
+    }
     public function registrarCaracteristicaProducto ($caracteristica) {
         $this->productoRepository->registrarCaracteristicaProducto($caracteristica);
 

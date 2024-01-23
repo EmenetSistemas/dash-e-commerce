@@ -8,11 +8,14 @@ Route::post('/auth/login', 'App\Http\Controllers\Auth\LoginController@login');
 Route::post('/auth', 'App\Http\Controllers\Auth\LoginController@auth');
 Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
 Route::post('/dashboard/usuarios/obtenerInformacionUsuarioPorToken', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerInformacionUsuarioPorToken');
+Route::get('/dashboard/usuarios/obtenerCantidadUsuariosTienda', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerCantidadUsuariosTienda');
 
 // porductos dash
-Route::get('/dashboard/productos/obtenerProductosPendientes', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductosPendientes');
+Route::get('/dashboard/productos/obtenerProductos/{variante}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductos');
 Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerdetalleProducto');
 Route::get('/dashboard/productos/obtenerCategoriasApartados', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasApartados');
+Route::post('/dashboard/productos/actualizarImagen', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
+Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
     //caracteristicas
     Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');
     Route::get('/dashboard/productos/obtenerCaracteristicasProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCaracteristicasProducto');

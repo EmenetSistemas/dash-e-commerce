@@ -30,30 +30,32 @@
                         <div class="col-lg-10">
                             <label for="nombreProducto" class="form-label required">Nombre:</label>
                             <input type="text" class="form-control" formControlName="nombreProducto" id="nombreProducto"
-                                placeholder="Nombre">
+                                placeholder="Nombre" (keypress)="soloTexto($event)" maxlength="255">
                         </div>
                         <div class="col-lg-2">
                             <label for="stockProducto" class="form-label">Stock:</label>
-                            <input type="text" class="form-control" formControlName="stockProducto" id="stockProducto"
+                            <input type="text" class="form-control t-center" formControlName="stockProducto" id="stockProducto"
                                 placeholder="Stock">
                         </div>
                         <div class="col-lg-2">
                             <label for="precioProducto" class="form-label">Precio:</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" formControlName="precioProducto"
+                                <input type="text" class="form-control t-center" formControlName="precioProducto"
                                     id="precioProducto" placeholder="Precio"
                                     [value]="(detalleProducto?.precio ?? 0) | number:'1.2-2'">
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <label for="descuento" class="form-label">Descuento %:</label>
-                            <input type="text" class="form-control" formControlName="descuento" id="descuento"
-                                placeholder="Descuento">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control t-center" formControlName="descuento" id="descuento" placeholder="Descuento" (keypress)="soloNumeros($event)" maxlength="2">
+                                <span class="input-group-text">%</span>
+                            </div>
                         </div>
                         <div class="col-lg-4">
                             <label for="apartadoProducto" class="form-label required">Apartado:</label>
-                            <select formControlName="apartadoProducto" id="apartadoProducto" class="form-select"
+                            <select formControlName="apartadoProducto" id="apartadoProducto" class="form-select t-center"
                                 (change)="cambioApartado()">
                                 <option value="" style="display: none; visibility: hidden;">Elija un apartado</option>
                                 <option *ngFor="let apartado of apartados" [value]="apartado.id">{{apartado.nombre}}
@@ -62,7 +64,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="categoriaProducto" class="form-label">Categoría:</label>
-                            <select formControlName="categoriaProducto" id="categoriaProducto" class="form-select">
+                            <select formControlName="categoriaProducto" id="categoriaProducto" class="form-select t-center">
                                 <option value="" style="display: none; visibility: hidden;">Elija una categoría</option>
                                 <option *ngFor="let categoria of categoriasApartados" [value]="categoria.id">
                                     {{categoria.nombre}}</option>
@@ -71,17 +73,17 @@
                         <div class="col-lg-8">
                             <label for="descripcionProducto" class="form-label">Descripción producto:</label>
                             <textarea formControlName="descripcionProducto" id="referencias"
-                                placeholder="Descripción producto" class="form-control"></textarea>
+                                placeholder="Descripción producto" class="form-control" (keypress)="soloTexto($event)"></textarea>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label for="imagen" class="form-label required">Imagen:</label>
-                                <input type="file" class="form-control" id="imagen" (change)="onFileChange($event)"
-                                    accept="image/*" required>
+                                <label for="imagenProducto" class="form-label required">Imagen:</label>
+                                <input type="file" class="form-control" formControlName="imagenProducto" id="imagenProducto" (change)="onFileChange($event)"
+                                    accept="image/*">
                             </div>
 
                             <div *ngIf="imagenSeleccionada">
-                                <img [src]="urlImagen()" alt="Imagen previsualizada" class="img-thumbnail">
+                                <img [src]="this.imagenSeleccionada" alt="Imagen previsualizada" class="img-thumbnail">
                             </div>
 
                             <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -142,6 +144,6 @@
 </div>
 
 <div class="modal-footer" style="text-align: center;">
-    <button type="button" class="btn btn-primary"><b>Modificar Producto</b></button>
+    <button type="button" class="btn btn-primary" (click)="modificarProducto()"><b>Modificar Producto</b></button>
     <button type="button" class="btn btn-danger" (click)="cancelarModificacion()"><b>Cerrar</b></button>
 </div>
