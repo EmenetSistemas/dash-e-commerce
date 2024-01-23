@@ -48,17 +48,17 @@ class ProductoRepository
                                   'tblProductos.imagen as imagen',
                                   'tblProductos.precio as precio',
                                   'tblProductos.descuento as descuento',
-                                  'CatCategorias.nombre as categoria',
-                                  'CatCategorias.pkCatCategoria as idCategoria',
-                                  'CatApartados.nombre as apartado',
-                                  'CatApartados.pkCatApartado as idApartado',
+                                  'catCategorias.nombre as categoria',
+                                  'catCategorias.pkCatCategoria as idCategoria',
+                                  'catApartados.nombre as apartado',
+                                  'catApartados.pkCatApartado as idApartado',
                                   'tblProductos.calificacion as calificacion',
                                   'tblProductos.calificaciones as calificaciones',
                                   'tblProductos.descripcion as descripcion',
                                   'tblProductos.stock as stock',
                              )
-                             ->leftJoin('CatApartados', 'CatApartados.pkCatApartado', 'tblProductos.fkCatApartado')
-                             ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria');
+                             ->leftJoin('catApartados', 'catApartados.pkCatApartado', 'tblProductos.fkCatApartado')
+                             ->leftJoin('catCategorias', 'catCategorias.pkCatCategoria', 'catApartados.fkCatCategoria');
 
         if ($variante == 'pendientes' || $variante == 'cantidadPendientes') {
             $query->whereNull('tblProductos.nombre');
@@ -81,17 +81,17 @@ class ProductoRepository
                                   'tblProductos.imagen as imagen',
                                   'tblProductos.precio as precio',
                                   'tblProductos.descuento as descuento',
-                                  'CatCategorias.nombre as categoria',
-                                  'CatCategorias.pkCatCategoria as idCategoria',
-                                  'CatApartados.nombre as apartado',
-                                  'CatApartados.pkCatApartado as idApartado',
+                                  'catCategorias.nombre as categoria',
+                                  'catCategorias.pkCatCategoria as idCategoria',
+                                  'catApartados.nombre as apartado',
+                                  'catApartados.pkCatApartado as idApartado',
                                   'tblProductos.calificacion as calificacion',
                                   'tblProductos.calificaciones as calificaciones',
                                   'tblProductos.descripcion as descripcion',
                                   'tblProductos.stock as stock',
                              )
-                             ->leftJoin('CatApartados', 'CatApartados.pkCatApartado', 'tblProductos.fkCatApartado')
-                             ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria')
+                             ->leftJoin('catApartados', 'catApartados.pkCatApartado', 'tblProductos.fkCatApartado')
+                             ->leftJoin('catCategorias', 'catCategorias.pkCatCategoria', 'catApartados.fkCatCategoria')
                              ->where('tblProductos.pkTblProducto', $pkProducto);
     
         return $query->get();
