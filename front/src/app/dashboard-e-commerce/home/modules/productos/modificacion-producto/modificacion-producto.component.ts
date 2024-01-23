@@ -126,11 +126,14 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		this.formProducto.get('nombreProducto')?.setValue(this.detalleProducto.nombre);
 		this.formProducto.get('stockProducto')?.setValue(this.detalleProducto.stock);
 		this.formProducto.get('descuento')?.setValue(this.detalleProducto.descuento);
+		this.formProducto.get('apartadoProducto')?.setValue(this.detalleProducto.idApartado ?? '');
+		this.cambioApartado();
 		this.formProducto.get('descripcionProducto')?.setValue(this.detalleProducto.descripcion);
 	}
 
 	protected cambioApartado () : void {
 		const pkApartado = this.formProducto.get('apartadoProducto')?.value;
+		if (pkApartado == '') return;
 		const fkCategoria = this.apartados.find((apartado : any) => apartado.id == pkApartado).fkCatCategoria;
 
 		this.formProducto.get('categoriaProducto')?.setValue(fkCategoria);
@@ -161,8 +164,8 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 
 		this.apiProductos.modificarProducto(this.formProducto.value).subscribe(
 			respuesta => {
+				this.cancelarModificacion();
 				this.dataService.realizarClickConsultaPorductos.emit();
-				this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}
@@ -285,6 +288,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 	}
 
 	protected cancelarModificacion () : void {
+		this.formProducto.reset();
 		this.cerrarModal();
 	}
 

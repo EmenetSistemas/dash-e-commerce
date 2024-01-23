@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
@@ -31,7 +31,8 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 	constructor(
 		private mensajes: MensajesService,
-		private modalService : ModalService
+		private modalService : ModalService,
+		private cdRef: ChangeDetectorRef
 	) { }
 
 	ngOnInit(): void {
@@ -40,12 +41,14 @@ export class DatatableComponent implements OnInit, OnChanges {
 		Object.keys(this.columnasTabla).forEach((key) => {
 			this.filterValues[key] = '';
 		});
+		this.limpiarFiltros();
 	}
 
 	ngOnChanges(): void {
 		this.selectedCheckboxes = [];
 		this.emitirDatos();
 		this.onItemsPerPageChange();
+		this.limpiarFiltros();
 	}
 
 	abrirModalModificacion(idDetalle: number, idModal: string) {
@@ -169,6 +172,14 @@ export class DatatableComponent implements OnInit, OnChanges {
 		}
 
 		this.emitirDatos();
+	}
+
+	limpiarFiltros(): void {
+		Object.keys(this.filterValues).forEach((key) => {
+		  this.filterValues[key] = '';
+		});
+		this.currentPage = 1;
+		this.cdRef.detectChanges();
 	}
 
 	getTableColumnStyle(columna: string, rowData: any): any {

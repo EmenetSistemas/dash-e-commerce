@@ -60,13 +60,17 @@ class ProductoRepository
                              ->leftJoin('CatApartados', 'CatApartados.pkCatApartado', 'tblProductos.fkCatApartado')
                              ->leftJoin('CatCategorias', 'CatCategorias.pkCatCategoria', 'CatApartados.fkCatCategoria');
 
-        if ($variante == 'pendientes') {
+        if ($variante == 'pendientes' || $variante == 'cantidadPendientes') {
             $query->whereNull('tblProductos.nombre');
         } else {
             $query->whereNotNull('tblProductos.nombre');
         }
 
-        return $query->get();
+        if ($variante == 'cantidadPendientes' || $variante == 'cantidadTienda') {
+            return $query->count();
+        } else {
+            return $query->get();
+        }
     }
 
     public function obtenerdetalleProducto ($pkProducto) {

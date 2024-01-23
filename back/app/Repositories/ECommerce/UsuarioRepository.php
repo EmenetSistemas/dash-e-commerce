@@ -111,4 +111,10 @@ class UsuarioRepository
 
         return $usuario->get();
     }
+
+    public function obtenerCantidadUsuariosTienda () {
+        $query = TblUsuariosTienda::where('activo', 1);
+
+        return $query->count();
+    }
 }

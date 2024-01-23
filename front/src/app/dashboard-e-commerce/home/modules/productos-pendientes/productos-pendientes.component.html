@@ -16,5 +16,6 @@
             <button class="btn btn-danger t-bold" (click)="limpiarTabla()">Limpiar</button>
         </div>
     </div>
-    <app-datatable [columnasTabla]="columnasProductos" [datosTabla]="listaProductos" [tableConfig]="tableConfig"></app-datatable>
+    <app-datatable *ngIf="this.datosMostrar == 'pendientes'" [columnasTabla]="columnasProductosPendientes" [datosTabla]="listaProductos" [tableConfig]="tableConfigPendientes"></app-datatable>
+    <app-datatable *ngIf="this.datosMostrar != 'pendientes'" [columnasTabla]="columnasProductosTienda" [datosTabla]="listaProductos" [tableConfig]="tableConfig"></app-datatable>
 </div>
