@@ -26,3 +26,5 @@ Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dash
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');
 Route::post('/usuarios/login', 'App\Http\Controllers\ECommerce\UsuarioController@login');
 Route::post('/usuarios/registro', 'App\Http\Controllers\ECommerce\UsuarioController@registro');
+    // productos e-commerce
+    Route::get('/e-commerce/productos/obtenerProductosPorApartado/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosPorApartado');
