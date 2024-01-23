@@ -3,17 +3,26 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+// rutas dashboard e-commerce
+Route::post('/auth/login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::post('/auth', 'App\Http\Controllers\Auth\LoginController@auth');
+Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
+Route::post('/dashboard/usuarios/obtenerInformacionUsuarioPorToken', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerInformacionUsuarioPorToken');
+Route::get('/dashboard/usuarios/obtenerCantidadUsuariosTienda', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerCantidadUsuariosTienda');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// porductos dash
+Route::get('/dashboard/productos/obtenerProductos/{variante}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductos');
+Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerdetalleProducto');
+Route::get('/dashboard/productos/obtenerCategoriasApartados', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasApartados');
+Route::post('/dashboard/productos/actualizarImagen', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
+Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
+    //caracteristicas
+    Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');
+    Route::get('/dashboard/productos/obtenerCaracteristicasProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCaracteristicasProducto');
+    Route::post('/dashboard/productos/actualizarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCaracteristicaProducto');
+    Route::get('/dashboard/productos/eliminarCaracteristicaProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@eliminarCaracteristicaProducto');
+
+// rutas e-commerce
+Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');
+Route::post('/usuarios/login', 'App\Http\Controllers\ECommerce\UsuarioController@login');
+Route::post('/usuarios/registro', 'App\Http\Controllers\ECommerce\UsuarioController@registro');

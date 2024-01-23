@@ -1,0 +1,29 @@
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" [routerLink]="['inicio']">
+                <i class="ri-home-2-line"></i>
+                <span>Inicio</span>
+            </a>
+        </li>
+
+        <li class="nav-heading">Administración</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-nav-clientes" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-people"></i><span>Productos</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="components-nav-clientes" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li [routerLink]="['productos/pendientes']">
+                    <a>
+                        <i class="bi bi-circle"></i><span>Porductos pendientes</span>
+                    </a>
+                </li>
+                <li [routerLink]="['productos/tienda']">
+                    <a>
+                        <i class="bi bi-circle"></i><span>Porductos en tienda</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>

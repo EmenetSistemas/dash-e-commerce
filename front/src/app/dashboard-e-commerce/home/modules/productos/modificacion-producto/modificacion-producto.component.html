@@ -1,0 +1,149 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Modificación de Producto</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Producto</li>
+                <li class="breadcrumb-item active">Modificación</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body card-w-title">
+            <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100 active t-bold" id="home-tab" data-bs-toggle="tab"
+                        data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home"
+                        aria-selected="true">General</button>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100 t-bold" id="profile-tab" data-bs-toggle="tab"
+                        data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile"
+                        aria-selected="false" tabindex="-1">Características</button>
+                </li>
+            </ul>
+            <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel"
+                    aria-labelledby="home-tab">
+                    <form class="row g-3" [formGroup]="formProducto" autocomplete="off">
+                        <div class="col-lg-10">
+                            <label for="nombreProducto" class="form-label required">Nombre:</label>
+                            <input type="text" class="form-control" formControlName="nombreProducto" id="nombreProducto"
+                                placeholder="Nombre" (keypress)="soloTexto($event)" maxlength="255">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="stockProducto" class="form-label">Stock:</label>
+                            <input type="text" class="form-control t-center" formControlName="stockProducto" id="stockProducto"
+                                placeholder="Stock">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="precioProducto" class="form-label">Precio:</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control t-center" formControlName="precioProducto"
+                                    id="precioProducto" placeholder="Precio"
+                                    [value]="(detalleProducto?.precio ?? 0) | number:'1.2-2'">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="descuento" class="form-label">Descuento %:</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control t-center" formControlName="descuento" id="descuento" placeholder="Descuento" (keypress)="soloNumeros($event)" maxlength="2">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="apartadoProducto" class="form-label required">Apartado:</label>
+                            <select formControlName="apartadoProducto" id="apartadoProducto" class="form-select t-center"
+                                (change)="cambioApartado()">
+                                <option value="" style="display: none; visibility: hidden;">Elija un apartado</option>
+                                <option *ngFor="let apartado of apartados" [value]="apartado.id">{{apartado.nombre}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="categoriaProducto" class="form-label">Categoría:</label>
+                            <select formControlName="categoriaProducto" id="categoriaProducto" class="form-select t-center">
+                                <option value="" style="display: none; visibility: hidden;">Elija una categoría</option>
+                                <option *ngFor="let categoria of categoriasApartados" [value]="categoria.id">
+                                    {{categoria.nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-8">
+                            <label for="descripcionProducto" class="form-label">Descripción producto:</label>
+                            <textarea formControlName="descripcionProducto" id="referencias"
+                                placeholder="Descripción producto" class="form-control" (keypress)="soloTexto($event)"></textarea>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="imagenProducto" class="form-label required">Imagen:</label>
+                                <input type="file" class="form-control" formControlName="imagenProducto" id="imagenProducto" (change)="onFileChange($event)"
+                                    accept="image/*">
+                            </div>
+
+                            <div *ngIf="imagenSeleccionada">
+                                <img [src]="this.imagenSeleccionada" alt="Imagen previsualizada" class="img-thumbnail">
+                            </div>
+
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Se recomienda públicar imagenes con dimensiones resultantes en un cuadrado (misma altura
+                                que ancho de la imagen).
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel"
+                    aria-labelledby="profile-tab">
+                    <form class="row g-3" autocomplete="off" [formGroup]="formProducto">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="listaCaracteristicas.length == 0">
+                            <i class="bi bi-exclamation-triangle me-1"></i>
+                            Se debe registrar al menos una característica del producto
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <!--Registro de nueva caracteristica-->
+                        <div class="col-lg-4">
+                            <label for="tituloCaracteristica" class="form-label required">Título:</label>
+                            <input type="text" class="form-control" formControlName="tituloCaracteristica"
+                                id="tituloCaracteristica" placeholder="Título" (keypress)="soloTexto($event)" maxlength="255">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="descripcionCaracteristica" class="form-label required">Descripción:</label>
+                            <textarea formControlName="descripcionCaracteristica" id="descripcionCaracteristica"
+                                placeholder="Descripción" class="form-control" rows="1"></textarea>
+                        </div>
+                        <div class="col-lg-2" *ngIf="!mostrarUpdate">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-primary form-control t-bold" (click)="registrarCaracteristicaProducto()"><i
+                                    class="bi bi-plus-circle"></i></button>
+                        </div>
+                        <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-warning form-control t-bold"
+                                (click)="actualizarCaracteristicaProducto()"><i
+                                    class="bi bi-arrow-clockwise"></i></button>
+                        </div>
+                        <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-danger form-control t-bold"
+                                (click)="ocultarModificacionCaracteristica()"><i class="bi bi-x-lg"></i></button>
+                        </div>
+
+                        <app-datatable [columnasTabla]="columnasCaracteristicas" [tableConfig]="tableConfig"
+                            [datosTabla]="listaCaracteristicas"
+                            (actionSelected)="realizarAccion($event)"></app-datatable>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="text-align: center;">
+    <button type="button" class="btn btn-primary" (click)="modificarProducto()"><b>Modificar Producto</b></button>
+    <button type="button" class="btn btn-danger" (click)="cancelarModificacion()"><b>Cerrar</b></button>
+</div>
