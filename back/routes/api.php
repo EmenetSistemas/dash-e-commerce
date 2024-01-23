@@ -14,6 +14,7 @@ Route::get('/dashboard/usuarios/obtenerCantidadUsuariosTienda', 'App\Http\Contro
 Route::get('/dashboard/productos/obtenerProductos/{variante}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductos');
 Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerdetalleProducto');
 Route::get('/dashboard/productos/obtenerCategoriasApartados', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasApartados');
+Route::post('/dashboard/productos/actualizarImagen', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
 Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
     //caracteristicas
     Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');

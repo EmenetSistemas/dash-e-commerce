@@ -120,13 +120,17 @@ class ProductoRepository
     }
 
     public function modificarProducto ($producto) {
+        $update = [
+            'nombre' => $producto['nombreProducto'],
+            'descuento' => $producto['descuento'],
+            'fkCatApartado' => $producto['apartadoProducto']
+        ];
+
+        if (isset($producto['imagen'])) {
+            $update['imagen'] = $producto['imagen'];
+        }
         TblProductos::where('pkTblProducto', $producto['pkProducto'])
-                    ->update([
-                        'nombre' => $producto['nombreProducto'],
-                        'imagen' => $producto['imagenProducto'],
-                        'descuento' => $producto['descuento'],
-                        'fkCatApartado' => $producto['apartadoProducto']
-                    ]);
+                    ->update($update);
     }
 
     public function registrarCaracteristicaProducto ($caracteristica) {

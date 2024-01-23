@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
 import FGenerico from 'src/app/dashboard-e-commerce/shared/util/funciones-genericas';
 import { DataService } from 'src/app/services/data/data.service';
@@ -83,8 +83,8 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 			descuento				  : [null, [Validators.pattern('[0-9]*')]],
 			apartadoProducto		  : ['', [Validators.required]],
 			categoriaProducto		  : [{ value: '', disabled: true }, []],
-			imagenProducto			  : [, [Validators.required]],
-			descripcionProducto		  : [{ value: null, disabled: true }, [Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
+			imagenProducto			  : [],
+			descripcionProducto		  : [{ value: null, disabled: true }, []],
 			tituloCaracteristica	  : [null, []],
 			descripcionCaracteristica : [null, []]
 		});
@@ -129,6 +129,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		this.formProducto.get('apartadoProducto')?.setValue(this.detalleProducto.idApartado ?? '');
 		this.cambioApartado();
 		this.formProducto.get('descripcionProducto')?.setValue(this.detalleProducto.descripcion);
+		this.urlImagen(this.detalleProducto.imagen);
 	}
 
 	protected cambioApartado () : void {
@@ -141,16 +142,36 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 
 	protected onFileChange(event: Event): void {
 		const inputElement = event.target as HTMLInputElement;
-		this.imagenSeleccionada = (inputElement.files && inputElement.files.length > 0) ? inputElement.files[0] : null;
+		const file : any = (inputElement.files && inputElement.files.length > 0) ? inputElement.files[0] : null;
+		if (file) {
+			const reader = new FileReader();
+		
+			reader.onloadend = () => {
+			  	const base64Image = reader.result as string;
+				this.formProducto.value.imagen = base64Image;
+			  	this.urlImagen(base64Image);
+			};
+
+			reader.readAsDataURL(file);
+		} else {
+			this.imagenSeleccionada = null;
+		}
 	}
-	  
-	protected urlImagen(): SafeUrl {
-		return this.imagenSeleccionada ? this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.imagenSeleccionada)) : '';
-	}	  
+	
+	protected urlImagen( img64 : string ) : void {
+		if (img64 != null) {
+			this.imagenSeleccionada = this.sanitizer.bypassSecurityTrustUrl(img64);
+		}
+	}
 
 	protected modificarProducto () : void {
 		if (this.formProducto.invalid) {
 			this.mensajes.mensajeGenerico('Aún hay campos vacíos o que no cumplen con la estructura correcta.', 'warning', 'Los campos requeridos están marcados con un *');
+			return;
+		}
+
+		if (this.imagenSeleccionada == null) {
+			this.mensajes.mensajeGenerico('Se debe colocar una imagen respectiva del producto para poder continuar.', 'warning', 'Imagen producto');
 			return;
 		}
 

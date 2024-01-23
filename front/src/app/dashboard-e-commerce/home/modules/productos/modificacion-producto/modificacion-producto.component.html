@@ -79,11 +79,11 @@
                             <div class="mb-3">
                                 <label for="imagenProducto" class="form-label required">Imagen:</label>
                                 <input type="file" class="form-control" formControlName="imagenProducto" id="imagenProducto" (change)="onFileChange($event)"
-                                    accept="image/*" required>
+                                    accept="image/*">
                             </div>
 
                             <div *ngIf="imagenSeleccionada">
-                                <img [src]="urlImagen()" alt="Imagen previsualizada" class="img-thumbnail">
+                                <img [src]="this.imagenSeleccionada" alt="Imagen previsualizada" class="img-thumbnail">
                             </div>
 
                             <div class="alert alert-info alert-dismissible fade show" role="alert">
