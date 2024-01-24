@@ -53,6 +53,23 @@ class UsuarioRepository
         ];
     }
 
+    public function actaulizarUsuario ($datosUsuario, $pkUsuario) {
+        $update = [
+            'nombre' => $datosUsuario['nombre'],
+            'aPaterno' => $datosUsuario['aPaterno'],
+            'aMaterno' => $datosUsuario['aMaterno'],
+            'telefono' => $datosUsuario['telefono'],
+            'correo' => $datosUsuario['correo']
+        ];
+
+        if (isset($datosUsuario['password']) && !is_null($datosUsuario['password'])) {
+            $update['password'] = bcrypt($datosUsuario['password']);
+        }
+
+        TblUsuariosTienda::where('pkTblUsuarioTienda', $pkUsuario)
+                         ->update($update);
+    }
+
     public function registrarDireccion ($datosUsuario, $pkRegistro) {
         $registro = new TblDirecciones();
         $registro->fkTblUsuario = $pkRegistro;
@@ -65,6 +82,18 @@ class UsuarioRepository
         $registro->save();
     }
 
+    public function actualizarDireccion ($datosUsuario, $pkRegistro) {
+        TblDirecciones::where('fkTblUsuario', $pkRegistro)
+                      ->update([
+                          'calle' => $datosUsuario['calle'],
+                          'noExterior' => $datosUsuario['noExterior'],
+                          'localidad' => $datosUsuario['localidad'],
+                          'municipio' => $datosUsuario['municipio'],
+                          'estado' => $datosUsuario['estado'],
+                          'cp' => $datosUsuario['cp']
+                      ]);
+    }
+
     public function registrarMetodoPago ($datosUsuario, $pkRegistro) {
         $registro = new TblMetodosPago();
         $registro->fkTblUsuario = $pkRegistro;
@@ -73,6 +102,15 @@ class UsuarioRepository
         $registro->noTarjeta    = $datosUsuario['noTarjeta'];
         $registro->statusActual = 1;
         $registro->save();
+    }
+
+    public function actualizarMetodoPago($datosUsuario, $pkRegistro) {
+        TblMetodosPago::where('fkTblUsuario', $pkRegistro)
+                      ->update([
+                          'emisor' => $datosUsuario['emisor'],
+                          'tipo' => $datosUsuario['tipo'],
+                          'noTarjeta' => $datosUsuario['noTarjeta']
+                      ]);
     }
 
     public function obtenerInformacionPorToken ($token) {

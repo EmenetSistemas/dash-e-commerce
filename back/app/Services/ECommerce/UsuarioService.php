@@ -48,6 +48,35 @@ class UsuarioService
         );
     }
 
+    public function modificacion ( $datosUsuario ) {
+        $datosSesion = $this->usuarioRepository->obtenerDatosSesion($datosUsuario['token']);
+        $validaCorreo = $this->usuarioRepository->validarCorreoExistente($datosUsuario['correo'], $datosSesion[0]->pkTblUsuarioTienda);
+
+        if ($validaCorreo > 0) {
+            return response()->json(
+                [
+                    'mensaje' => 'Upss! Al parecer ya existe una cuenta vinculada a este correo. Por favor validar la información',
+                    'status' => 409
+                ],
+                200
+            );
+        }
+
+        DB::beginTransaction();
+            $this->usuarioRepository->actaulizarUsuario($datosUsuario, $datosSesion[0]->pkTblUsuarioTienda);
+            $this->usuarioRepository->actualizarDireccion($datosUsuario, $datosSesion[0]->pkTblUsuarioTienda);
+            $this->usuarioRepository->actualizarMetodoPago($datosUsuario, $datosSesion[0]->pkTblUsuarioTienda);
+        DB::commit();
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó la información con éxito.',
+                'status' => 200
+            ],
+            200
+        );
+    }
+
     public function login ( $credenciales ) {
         $usuario = $this->usuarioRepository->validarExistenciaUsuario( $credenciales['correo'], $credenciales['password'] );
 

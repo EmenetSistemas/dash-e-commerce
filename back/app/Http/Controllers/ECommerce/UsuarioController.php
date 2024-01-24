@@ -33,6 +33,21 @@ class UsuarioController extends Controller
         }
     }
 
+    public function modificacion ( Request $request ) {
+        try {
+            return $this->usuarioService->modificacion( $request->all() );
+        } catch ( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error interno'
+                ],
+                500
+            );
+        }
+    }
+
     public function login( Request $request ) {
         try {
             return $this->usuarioService->login( $request->all() );
