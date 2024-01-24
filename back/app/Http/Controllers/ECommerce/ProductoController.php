@@ -62,4 +62,49 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function agregarItemCarrito (Request $request) {
+        try{
+            return $this->productoService->agregarItemCarrito($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerNoItemsCarritoCompras ($token) {
+        try{
+            return $this->productoService->obtenerNoItemsCarritoCompras($token);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerItemsCarritoCompras ($token) {
+        try{
+            return $this->productoService->obtenerItemsCarritoCompras($token);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

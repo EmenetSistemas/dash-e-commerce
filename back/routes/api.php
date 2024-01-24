@@ -31,3 +31,8 @@ Route::post('/usuarios/modificacion', 'App\Http\Controllers\ECommerce\UsuarioCon
     Route::get('/e-commerce/productos/obtenerProductosPorApartado/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosPorApartado');
     Route::get('/e-commerce/productos/obtenerDetalleProductoPorId/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductoPorId');
     Route::post('/e-commerce/productos/obtenerDetalleProductosVenta', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductosVenta');
+
+    // carrito compras
+    Route::post('/e-commerce/productos/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
+    Route::get('/e-commerce/productos/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
+    Route::get('/e-commerce/productos/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
