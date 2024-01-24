@@ -28,3 +28,4 @@ Route::post('/usuarios/login', 'App\Http\Controllers\ECommerce\UsuarioController
 Route::post('/usuarios/registro', 'App\Http\Controllers\ECommerce\UsuarioController@registro');
     // productos e-commerce
     Route::get('/e-commerce/productos/obtenerProductosPorApartado/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosPorApartado');
+    Route::get('/e-commerce/productos/obtenerDetalleProductoPorId/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductoPorId');

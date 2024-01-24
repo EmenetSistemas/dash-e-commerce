@@ -32,4 +32,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerDetalleProductoPorId ($pkProducto) {
+        try{
+            return $this->productoService->obtenerDetalleProductoPorId($pkProducto);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }
