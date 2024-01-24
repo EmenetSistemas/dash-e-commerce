@@ -47,4 +47,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerDetalleProductosVenta (Request $request) {
+        try{
+            return $this->productoService->obtenerDetalleProductosVenta($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

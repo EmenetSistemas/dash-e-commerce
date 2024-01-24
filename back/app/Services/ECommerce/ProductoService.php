@@ -49,4 +49,23 @@ class ProductoService
             200
         );
     }
+
+    public function obtenerDetalleProductosVenta ($productos) {
+        $detalleProductos = [];
+        foreach ($productos as $producto) {
+            $temp = $this->dashboardProductoRepository->obtenerdetalleProducto($producto['id'])[0];
+            $temp->cantidad = $producto['cantidad'];
+            array_push($detalleProductos, $temp);
+        }
+
+        return response()->json(
+            [
+                'data' => [
+                    'detalleProductos' => $detalleProductos
+                ],
+                'mensaje' => 'Se obtuvieron los porductos con éxito'
+            ],
+            200
+        );
+    }
 }
