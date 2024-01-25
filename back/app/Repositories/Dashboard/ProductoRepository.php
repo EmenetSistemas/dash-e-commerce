@@ -122,7 +122,7 @@ class ProductoRepository
     public function modificarProducto ($producto) {
         $update = [
             'nombre' => $producto['nombreProducto'],
-            'descuento' => $producto['descuento'],
+            'descuento' => is_null($producto['descuento']) ? $producto['descuento'] : $producto['descuento'] / 100,
             'fkCatApartado' => $producto['apartadoProducto']
         ];
 

@@ -125,7 +125,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 	private cargarFormProducto () : void {
 		this.formProducto.get('nombreProducto')?.setValue(this.detalleProducto.nombre);
 		this.formProducto.get('stockProducto')?.setValue(this.detalleProducto.stock);
-		this.formProducto.get('descuento')?.setValue(this.detalleProducto.descuento);
+		this.formProducto.get('descuento')?.setValue(this.detalleProducto.descuento != null ? this.detalleProducto.descuento*100 : this.detalleProducto.descuento);
 		this.formProducto.get('apartadoProducto')?.setValue(this.detalleProducto.idApartado ?? '');
 		this.cambioApartado();
 		this.formProducto.get('descripcionProducto')?.setValue(this.detalleProducto.descripcion);
