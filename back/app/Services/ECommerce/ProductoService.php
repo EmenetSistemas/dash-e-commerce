@@ -166,7 +166,6 @@ class ProductoService
     }
 
     public function agregarPedido ($pedido) {
-        Log::alert($pedido);
         $datosSesion = $this->usuarioRepository->obtenerDatosSesion($pedido['token']);
 
         DB::beginTransaction();
@@ -179,6 +178,40 @@ class ProductoService
         return response()->json(
             [
                 'mensaje' => 'Pedido realizado con éxito'
+            ],
+            200
+        );
+    }
+
+    public function obtenerNoPedidos ($token) {
+        $datosSesion = $this->usuarioRepository->obtenerDatosSesion($token);
+        $noPedidos = $this->productoRepository->obtenerNoPedidos($datosSesion[0]->pkTblUsuarioTienda);
+
+        return response()->json(
+            [
+                'data' => [
+                    'noPedidos' => $noPedidos
+                ],
+                'mensaje' => 'Se eliminarón todos los productos del carrito de compras'
+            ],
+            200
+        );
+    }
+
+    public function obtenerPedidos ($token) {
+        $datosSesion = $this->usuarioRepository->obtenerDatosSesion($token);
+        $pedidos = $this->productoRepository->obtenerPedidos($datosSesion[0]->pkTblUsuarioTienda);
+
+        foreach ($pedidos as $pedido) {
+            $pedido->productos = $this->productoRepository->obtenerProductosPedido($pedido->idPedido);
+        }
+
+        return response()->json(
+            [
+                'data' => [
+                    'pedidos' => $pedidos
+                ],
+                'mensaje' => 'Se eliminarón todos los productos del carrito de compras'
             ],
             200
         );

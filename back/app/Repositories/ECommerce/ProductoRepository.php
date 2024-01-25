@@ -8,6 +8,7 @@ use App\Models\TblDetallePedido;
 use App\Models\TblPedidos;
 use App\Models\TblProductos;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProductoRepository
@@ -106,5 +107,41 @@ class ProductoRepository
         $registro->fkTblProducto      = $producto['id'];
         $registro->cantidad           = $producto['cantidad'];
         $registro->save();
+    }
+
+    public function obtenerNoPedidos ($pkUsuario) {
+        $query = TblPedidos::select('pkTblPedido')
+                           ->where('fkTblUsuarioTienda', $pkUsuario);
+
+        return $query->count();
+    }
+
+    public function obtenerPedidos ($pkUsuario) {
+        $query = TblPedidos::select(
+                               'tblPedidos.pkTblPedido as idPedido',
+                               'tblPedidos.fechaPedido',
+                               'tblPedidos.fechaEntrega',
+                               DB::raw("CONCAT(tblDirecciones.calle,', ',tblDirecciones.localidad,', ',tblDirecciones.municipio,', ',tblDirecciones.estado,', ',tblDirecciones.cp) as direccionEntrega")
+                           )
+                           ->leftJoin('tblDirecciones', 'tblDirecciones.pkTblDireccion', 'tblPedidos.fkTblDireccion')
+                           ->where('fkTblUsuarioTienda', $pkUsuario);
+
+        return $query->get();
+    }
+
+    public function obtenerProductosPedido ($pkPedido) {
+        $query = TblDetallePedido::select(
+                                     'tblDetallePedido.cantidad',
+                                     'tblProductos.pkTblProducto as idItem',
+                                     'tblProductos.nombre as nombre',
+                                     'tblProductos.precio as precio',
+                                     'tblProductos.descuento as descuento',
+                                     'tblProductos.imagen as imagen'
+                                 )
+                                 ->leftJoin('tblProductos', 'tblProductos.pkTblProducto', 'tblDetallePedido.fkTblProducto')
+                                 ->leftJoin('catApartados', 'catApartados.pkCatApartado', 'tblProductos.fkCatApartado')
+                                 ->where('tblDetallePedido.fkTblPedido', $pkPedido);
+
+        return $query->get();
     }
 }
