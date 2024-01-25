@@ -57,7 +57,7 @@ class ProductoService
     public function obtenerDetalleProductosVenta ($productos) {
         $detalleProductos = [];
         foreach ($productos as $producto) {
-            $temp = $this->dashboardProductoRepository->obtenerdetalleProducto($producto['idItem'])[0];
+            $temp = $this->dashboardProductoRepository->obtenerdetalleProducto($producto['idItem'] ?? $producto['id'])[0];
             $temp->cantidad = $producto['cantidad'];
             array_push($detalleProductos, $temp);
         }
@@ -212,6 +212,28 @@ class ProductoService
                     'pedidos' => $pedidos
                 ],
                 'mensaje' => 'Se eliminarón todos los productos del carrito de compras'
+            ],
+            200
+        );
+    }
+
+    public function cancelarPedido ($idPedido) {
+        $this->productoRepository->cancelarPedido($idPedido);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se canceló el pedido con éxito'
+            ],
+            200
+        );
+    }
+
+    public function cancelarProductoPedido ($idPedido, $idProducto) {
+        $this->productoRepository->cancelarProductoPedido($idPedido, $idProducto);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se eliminó el producto del pedido con éxito'
             ],
             200
         );

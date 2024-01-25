@@ -30,7 +30,7 @@ class ProductoRepository
     public function validarItemEnCarrito ($pkItem, $pkUsuario) {
         $query = TblCarritoCompras::where([
                                       ['fkTblUsuarioTienda', $pkUsuario],
-                                      ['pkTblCarritoCompras', $pkItem]
+                                      ['idItem', $pkItem]
                                   ]);
 
         return $query->get()[0] ?? null;
@@ -143,5 +143,20 @@ class ProductoRepository
                                  ->where('tblDetallePedido.fkTblPedido', $pkPedido);
 
         return $query->get();
+    }
+
+    public function cancelarPedido ($pkPedido) {
+        TblPedidos::where('pkTblPedido', $pkPedido)
+                  ->delete();
+        TblDetallePedido::where('fkTblPedido', $pkPedido)
+                        ->delete();
+    }
+
+    public function cancelarProductoPedido ($pkPedido, $idProducto) {
+        TblDetallePedido::where([
+                      ['fkTblPedido', $pkPedido],
+                      ['fkTblProducto', $idProducto],
+                  ])
+                  ->delete();
     }
 }

@@ -43,3 +43,5 @@ Route::post('/usuarios/modificacion', 'App\Http\Controllers\ECommerce\UsuarioCon
     Route::post('/e-commerce/pedidos/agregarPedido', 'App\Http\Controllers\ECommerce\ProductoController@agregarPedido');
     Route::get('/e-commerce/pedidos/obtenerNoPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoPedidos');
     Route::get('/e-commerce/pedidos/obtenerPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerPedidos');
+    Route::get('/e-commerce/pedidos/cancelarPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarPedido');
+    Route::get('/e-commerce/pedidos/cancelarProductoPedido/{idPedido}/{idProducto}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarProductoPedido');

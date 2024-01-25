@@ -182,4 +182,34 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function cancelarPedido ($idPedido) {
+        try{
+            return $this->productoService->cancelarPedido($idPedido);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function cancelarProductoPedido ($idPedido, $idProducto) {
+        try{
+            return $this->productoService->cancelarProductoPedido($idPedido, $idProducto);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }
