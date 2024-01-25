@@ -121,6 +121,7 @@ class ProductoRepository
                                'tblPedidos.pkTblPedido as idPedido',
                                'tblPedidos.fechaPedido',
                                'tblPedidos.fechaEntrega',
+                               'tblPedidos.fkStatus',
                                DB::raw("CONCAT(tblDirecciones.calle,', ',tblDirecciones.localidad,', ',tblDirecciones.municipio,', ',tblDirecciones.estado,', ',tblDirecciones.cp) as direccionEntrega")
                            )
                            ->leftJoin('tblDirecciones', 'tblDirecciones.pkTblDireccion', 'tblPedidos.fkTblDireccion')
