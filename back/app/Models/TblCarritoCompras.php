@@ -10,7 +10,7 @@ class TblCarritoCompras extends Model
     use HasFactory;
     public $timestamps = false;
     protected $primaryKey = 'pkTblCarritoCompras';
-    protected $table = 'tblCarritoComrpas';
+    protected $table = 'tblCarritoCompras';
     protected $fillable = 
     [
         'pkTblCarritoCompras',

@@ -62,7 +62,14 @@ class ProductoRepository
     }
 
     public function obtenerItemsCarritoCompras ($pkUsuario) {
-        $query = TblCarritoCompras::where('fkTblUsuarioTienda', $pkUsuario);
+        $query = TblCarritoCompras::select(
+                                      'tblCarritoCompras.*',
+                                      'tblProductos.imagen',
+                                      'tblProductos.precio',
+                                      'tblProductos.descuento'
+                                  )
+                                  ->leftJoin('tblProductos', 'tblProductos.pkTblProducto', 'tblCarritoCompras.idItem')
+                                  ->where('tblCarritoCompras.fkTblUsuarioTienda', $pkUsuario);
 
         return $query->get();
     }
