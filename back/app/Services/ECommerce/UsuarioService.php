@@ -142,6 +142,7 @@ class UsuarioService
             'telefono' => $datosSesion[0]->telefono,
             'correo' => $datosSesion[0]->correo,
             'direccion' => [
+                'pkTblDireccion' => $datosSesion[0]->pkTblDireccion,
                 'calle' => $datosSesion[0]->calle,
                 'noExterior' => $datosSesion[0]->noExterior,
                 'localidad' => $datosSesion[0]->localidad,

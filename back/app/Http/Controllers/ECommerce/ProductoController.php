@@ -137,4 +137,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function agregarPedido (Request $request) {
+        try{
+            return $this->productoService->agregarPedido($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TblCarritoCompras extends Model
+class TblPedidos extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $primaryKey = 'pkTblCarritoCompras';
-    protected $table = 'tblCarritoCompras';
+    protected $primaryKey = 'pkTblPedido';
+    protected $table = 'tblPedidos';
     protected $fillable = 
     [
-        'pkTblCarritoCompras',
+        'pkTblPedido',
         'fkTblUsuarioTienda',
-	    'idItem',
-	    'cantidad'
+        'fechaPedido',
+        'fechaEntrega',
+        'fechaAlta',
+        'fkStatus'
     ];
 }

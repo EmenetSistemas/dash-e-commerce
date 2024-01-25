@@ -164,4 +164,23 @@ class ProductoService
             200
         );
     }
+
+    public function agregarPedido ($pedido) {
+        Log::alert($pedido);
+        $datosSesion = $this->usuarioRepository->obtenerDatosSesion($pedido['token']);
+
+        DB::beginTransaction();
+            $pkPedido = $this->productoRepository->agregarPedido($pedido, $datosSesion[0]->pkTblUsuarioTienda);
+            foreach ($pedido['productos'] as $producto) {
+                $this->productoRepository->agregarDetallePedido($producto, $pkPedido);
+            }
+        DB::commit();
+
+        return response()->json(
+            [
+                'mensaje' => 'Pedido realizado con éxito'
+            ],
+            200
+        );
+    }
 }

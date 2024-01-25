@@ -4,7 +4,10 @@ namespace App\Repositories\ECommerce;
 
 use App\Models\TblCaracteristicasProducto;
 use App\Models\TblCarritoCompras;
+use App\Models\TblDetallePedido;
+use App\Models\TblPedidos;
 use App\Models\TblProductos;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class ProductoRepository
@@ -82,5 +85,26 @@ class ProductoRepository
     public function vaciarCarrito ($pkTblUsuarioTienda) {
         TblCarritoCompras::where('fkTblUsuarioTienda', $pkTblUsuarioTienda)
                          ->delete();
+    }
+
+    public function agregarPedido ($pedido, $pkUsuario) {
+        $registro = new TblPedidos();
+        $registro->fkTblUsuarioTienda = $pkUsuario;
+        $registro->fkTblDireccion     = $pedido['pkDireccion'];
+        $registro->fechaPedido        = Carbon::parse($pedido['fechaPedido']);
+        $registro->fechaEntrega       = Carbon::parse($pedido['fechaEntrega']);
+        $registro->fechaAlta          = Carbon::now();
+        $registro->fkStatus           = 1;
+        $registro->save();
+
+        return $registro->pkTblPedido;
+    }
+
+    public function agregarDetallePedido ($producto, $pkPedido) {
+        $registro = new TblDetallePedido();
+        $registro->fkTblPedido        = $pkPedido;
+        $registro->fkTblProducto      = $producto['id'];
+        $registro->cantidad           = $producto['cantidad'];
+        $registro->save();
     }
 }

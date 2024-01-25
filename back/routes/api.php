@@ -33,8 +33,11 @@ Route::post('/usuarios/modificacion', 'App\Http\Controllers\ECommerce\UsuarioCon
     Route::post('/e-commerce/productos/obtenerDetalleProductosVenta', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductosVenta');
 
     // carrito compras
-    Route::post('/e-commerce/productos/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
-    Route::get('/e-commerce/productos/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
-    Route::get('/e-commerce/productos/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
-    Route::get('/e-commerce/productos/eliminarItemCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
-    Route::get('/e-commerce/productos/vaciarCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');
+    Route::post('/e-commerce/carritoCompras/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
+    Route::get('/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
+    Route::get('/e-commerce/carritoCompras/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
+    Route::get('/e-commerce/carritoCompras/eliminarItemCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
+    Route::get('/e-commerce/carritoCompras/vaciarCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');
+
+    // pedidos
+    Route::post('/e-commerce/pedidos/agregarPedido', 'App\Http\Controllers\ECommerce\ProductoController@agregarPedido');
