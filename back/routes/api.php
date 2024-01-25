@@ -36,3 +36,5 @@ Route::post('/usuarios/modificacion', 'App\Http\Controllers\ECommerce\UsuarioCon
     Route::post('/e-commerce/productos/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
     Route::get('/e-commerce/productos/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
     Route::get('/e-commerce/productos/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
+    Route::get('/e-commerce/productos/eliminarItemCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
+    Route::get('/e-commerce/productos/vaciarCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');

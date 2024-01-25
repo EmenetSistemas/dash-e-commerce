@@ -107,4 +107,34 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function eliminarItemCarrito ($pkItemCarrito) {
+        try{
+            return $this->productoService->eliminarItemCarrito($pkItemCarrito);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function vaciarCarrito ($token) {
+        try{
+            return $this->productoService->vaciarCarrito($token);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

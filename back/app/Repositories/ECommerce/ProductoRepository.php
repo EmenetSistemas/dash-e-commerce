@@ -73,4 +73,14 @@ class ProductoRepository
 
         return $query->get();
     }
+
+    public function eliminarItemCarrito ($pkItemCarrito) {
+        TblCarritoCompras::where('pkTblCarritoCompras', $pkItemCarrito)
+                         ->delete();
+    }
+    
+    public function vaciarCarrito ($pkTblUsuarioTienda) {
+        TblCarritoCompras::where('fkTblUsuarioTienda', $pkTblUsuarioTienda)
+                         ->delete();
+    }
 }

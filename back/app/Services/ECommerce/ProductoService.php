@@ -141,4 +141,27 @@ class ProductoService
             200
         );
     }
+    
+    public function eliminarItemCarrito ($pkItemCarrito) {
+        $this->productoRepository->eliminarItemCarrito($pkItemCarrito);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se eliminó el producto del carrito'
+            ],
+            200
+        );
+    }
+
+    public function vaciarCarrito ($token) {
+        $datosSesion = $this->usuarioRepository->obtenerDatosSesion($token);
+        $this->productoRepository->vaciarCarrito($datosSesion[0]->pkTblUsuarioTienda);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se eliminarón todos los productos del carrito de compras'
+            ],
+            200
+        );
+    }
 }
