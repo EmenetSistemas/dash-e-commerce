@@ -1,0 +1,19 @@
+.dropdown {
+    width: 100% !important;
+}
+
+.dropdown-menu {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.dropdown-search {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+.dropdown-list {
+    min-width: 300px !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+}

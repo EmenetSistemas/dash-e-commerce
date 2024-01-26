@@ -5,6 +5,7 @@ namespace App\Services\ECommerce;
 use App\Repositories\Dashboard\ProductoRepository as DashboardProductoRepository;
 use App\Repositories\ECommerce\UsuarioRepository;
 use App\Repositories\ECommerce\ProductoRepository;
+use App\Services\Dashboard\ProductoService as DashboardProductoService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -12,16 +13,19 @@ class ProductoService
 {
     protected $productoRepository;
     protected $dashboardProductoRepository;
+    protected $dashboardProductoService;
     protected $usuarioRepository;
 
     public function __construct(
         ProductoRepository $ProductoRepository,
         DashboardProductoRepository $DashboardProductoRepository,
+        DashboardProductoService $DashboardProductoService,
         UsuarioRepository $UsuarioRepository
     )
     {
         $this->productoRepository = $ProductoRepository;
         $this->dashboardProductoRepository = $DashboardProductoRepository;
+        $this->dashboardProductoService = $DashboardProductoService;
         $this->usuarioRepository = $UsuarioRepository;
     }
 
@@ -40,6 +44,7 @@ class ProductoService
     }
 
     public function obtenerDetalleProductoPorId ($pkProducto) {
+        $this->dashboardProductoService->actualizarProductos();
         $detalleProducto = $this->dashboardProductoRepository->obtenerdetalleProducto($pkProducto);
         $detalleProducto[0]->caracteristicas = $this->dashboardProductoRepository->obtenerCaracteristicasProducto($pkProducto);
 
@@ -55,6 +60,7 @@ class ProductoService
     }
 
     public function obtenerDetalleProductosVenta ($productos) {
+        $this->dashboardProductoService->actualizarProductos();
         $detalleProductos = [];
         foreach ($productos as $producto) {
             $temp = $this->dashboardProductoRepository->obtenerdetalleProducto($producto['idItem'] ?? $producto['id'])[0];

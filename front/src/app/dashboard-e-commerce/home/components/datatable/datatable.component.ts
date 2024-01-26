@@ -31,7 +31,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 	constructor(
 		private mensajes: MensajesService,
-		private modalService : ModalService,
+		private modalService: ModalService,
 		private cdRef: ChangeDetectorRef
 	) { }
 
@@ -53,12 +53,12 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 	abrirModalModificacion(idDetalle: number, idModal: string) {
 		const dataModal = {
-			idDetalle : idDetalle
+			idDetalle: idDetalle
 		};
 		switch (idModal) {
 			case 'modificacionProducto':
 				this.modalService.abrirModalConComponente(ModificacionProductoComponent, dataModal);
-			break;
+				break;
 		}
 	}
 
@@ -72,6 +72,28 @@ export class DatatableComponent implements OnInit, OnChanges {
 		this.mensajes.mensajeGenerico('Se generó el PDF con éxito', 'success');
 	}
 
+	private getDateDb(dateString: string): Date | null {
+		const parts = dateString.split('-');
+		if (parts.length === 3) {
+			const day = +parts[0];
+			const month = +parts[1] - 1;
+			const year = +parts[2];
+			return new Date(year, month, day);
+		}
+		return null;
+	}
+
+	private getDateInput(dateString: string): Date | null {
+		const parts = dateString.split('-');
+		if (parts.length === 3) {
+			const day = +parts[2];
+			const month = +parts[1] - 1;
+			const year = +parts[0];
+			return new Date(year, month, day);
+		}
+		return null;
+	}
+
 	get paginatedItems() {
 		const startIndex = (this.currentPage - 1) * this.itemsPerPage;
 		const endIndex = startIndex + this.itemsPerPage;
@@ -79,14 +101,27 @@ export class DatatableComponent implements OnInit, OnChanges {
 		return this.datosTabla.filter((registro: any) => {
 			return Object.keys(this.filterValues).every((column: any) => {
 				const filter = this.filterValues[column].toLowerCase();
-				const value = registro[column]?.toString()?.toLowerCase();
+				const value = registro[column.replace('_inicio', '').replace('_fin', '')];
+		
+				if (column.endsWith('_inicio') || column.endsWith('_fin')) {
+					column = column.replace('_inicio', '').replace('_fin', '');
+					const startDate = this.getDateInput(this.filterValues[column + '_inicio'] ?? '');
+					const endDate = this.getDateInput(this.filterValues[column + '_fin'] ?? '');
+					const dateValue = this.getDateDb(value ?? '');
+					
+					if (startDate && endDate && dateValue) {
+						return dateValue >= startDate && dateValue <= endDate;
+					}
+		
+					return true;
+				}
 
 				if (filter === '') {
 					return true;
 				} else if (filter === 'null' && this.tableConfig[column]?.showEmptyOption) {
 					return value === undefined || value === null || value === '';
 				} else {
-					return value?.includes(filter);
+					return value?.toString().toLowerCase().includes(filter);
 				}
 			});
 		}).slice(startIndex, endIndex);
@@ -176,7 +211,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 	limpiarFiltros(): void {
 		Object.keys(this.filterValues).forEach((key) => {
-		  this.filterValues[key] = '';
+			this.filterValues[key] = '';
 		});
 		this.currentPage = 1;
 		this.cdRef.detectChanges();
@@ -203,10 +238,10 @@ export class DatatableComponent implements OnInit, OnChanges {
 		this.selectionChange.emit(data);
 	}
 
-	protected emitirIdAccion ( action : string, idAccion : number ) : void {
+	protected emitirIdAccion(action: string, idAccion: number): void {
 		const data = {
-			action : action,
-			idAccion : idAccion
+			action: action,
+			idAccion: idAccion
 		};
 		this.actionSelected.emit(data);
 	}

@@ -17,7 +17,7 @@ class ProductoService
         $this->productoRepository = $ProductoRepository;
     }
 
-    private function actualizarProductos () {
+    public function actualizarProductos () {
         $productosServer = $this->productoRepository->obtenerProductosServidor();
         
         DB::beginTransaction();
@@ -132,6 +132,39 @@ class ProductoService
                 'mensaje' => 'Se eliminó la característica con éxiito'
             ],
             200
+        );
+    }
+
+    public function obtenerStatusPedidosSelect () {
+        $sociosGenerales = $this->productoRepository->obtenerStatusPedidosGenerales();
+        $opcionesSelect = [];
+
+        foreach( $sociosGenerales as $item ){
+            $temp = [
+                'value' => $item->pkCatStatus,
+                'label' => $item->nombreStatus,
+                'checked' => false
+            ];
+
+            array_push($opcionesSelect, $temp);
+        }
+        
+        return response()->json(
+            [
+                'mensaje' => 'Se consultaron los Status Pedidos con éxito',
+                'data' => $opcionesSelect
+            ]
+        );
+    }
+
+    public function obtenerPedidosPorStatus($status){
+        $pedidosStatus = $this->productoRepository->obtenerPedidosPorStatus($status['status']);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se consultaron los Pedidos por status seleccionados con éxito',
+                'data' => $pedidosStatus
+            ]
         );
     }
 }

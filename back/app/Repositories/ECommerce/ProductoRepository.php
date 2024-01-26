@@ -2,7 +2,6 @@
 
 namespace App\Repositories\ECommerce;
 
-use App\Models\TblCaracteristicasProducto;
 use App\Models\TblCarritoCompras;
 use App\Models\TblDetallePedido;
 use App\Models\TblPedidos;

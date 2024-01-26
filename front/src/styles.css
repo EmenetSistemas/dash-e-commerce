@@ -1317,3 +1317,16 @@ form label {
 	text-align: center !important;
 	align-items: center !important;
 }
+
+.f-left {
+	float: left !important;
+}
+
+.drop-space {
+	float: left !important;
+	width: 220px;
+}
+
+.w-50 {
+	width: 50% !important;
+}

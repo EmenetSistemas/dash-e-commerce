@@ -9,6 +9,8 @@ import { DatatableComponent } from './components/datatable/datatable.component';
 import { ConsultaProductosComponent } from './modules/productos/consulta-productos/consulta-productos.component';
 import { ModificacionProductoComponent } from './modules/productos/modificacion-producto/modificacion-producto.component';
 import { ModalModule } from "ngx-bootstrap/modal";
+import { PedidosComponent } from './modules/pedidos/pedidos.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
     imports:[
@@ -23,7 +25,9 @@ import { ModalModule } from "ngx-bootstrap/modal";
         ProductosPendientesComponent,
         DatatableComponent,
         ConsultaProductosComponent,
-        ModificacionProductoComponent
+        ModificacionProductoComponent,
+        PedidosComponent,
+        DropdownComponent
     ]
 })
 

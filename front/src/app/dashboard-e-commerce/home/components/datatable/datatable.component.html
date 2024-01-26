@@ -17,8 +17,8 @@
             <table class="table data-table-border custom-table">
                 <thead class="thead-light">
                     <tr>
-                        <th *ngFor="let columna of getColumnKeys()" scope="col" (click)="sortColumn(columna)"
-                            (click)="onItemsPerPageChange()" style="vertical-align: middle;">
+                        <th *ngFor="let columna of getColumnKeys()" scope="col"
+                            (click)="sortColumn(columna)">
                             {{ columnasTabla[columna] }}
                             <span *ngIf="sortBy === columna && !sortDesc && !tableConfig[columna]?.noFilter">&#9650;</span>
                             <span *ngIf="sortBy === columna && sortDesc && !tableConfig[columna]?.noFilter">&#9660;</span>
@@ -26,17 +26,27 @@
                     </tr>
                     <tr>
                         <th class="inputs" *ngFor="let columna of getColumnKeys()">
-                            <input *ngIf="!tableConfig[columna]?.noFilter && !tableConfig[columna]?.selectColumn"
-                                type="search" class="form-control" [placeholder]="columnasTabla[columna]"
-                                [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
-                            <select *ngIf="tableConfig[columna]?.selectColumn" class="form-select"
-                                [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
-                                <option value="">Todos</option>
-                                <option *ngFor="let option of tableConfig[columna].selectOptions" [value]="option">{{
-                                    option }}</option>
-                                <option *ngIf="tableConfig[columna]?.showEmptyOption" value="null">Sin información
-                                </option>
-                            </select>
+                            <ng-container *ngIf="tableConfig[columna]?.dateRange; else selectColumn">
+                                <div class="date-range-filter">
+                                    <input type="date" class="form-control w-50 f-left" [(ngModel)]="filterValues[columna + '_inicio']" (change)="onItemsPerPageChange()" />
+                                    <input type="date" class="form-control w-50 f-left" [(ngModel)]="filterValues[columna + '_fin']" (change)="onItemsPerPageChange()" />
+                                </div>
+                            </ng-container>
+                            <ng-template #selectColumn>
+                                <select *ngIf="tableConfig[columna]?.selectColumn; else defaultColumn" class="form-select"
+                                    [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
+                                    <option value="">Todos</option>
+                                    <option *ngFor="let option of tableConfig[columna].selectOptions" [value]="option">{{
+                                        option }}</option>
+                                    <option *ngIf="tableConfig[columna]?.showEmptyOption" value="null">Sin información
+                                    </option>
+                                </select>
+                            </ng-template>
+                            <ng-template #defaultColumn>
+                                <input *ngIf="!tableConfig[columna]?.noFilter && !tableConfig[columna]?.selectColumn"
+                                    type="search" class="form-control" [placeholder]="columnasTabla[columna]"
+                                    [(ngModel)]="filterValues[columna]" (input)="onItemsPerPageChange()">
+                            </ng-template>
                         </th>
                     </tr>
                 </thead>

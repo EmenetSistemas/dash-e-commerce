@@ -44,4 +44,12 @@ export class ProductosService {
 	public eliminarCaracteristicaProducto (pkProducto : number) : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/productos/eliminarCaracteristicaProducto/'+pkProducto);
 	}
+
+	public obtenerStatusPedidosSelect () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/pedidos/obtenerStatusPedidosSelect');
+	}
+
+	public obtenerPedidosPorStatus (status : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/pedidos/obtenerPedidosPorStatus', status);
+	}
 }

@@ -22,26 +22,31 @@ Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dash
     Route::post('/dashboard/productos/actualizarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCaracteristicaProducto');
     Route::get('/dashboard/productos/eliminarCaracteristicaProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@eliminarCaracteristicaProducto');
 
+//pedidos dash
+Route::get('/dashboard/pedidos/obtenerStatusPedidosSelect', 'App\Http\Controllers\Dashboard\ProductoController@obtenerStatusPedidosSelect');
+Route::post('/dashboard/pedidos/obtenerPedidosPorStatus', 'App\Http\Controllers\Dashboard\ProductoController@obtenerPedidosPorStatus');
+
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');
 Route::post('/usuarios/login', 'App\Http\Controllers\ECommerce\UsuarioController@login');
 Route::post('/usuarios/registro', 'App\Http\Controllers\ECommerce\UsuarioController@registro');
 Route::post('/usuarios/modificacion', 'App\Http\Controllers\ECommerce\UsuarioController@modificacion');
-    // productos e-commerce
-    Route::get('/e-commerce/productos/obtenerProductosPorApartado/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosPorApartado');
-    Route::get('/e-commerce/productos/obtenerDetalleProductoPorId/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductoPorId');
-    Route::post('/e-commerce/productos/obtenerDetalleProductosVenta', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductosVenta');
 
-    // carrito compras
-    Route::post('/e-commerce/carritoCompras/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
-    Route::get('/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
-    Route::get('/e-commerce/carritoCompras/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
-    Route::get('/e-commerce/carritoCompras/eliminarItemCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
-    Route::get('/e-commerce/carritoCompras/vaciarCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');
+// productos e-commerce
+Route::get('/e-commerce/productos/obtenerProductosPorApartado/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosPorApartado');
+Route::get('/e-commerce/productos/obtenerDetalleProductoPorId/{pkApartado}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductoPorId');
+Route::post('/e-commerce/productos/obtenerDetalleProductosVenta', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductosVenta');
 
-    // pedidos
-    Route::post('/e-commerce/pedidos/agregarPedido', 'App\Http\Controllers\ECommerce\ProductoController@agregarPedido');
-    Route::get('/e-commerce/pedidos/obtenerNoPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoPedidos');
-    Route::get('/e-commerce/pedidos/obtenerPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerPedidos');
-    Route::get('/e-commerce/pedidos/cancelarPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarPedido');
-    Route::get('/e-commerce/pedidos/cancelarProductoPedido/{idPedido}/{idProducto}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarProductoPedido');
+// carrito compras
+Route::post('/e-commerce/carritoCompras/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
+Route::get('/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
+Route::get('/e-commerce/carritoCompras/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
+Route::get('/e-commerce/carritoCompras/eliminarItemCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
+Route::get('/e-commerce/carritoCompras/vaciarCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');
+
+// pedidos
+Route::post('/e-commerce/pedidos/agregarPedido', 'App\Http\Controllers\ECommerce\ProductoController@agregarPedido');
+Route::get('/e-commerce/pedidos/obtenerNoPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoPedidos');
+Route::get('/e-commerce/pedidos/obtenerPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerPedidos');
+Route::get('/e-commerce/pedidos/cancelarPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarPedido');
+Route::get('/e-commerce/pedidos/cancelarProductoPedido/{idPedido}/{idProducto}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarProductoPedido');

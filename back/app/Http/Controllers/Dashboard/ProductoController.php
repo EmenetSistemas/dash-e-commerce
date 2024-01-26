@@ -137,4 +137,34 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerStatusPedidosSelect () {
+        try{
+            return $this->productoService->obtenerStatusPedidosSelect();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerPedidosPorStatus (Request $request) {
+        try{
+            return $this->productoService->obtenerPedidosPorStatus($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

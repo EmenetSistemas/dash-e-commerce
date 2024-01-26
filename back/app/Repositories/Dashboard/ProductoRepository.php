@@ -4,7 +4,9 @@ namespace App\Repositories\Dashboard;
 
 use App\Models\CatApartados;
 use App\Models\CatCategorias;
+use App\Models\CatStatusPedidos;
 use App\Models\TblCaracteristicasProducto;
+use App\Models\TblPedidos;
 use App\Models\TblProductos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -167,5 +169,25 @@ class ProductoRepository
         TblCaracteristicasProducto::where('pkTblCaracteristicaProducto', $pkProdcuto)
                                   ->delete();
         return;
+    }
+
+    public function obtenerStatusPedidosGenerales () {
+        return CatStatusPedidos::get();
+    }
+
+    public function obtenerPedidosPorStatus ($status) {
+        $query = TblPedidos::select(
+                               'tblPedidos.pkTblPedido as pkTblPedido',
+                               'tblPedidos.fkTblUsuarioTienda as fkTblUsuarioTienda',
+                               'catStatusPedido.nombreStatus as nombreStatus'
+                           )
+                           ->selectRaw("CONCAT(tblUsuariosTienda.nombre,' ',tblUsuariosTienda.aPaterno) as nombre")
+                           ->selectRaw("DATE_FORMAT(tblPedidos.fechaPedido, '%d-%m-%Y' ) as fechaPedido")
+                           ->selectRaw("DATE_FORMAT(tblPedidos.fechaEntrega, '%d-%m-%Y' ) as fechaEntrega")
+                           ->leftJoin('tblUsuariosTienda', 'tblUsuariosTienda.pkTblUsuarioTienda', 'tblPedidos.fkTblUsuarioTienda')
+                           ->leftJoin('catStatusPedido', 'catStatusPedido.pkCatStatus', 'tblPedidos.fkStatus')
+                           ->whereIn('tblPedidos.fkStatus', $status);
+
+        return $query->get();
     }
 }
