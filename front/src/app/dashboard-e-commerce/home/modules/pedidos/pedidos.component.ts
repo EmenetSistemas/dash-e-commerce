@@ -14,23 +14,21 @@ export class PedidosComponent implements OnInit{
 	protected columnasPedidos : any = {
 		"pkTblPedido" 		 : "#",
 		"nombre" 			 : "Cliente",
+		"productos" 		 : "Productos",
+		"articulos" 		 : "Articulos",
 		"fechaPedido" 		 : "Pedido",
 		"fechaEntrega" 		 : "Entrega",
 		"nombreStatus" 		 : "Status"
 	};
 
 	protected tableConfig : any = {
-		"fechaPedido" :{
+		"fechaPedido" : {
 			"dateRange" : true,
-			"style" : {
-				"text-align" : "center"
-			}
+			"center" : true
 		},
-		"fechaEntrega" :{
+		"fechaEntrega" : {
 			"dateRange" : true,
-			"style" : {
-				"text-align" : "center"
-			}
+			"center" : true
 		}
 	}
 
