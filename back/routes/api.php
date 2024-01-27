@@ -27,6 +27,8 @@ Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dash
 Route::get('/dashboard/pedidos/obtenerStatusPedidosSelect', 'App\Http\Controllers\Dashboard\ProductoController@obtenerStatusPedidosSelect');
 Route::post('/dashboard/pedidos/obtenerPedidosPorStatus', 'App\Http\Controllers\Dashboard\ProductoController@obtenerPedidosPorStatus');
 Route::get('/dashboard/pedidos/obtenerDetallePedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerDetallePedido');
+Route::get('/dashboard/pedidos/enviarPedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@enviarPedido');
+Route::get('/dashboard/pedidos/entregarPedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@entregarPedido');
 
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');

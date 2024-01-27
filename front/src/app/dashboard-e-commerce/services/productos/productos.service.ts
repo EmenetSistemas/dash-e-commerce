@@ -56,4 +56,12 @@ export class ProductosService {
 	public obtenerDetallePedido (idPedido : number) : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/pedidos/obtenerDetallePedido/'+idPedido);
 	}
+
+	public enviarPedido (idPedido : number) : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/pedidos/enviarPedido/'+idPedido);
+	}
+
+	public entregarPedido (idPedido : number) : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/pedidos/entregarPedido/'+idPedido);
+	}
 }

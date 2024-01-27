@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
+import { DataService } from 'src/app/services/data/data.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 
 @Component({
@@ -51,16 +52,35 @@ export class PedidosComponent implements OnInit{
 				'Pendiente',
 				'Enviado',
 				'Entregado'
+			],
+			"dadges" : true,
+			"center" : true,
+			"dadgesCases" : [
+				{
+					"text" : "Pendiente",
+					"color" : "warning"
+				}, {
+					"text" : "Enviado",
+					"color" : "primary"
+				}, {
+					"text" : "Entregado",
+					"color" : "success"
+				}
 			]
-		}
+		},
 	}
 
 	protected listaPedidosStatus : any = [];
 	
 	constructor(
 		private mensajes: MensajesService,
-		private apiProductos: ProductosService
-	) { }
+		private apiProductos: ProductosService,
+		private dataService: DataService
+	) {
+		this.dataService.realizarClickConsultaPedidos.subscribe(() => {
+			this.obtenerPedidosPorStatusFunction();
+		});
+	}
 
 	async ngOnInit () : Promise<void> {
 		this.mensajes.mensajeEsperar();
@@ -94,12 +114,16 @@ export class PedidosComponent implements OnInit{
 
 	protected obtenerPedidosPorStatus () : void {
 		this.mensajes.mensajeEsperar();
-		const arregloSocios = { status : this.statusSeleccionados.map(({value}) => value) };
+		this.obtenerPedidosPorStatusFunction().then(() => {
+			this.mensajes.mensajeGenericoToast('Se consultaron los Pedidos por status seleccionados con éxito', 'success');
+		});
+	}
 
-		this.apiProductos.obtenerPedidosPorStatus(arregloSocios).subscribe(
+	private obtenerPedidosPorStatusFunction () : Promise<any> {
+		const arregloSocios = { status : this.statusSeleccionados.map(({value}) => value) };
+		return this.apiProductos.obtenerPedidosPorStatus(arregloSocios).toPromise().then(
 			respuesta => {
 				this.listaPedidosStatus = respuesta.data;
-				this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}

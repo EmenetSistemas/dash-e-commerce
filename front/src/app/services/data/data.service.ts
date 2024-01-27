@@ -6,4 +6,5 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class DataService {
 	public claseSidebar: string = '';
 	public realizarClickConsultaPorductos: EventEmitter<void> = new EventEmitter<void>();
+	public realizarClickConsultaPedidos: EventEmitter<void> = new EventEmitter<void>();
 }

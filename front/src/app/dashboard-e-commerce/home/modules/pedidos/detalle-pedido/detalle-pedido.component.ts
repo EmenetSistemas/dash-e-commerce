@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
 import { UsuariosService } from 'src/app/dashboard-e-commerce/services/usuarios/usuarios.service';
 import FGenerico from 'src/app/dashboard-e-commerce/shared/util/funciones-genericas';
+import { DataService } from 'src/app/services/data/data.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 
@@ -25,12 +26,14 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 
 	protected datosUsuario : any = {};
 	protected productosPedido : any = [];
+	protected pedido : any = {};
 
 	constructor (
 		private mensajes : MensajesService,
 		private modalService : ModalService,
 		private fb : FormBuilder,
-		public apiProductos : ProductosService
+		private apiProductos : ProductosService,
+		private dataService : DataService
 	) {
 		super();
 	}
@@ -64,6 +67,7 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 			respuesta => {
 				this.datosUsuario = respuesta.data.datosUsuario[0];
 				this.productosPedido = respuesta.data.productosPedido;
+				this.pedido = respuesta.data.detallePedido[0];
 				this.cargarFormularioCliente();
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
@@ -84,6 +88,46 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 		this.formDatosPersonalesUsuario.get('municipio')?.setValue(this.datosUsuario.municipio);
 		this.formDatosPersonalesUsuario.get('estado')?.setValue(this.datosUsuario.estado);
 		this.formDatosPersonalesUsuario.get('referencias')?.setValue(this.datosUsuario.referencias);
+	}
+
+	protected async enviarPedido () : Promise<void> {
+		this.mensajes.mensajeConfirmacionCustom('Favor de asegurarse que los porductos y la cantidad de los mismos sean los solicitados en la compra. ¿Está seguro de cambiar el status del pedido y enviar los productos?', 'question', 'Enviar Productos Compra').then(
+			respuesta => {
+				if (respuesta.isConfirmed) {
+					this.mensajes.mensajeEsperar();
+					this.apiProductos.enviarPedido(this.idDetalle).subscribe(
+						respuesta => {
+							this.obtenerDetallePedido().then(() => {
+								this.dataService.realizarClickConsultaPedidos.emit();
+								this.mensajes.mensajeGenerico(respuesta.mensaje, 'success');
+							});
+						}, error => {
+							this.mensajes.mensajeGenerico('error', 'error');
+						}
+					);
+				}
+			}
+		);
+	}
+
+	protected entregarPedido () : void {
+		this.mensajes.mensajeConfirmacionCustom('Favor de asegurarse que los porductos se encuentren en excelentes condiciones para su entrega ¿Está seguro de cambiar el status del pedido y entregar los productos?', 'warning', 'Entregar Productos').then(
+			respuesta => {
+				if (respuesta.isConfirmed) {
+					this.mensajes.mensajeEsperar();
+					this.apiProductos.entregarPedido(this.idDetalle).subscribe(
+						respuesta => {
+							this.obtenerDetallePedido().then(() => {
+								this.dataService.realizarClickConsultaPedidos.emit();
+								this.mensajes.mensajeGenerico(respuesta.mensaje, 'success');
+							});
+						}, error => {
+							this.mensajes.mensajeGenerico('error', 'error');
+						}
+					);
+				}
+			}
+		);
 	}
 
 	public cerrarModal () : void {

@@ -186,10 +186,32 @@ class ProductoService
             [
                 'data' => [
                     'datosUsuario' => $usuario,
-                    'productosPedido' => $productos
+                    'productosPedido' => $productos,
+                    'detallePedido' => $pedido
                 ],
-                'mensaje' => 'Se consultó la información del usuario con éxito',
-                'status' => 200
+                'mensaje' => 'Se consultó la información del usuario con éxito'
+            ],
+            200
+        );
+    }
+
+    public function enviarPedido ($idPedido) {
+        $this->productoRepository->enviarPedido($idPedido);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se cambio el status del pedido a enviado con éxito',
+            ],
+            200
+        );
+    }
+
+    public function entregarPedido ($idPedido) {
+        $this->productoRepository->entregarPedido($idPedido);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se cambio el status del pedido a entregado con éxito',
             ],
             200
         );

@@ -182,4 +182,34 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function enviarPedido ($idPedido) {
+        try{
+            return $this->productoService->enviarPedido($idPedido);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function entregarPedido ($idPedido) {
+        try{
+            return $this->productoService->entregarPedido($idPedido);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

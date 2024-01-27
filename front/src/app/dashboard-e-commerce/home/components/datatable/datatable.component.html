@@ -104,9 +104,14 @@
                                     </ng-container>
                                 </ng-template>
                                 <ng-template #money>
-                                    <ng-container *ngIf="tableConfig[columna]?.moneyColumn; else deafult">
+                                    <ng-container *ngIf="tableConfig[columna]?.moneyColumn; else dadges">
                                         <span [ngStyle]="getTableColumnStyle(columna, item)">{{ item[columna] != null ? '$ '
                                             + (item[columna] | number:'1.2-2') : 'Sin información' }}</span>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #dadges>
+                                    <ng-container *ngIf="tableConfig[columna]?.dadges; else deafult">
+                                        <span class="badge bg-{{obtenerColorDadges(columna, item[columna])}}">{{item[columna]}}</span>
                                     </ng-container>
                                 </ng-template>
                                 <ng-template #deafult>

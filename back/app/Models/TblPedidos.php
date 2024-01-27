@@ -17,7 +17,7 @@ class TblPedidos extends Model
         'fkTblUsuarioTienda',
         'fechaPedido',
         'fechaEntregaEstimada',
-        'fechaEntregaEnvio',
+        'fechaEnvio',
         'fechaEntrega',
         'fechaAlta',
         'fkStatus'

@@ -8,6 +8,7 @@ use App\Models\CatStatusPedidos;
 use App\Models\TblCaracteristicasProducto;
 use App\Models\TblPedidos;
 use App\Models\TblProductos;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -200,5 +201,21 @@ class ProductoRepository
         $query = TblPedidos::where('pkTblPedido', $idPedido);
 
         return $query->get();
+    }
+
+    public function enviarPedido ($idPedido) {
+        TblPedidos::where('pkTblPedido', $idPedido)
+                  ->update([
+                      'fkStatus' => 2,
+                      'fechaEnvio' => Carbon::now()
+                  ]);
+    }
+
+    public function entregarPedido ($idPedido) {
+        TblPedidos::where('pkTblPedido', $idPedido)
+                  ->update([
+                      'fkStatus' => 3,
+                      'fechaEntrega' => Carbon::now()
+                  ]);
     }
 }

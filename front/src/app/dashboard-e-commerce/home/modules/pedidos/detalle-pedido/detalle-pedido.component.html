@@ -103,6 +103,7 @@
 </div>
 
 <div class="modal-footer" style="text-align: center;">
-    <button type="button" class="btn btn-primary"><b>Enviar</b></button>
+    <button *ngIf="pedido.fkStatus == 1" type="button" class="btn btn-primary" (click)="enviarPedido()"><b>Enviar</b></button>
+    <button *ngIf="pedido.fkStatus == 2" type="button" class="btn btn-warning" (click)="entregarPedido()"><b>Entregar</b></button>
     <button type="button" class="btn btn-danger" (click)="cerrarModal()"><b>Cerrar</b></button>
 </div>

@@ -238,6 +238,14 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 		return null;
 	}
+	
+	protected obtenerColorDadges (columna : string, valor : string) : string {
+		const color = this.tableConfig[columna]?.dadgesCases.find((caseItem : any) => caseItem.text == valor);
+		if (color) {
+			return color.color;
+		}
+		return 'default';
+	}
 
 	protected emitirDatos(): void {
 		const data = {
