@@ -6,6 +6,7 @@ use App\Repositories\Dashboard\ProductoRepository as DashboardProductoRepository
 use App\Repositories\ECommerce\UsuarioRepository;
 use App\Repositories\ECommerce\ProductoRepository;
 use App\Services\Dashboard\ProductoService as DashboardProductoService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -68,10 +69,13 @@ class ProductoService
             array_push($detalleProductos, $temp);
         }
 
+        $fechaEntregaEstimada = Carbon::now()->addDays(2)->isWeekend() ? Carbon::now()->addDays(2)->nextWeekday()->format('d-m-Y') : Carbon::now()->addDays(2)->format('d-m-Y');
+
         return response()->json(
             [
                 'data' => [
-                    'detalleProductos' => $detalleProductos
+                    'detalleProductos' => $detalleProductos,
+                    'fechaEntregaEstimada' => $fechaEntregaEstimada
                 ],
                 'mensaje' => 'Se obtuvieron los porductos con éxito'
             ],

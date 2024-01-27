@@ -89,12 +89,12 @@ class ProductoRepository
 
     public function agregarPedido ($pedido, $pkUsuario) {
         $registro = new TblPedidos();
-        $registro->fkTblUsuarioTienda = $pkUsuario;
-        $registro->fkTblDireccion     = $pedido['pkDireccion'];
-        $registro->fechaPedido        = Carbon::parse($pedido['fechaPedido']);
-        $registro->fechaEntrega       = Carbon::parse($pedido['fechaEntrega']);
-        $registro->fechaAlta          = Carbon::now();
-        $registro->fkStatus           = 1;
+        $registro->fkTblUsuarioTienda   = $pkUsuario;
+        $registro->fkTblDireccion       = $pedido['pkDireccion'];
+        $registro->fechaPedido          = Carbon::now();
+        $registro->fechaEntregaEstimada = Carbon::parse($pedido['fechaEntregaEstimada']);
+        $registro->fechaAlta            = Carbon::now();
+        $registro->fkStatus             = 1;
         $registro->save();
 
         return $registro->pkTblPedido;
@@ -118,11 +118,11 @@ class ProductoRepository
     public function obtenerPedidos ($pkUsuario) {
         $query = TblPedidos::select(
                                'tblPedidos.pkTblPedido as idPedido',
-                               'tblPedidos.fechaPedido',
-                               'tblPedidos.fechaEntrega',
-                               'tblPedidos.fkStatus',
-                               DB::raw("CONCAT(tblDirecciones.calle,', ',tblDirecciones.localidad,', ',tblDirecciones.municipio,', ',tblDirecciones.estado,', ',tblDirecciones.cp) as direccionEntrega")
+                               'tblPedidos.fkStatus as fkStatus'
                            )
+                           ->selectRaw("DATE_FORMAT(tblPedidos.fechaPedido, '%d-%m-%Y') as fechaPedido")
+                           ->selectRaw("DATE_FORMAT(tblPedidos.fechaEntregaEstimada, '%d-%m-%Y') as fechaEntregaEstimada")
+                           ->selectRaw("CONCAT(tblDirecciones.calle,', ',tblDirecciones.localidad,', ',tblDirecciones.municipio,', ',tblDirecciones.estado,', ',tblDirecciones.cp) as direccionEntrega")
                            ->leftJoin('tblDirecciones', 'tblDirecciones.pkTblDireccion', 'tblPedidos.fkTblDireccion')
                            ->where('fkTblUsuarioTienda', $pkUsuario);
 
