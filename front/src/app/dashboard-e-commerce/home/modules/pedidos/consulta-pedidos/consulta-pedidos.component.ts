@@ -12,13 +12,15 @@ export class PedidosComponent implements OnInit{
 	protected statusSeleccionados: any[] = [];
 
 	protected columnasPedidos : any = {
-		"id" 		   : "#",
-		"nombre" 	   : "Cliente",
-		"productos"    : "Productos",
-		"articulos"    : "Articulos",
-		"fechaPedido"  : "Pedido",
-		"fechaEntrega" : "Entrega",
-		"nombreStatus" : "Status"
+		"id" 		   			: "#",
+		"nombre" 	   			: "Cliente",
+		"productos"    			: "Productos",
+		"articulos"    			: "Articulos",
+		"fechaPedido"  			: "Pedido",
+		"fechaEntregaEstimada" 	: "Entrega Estimada",
+		"fechaEnvio" 			: "Envió",
+		"fechaEntrega" 			: "Entrega",
+		"nombreStatus" 			: "Status"
 	};
 
 	protected tableConfig : any = {
@@ -28,6 +30,14 @@ export class PedidosComponent implements OnInit{
 			"idModal" : "detallePedido"
 		},
 		"fechaPedido" : {
+			"dateRange" : true,
+			"center" : true
+		},
+		"fechaEnvio" : {
+			"dateRange" : true,
+			"center" : true
+		},
+		"fechaEntregaEstimada" : {
 			"dateRange" : true,
 			"center" : true
 		},

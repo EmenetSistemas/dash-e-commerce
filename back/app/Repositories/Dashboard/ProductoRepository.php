@@ -184,6 +184,8 @@ class ProductoRepository
                            ->selectRaw("CONCAT('#PE-',tblPedidos.pkTblPedido) as id")
                            ->selectRaw("CONCAT(tblUsuariosTienda.nombre,' ',tblUsuariosTienda.aPaterno) as nombre")
                            ->selectRaw("DATE_FORMAT(tblPedidos.fechaPedido, '%d-%m-%Y' ) as fechaPedido")
+                           ->selectRaw("DATE_FORMAT(tblPedidos.fechaEntregaEstimada, '%d-%m-%Y' ) as fechaEntregaEstimada")
+                           ->selectRaw("DATE_FORMAT(tblPedidos.fechaEnvio, '%d-%m-%Y' ) as fechaEnvio")
                            ->selectRaw("DATE_FORMAT(tblPedidos.fechaEntrega, '%d-%m-%Y' ) as fechaEntrega")
                            ->selectRaw("(SELECT COUNT(fkTblPedido) FROM tblDetallePedido WHERE fkTblPedido = tblPedidos.pkTblPedido) as productos")
                            ->selectRaw("(SELECT SUM(cantidad) FROM tblDetallePedido WHERE fkTblPedido = tblPedidos.pkTblPedido) as articulos")

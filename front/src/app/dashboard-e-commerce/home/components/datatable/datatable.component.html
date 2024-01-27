@@ -20,17 +20,15 @@
                         <th *ngFor="let columna of getColumnKeys()" scope="col" [ngClass]="{'t-center': tableConfig[columna]?.center}"
                             (click)="sortColumn(columna)">
                             {{ columnasTabla[columna] }}
-                            <span *ngIf="sortBy === columna && !sortDesc && !tableConfig[columna]?.noFilter">&#9650;</span>
-                            <span *ngIf="sortBy === columna && sortDesc && !tableConfig[columna]?.noFilter">&#9660;</span>
+                            <span *ngIf="sortBy === columna && !sortDesc && !tableConfig[columna]?.noFilter" class="t-bold"><i class="bi bi-sort-up-alt"></i></span>
+                            <span *ngIf="sortBy === columna && sortDesc && !tableConfig[columna]?.noFilter" class="t-bold"><i class="bi bi-sort-down"></i></span>
                         </th>
                     </tr>
                     <tr>
                         <th class="inputs" *ngFor="let columna of getColumnKeys()">
                             <ng-container *ngIf="tableConfig[columna]?.dateRange; else selectColumn">
-                                <div class="date-range-filter">
-                                    <input type="date" class="form-control w-50 f-left" [(ngModel)]="filterValues[columna + '_inicio']" (change)="onItemsPerPageChange()" />
-                                    <input type="date" class="form-control w-50 f-left" [(ngModel)]="filterValues[columna + '_fin']" (change)="onItemsPerPageChange()" />
-                                </div>
+                                <input type="date" class="form-control" [(ngModel)]="filterValues[columna + '_inicio']" (change)="onItemsPerPageChange()" />
+                                <input type="date" class="form-control" [(ngModel)]="filterValues[columna + '_fin']" (change)="onItemsPerPageChange()" />
                             </ng-container>
                             <ng-template #selectColumn>
                                 <select *ngIf="tableConfig[columna]?.selectColumn; else defaultColumn" class="form-select"

@@ -90,15 +90,6 @@ thead {
     background-color: #FFE0D9;
 }
 
-.input-rage-date {
-    max-width: 150px !important;
-}
-
-.date-range-filter {
-    display: flex;
-    align-items: center;
-}
-
-.date-range-filter input {
-    margin-right: 5px;
+th {
+    vertical-align: middle !important;
 }
