@@ -181,6 +181,7 @@ class ProductoRepository
                                'tblPedidos.fkTblUsuarioTienda as fkTblUsuarioTienda',
                                'catStatusPedido.nombreStatus as nombreStatus'
                            )
+                           ->selectRaw("CONCAT('#PE-',tblPedidos.pkTblPedido) as id")
                            ->selectRaw("CONCAT(tblUsuariosTienda.nombre,' ',tblUsuariosTienda.aPaterno) as nombre")
                            ->selectRaw("DATE_FORMAT(tblPedidos.fechaPedido, '%d-%m-%Y' ) as fechaPedido")
                            ->selectRaw("DATE_FORMAT(tblPedidos.fechaEntrega, '%d-%m-%Y' ) as fechaEntrega")
@@ -189,6 +190,12 @@ class ProductoRepository
                            ->leftJoin('tblUsuariosTienda', 'tblUsuariosTienda.pkTblUsuarioTienda', 'tblPedidos.fkTblUsuarioTienda')
                            ->leftJoin('catStatusPedido', 'catStatusPedido.pkCatStatus', 'tblPedidos.fkStatus')
                            ->whereIn('tblPedidos.fkStatus', $status);
+
+        return $query->get();
+    }
+
+    public function obtenerDetallePedido ($idPedido) {
+        $query = TblPedidos::where('pkTblPedido', $idPedido);
 
         return $query->get();
     }

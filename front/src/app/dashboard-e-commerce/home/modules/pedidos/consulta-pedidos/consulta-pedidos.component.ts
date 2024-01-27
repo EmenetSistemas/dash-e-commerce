@@ -4,24 +4,29 @@ import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 
 @Component({
 	selector: 'app-pedidos',
-	templateUrl: './pedidos.component.html',
-	styleUrls: ['./pedidos.component.css']
+	templateUrl: './consulta-pedidos.component.html',
+	styleUrls: ['./consulta-pedidos.component.css']
 })
 export class PedidosComponent implements OnInit{
 	protected statusPedidos: any[] = [];
 	protected statusSeleccionados: any[] = [];
 
 	protected columnasPedidos : any = {
-		"pkTblPedido" 		 : "#",
-		"nombre" 			 : "Cliente",
-		"productos" 		 : "Productos",
-		"articulos" 		 : "Articulos",
-		"fechaPedido" 		 : "Pedido",
-		"fechaEntrega" 		 : "Entrega",
-		"nombreStatus" 		 : "Status"
+		"id" 		   : "#",
+		"nombre" 	   : "Cliente",
+		"productos"    : "Productos",
+		"articulos"    : "Articulos",
+		"fechaPedido"  : "Pedido",
+		"fechaEntrega" : "Entrega",
+		"nombreStatus" : "Status"
 	};
 
 	protected tableConfig : any = {
+		"id" : {
+			"detailColumn" : true,
+			"value" : "pkTblPedido",
+			"idModal" : "detallePedido"
+		},
 		"fechaPedido" : {
 			"dateRange" : true,
 			"center" : true
@@ -29,6 +34,14 @@ export class PedidosComponent implements OnInit{
 		"fechaEntrega" : {
 			"dateRange" : true,
 			"center" : true
+		},
+		"nombreStatus" : {
+			"selectColumn" : true,
+			"selectOptions" : [
+				'Pendiente',
+				'Enviado',
+				'Entregado'
+			]
 		}
 	}
 

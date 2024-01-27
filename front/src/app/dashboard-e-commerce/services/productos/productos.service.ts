@@ -52,4 +52,8 @@ export class ProductosService {
 	public obtenerPedidosPorStatus (status : any) : Observable<any> {
 		return this.http.post<any>(this.url + '/dashboard/pedidos/obtenerPedidosPorStatus', status);
 	}
+
+	public obtenerDetallePedido (idPedido : number) : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/pedidos/obtenerDetallePedido/'+idPedido);
+	}
 }

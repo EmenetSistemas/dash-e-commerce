@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 import { ModificacionProductoComponent } from '../../modules/productos/modificacion-producto/modificacion-producto.component';
+import { DetallePedidoComponent } from '../../modules/pedidos/detalle-pedido/detalle-pedido.component';
 
 @Component({
 	selector: 'app-datatable',
@@ -63,7 +64,14 @@ export class DatatableComponent implements OnInit, OnChanges {
 	}
 
 	abrirModalDetalle(idDetalle: number, idModal: string) {
-
+		const dataModal = {
+			idDetalle: idDetalle
+		};
+		switch (idModal) {
+			case 'detallePedido':
+				this.modalService.abrirModalConComponente(DetallePedidoComponent, dataModal, ' sp-large-modal');
+				break;
+		}
 	}
 
 	descargarPdf(idDetalle: number, rutaPdf: string) {

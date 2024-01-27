@@ -16,6 +16,7 @@ Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http
 Route::get('/dashboard/productos/obtenerCategoriasApartados', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasApartados');
 Route::post('/dashboard/productos/actualizarImagen', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
 Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
+
     //caracteristicas
     Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');
     Route::get('/dashboard/productos/obtenerCaracteristicasProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCaracteristicasProducto');
@@ -25,6 +26,7 @@ Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dash
 //pedidos dash
 Route::get('/dashboard/pedidos/obtenerStatusPedidosSelect', 'App\Http\Controllers\Dashboard\ProductoController@obtenerStatusPedidosSelect');
 Route::post('/dashboard/pedidos/obtenerPedidosPorStatus', 'App\Http\Controllers\Dashboard\ProductoController@obtenerPedidosPorStatus');
+Route::get('/dashboard/pedidos/obtenerDetallePedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerDetallePedido');
 
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');

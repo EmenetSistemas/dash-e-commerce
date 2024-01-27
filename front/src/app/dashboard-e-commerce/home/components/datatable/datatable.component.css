@@ -91,16 +91,14 @@ thead {
 }
 
 .input-rage-date {
-	max-width: 150px !important;
+    max-width: 150px !important;
 }
 
-/* Agrega este estilo al archivo CSS correspondiente */
 .date-range-filter {
     display: flex;
     align-items: center;
-  }
-  
-  .date-range-filter input {
+}
+
+.date-range-filter input {
     margin-right: 5px;
-  }
-  
+}

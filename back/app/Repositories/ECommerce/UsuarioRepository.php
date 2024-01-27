@@ -158,4 +158,14 @@ class UsuarioRepository
 
         return $query->count();
     }
+
+    public function obtenerInformacionUsuarioPorId ($idUsuario) {
+        $query = TblUsuariosTienda::join('tblDirecciones', function ($join) {
+                                      $join->on('tblDirecciones.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
+                                          ->where('tblDirecciones.statusActual', '=', 1);
+                                  })
+                                  ->where('tblUsuariosTienda.pkTblUsuarioTienda', $idUsuario);
+
+        return $query->get() ?? [];
+    }
 }

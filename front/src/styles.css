@@ -1330,3 +1330,8 @@ form label {
 .w-50 {
 	width: 50% !important;
 }
+
+.sp-large-modal {
+	width: 90vw !important;
+    max-width: none !important;
+}

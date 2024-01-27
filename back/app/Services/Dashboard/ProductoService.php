@@ -3,18 +3,27 @@
 namespace App\Services\Dashboard;
 
 use App\Repositories\Dashboard\ProductoRepository;
+use App\Repositories\ECommerce\ProductoRepository as ECommerceProductoRepository;
+use App\Repositories\ECommerce\UsuarioRepository;
+use App\Services\ECommerce\ProductoService as ECommerceProductoService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProductoService
 {
     protected $productoRepository;
+    protected $usuarioRepository;
+    protected $eCommerceProductoRepository;
 
     public function __construct(
-        ProductoRepository $ProductoRepository
+        ProductoRepository $ProductoRepository,
+        UsuarioRepository $UsuarioRepository,
+        ECommerceProductoRepository $ECommerceProductoRepository
     )
     {
         $this->productoRepository = $ProductoRepository;
+        $this->usuarioRepository = $UsuarioRepository;
+        $this->eCommerceProductoRepository = $ECommerceProductoRepository;
     }
 
     public function actualizarProductos () {
@@ -165,6 +174,24 @@ class ProductoService
                 'mensaje' => 'Se consultaron los Pedidos por status seleccionados con éxito',
                 'data' => $pedidosStatus
             ]
+        );
+    }
+
+    public function obtenerDetallePedido ($idPedido) {
+        $productos = $this->eCommerceProductoRepository->obtenerProductosPedido($idPedido);
+        $pedido = $this->productoRepository->obtenerDetallePedido($idPedido);
+        $usuario = $this->usuarioRepository->obtenerInformacionUsuarioPorId($pedido[0]->fkTblUsuarioTienda);
+
+        return response()->json(
+            [
+                'data' => [
+                    'datosUsuario' => $usuario,
+                    'productosPedido' => $productos
+                ],
+                'mensaje' => 'Se consultó la información del usuario con éxito',
+                'status' => 200
+            ],
+            200
         );
     }
 }

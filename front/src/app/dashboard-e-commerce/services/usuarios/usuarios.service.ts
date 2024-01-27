@@ -17,6 +17,10 @@ export class UsuariosService {
 		return this.http.post<any>(this.url + '/dashboard/usuarios/obtenerInformacionUsuarioPorToken', { token });
 	}
 
+	public obtenerInformacionUsuarioPorId(idUsuario: number): Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/usuarios/obtenerInformacionUsuarioPorId/'+ idUsuario);
+	}
+
 	public obtenerCantidadUsuariosTienda() : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/usuarios/obtenerCantidadUsuariosTienda');
 	}

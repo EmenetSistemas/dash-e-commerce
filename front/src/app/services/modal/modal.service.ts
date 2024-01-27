@@ -9,7 +9,7 @@ export class ModalService {
 
 	constructor(private modalService: BsModalService) { }
 
-	abrirModalConComponente(component: any, dataModal: any = null, typeModal : string = ' custom-modal') {
+	abrirModalConComponente(component: any, dataModal: any = null, typeModal : string = '') {
 		const modalConfig = {
 			ignoreBackdropClick: true,
 			keyboard: false,

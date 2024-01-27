@@ -4,13 +4,13 @@ import { HomeRoutes } from "./home.routing";
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { InicioComponent } from "./modules/inicio/inicio.component";
-import { ProductosPendientesComponent } from './modules/productos-pendientes/productos-pendientes.component';
 import { DatatableComponent } from './components/datatable/datatable.component';
 import { ConsultaProductosComponent } from './modules/productos/consulta-productos/consulta-productos.component';
 import { ModificacionProductoComponent } from './modules/productos/modificacion-producto/modificacion-producto.component';
 import { ModalModule } from "ngx-bootstrap/modal";
-import { PedidosComponent } from './modules/pedidos/pedidos.component';
-import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { PedidosComponent } from "./modules/pedidos/consulta-pedidos/consulta-pedidos.component";
+import { DropdownComponent } from "./components/dropdown/dropdown.component";
+import { DetallePedidoComponent } from "./modules/pedidos/detalle-pedido/detalle-pedido.component";
 
 @NgModule({
     imports:[
@@ -22,12 +22,12 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     ],
     declarations: [
         InicioComponent,
-        ProductosPendientesComponent,
         DatatableComponent,
         ConsultaProductosComponent,
         ModificacionProductoComponent,
         PedidosComponent,
-        DropdownComponent
+        DropdownComponent,
+        DetallePedidoComponent
     ]
 })
 

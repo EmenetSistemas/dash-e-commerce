@@ -1,8 +1,8 @@
 import { Routes } from "@angular/router";
 import { HomeComponent } from "./home.component";
 import { InicioComponent } from "./modules/inicio/inicio.component";
-import { ProductosPendientesComponent } from "./modules/productos-pendientes/productos-pendientes.component";
-import { PedidosComponent } from "./modules/pedidos/pedidos.component";
+import { PedidosComponent } from "./modules/pedidos/consulta-pedidos/consulta-pedidos.component";
+import { ConsultaProductosComponent } from "./modules/productos/consulta-productos/consulta-productos.component";
 
 export const HomeRoutes: Routes = [
     {
@@ -14,7 +14,7 @@ export const HomeRoutes: Routes = [
                 component: InicioComponent
             }, {
                 path: 'productos/:datos',
-                component: ProductosPendientesComponent
+                component: ConsultaProductosComponent
             }, {
                 path: 'pedidos',
                 component: PedidosComponent

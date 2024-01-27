@@ -133,7 +133,9 @@ class ProductoRepository
         $query = TblDetallePedido::select(
                                      'tblDetallePedido.cantidad',
                                      'tblProductos.pkTblProducto as idItem',
+                                     'tblProductos.identificador_mbp as identificador_mbp',
                                      'tblProductos.nombre as nombre',
+                                     'tblProductos.descripcion as descripcion',
                                      'tblProductos.precio as precio',
                                      'tblProductos.descuento as descuento',
                                      'tblProductos.imagen as imagen'
