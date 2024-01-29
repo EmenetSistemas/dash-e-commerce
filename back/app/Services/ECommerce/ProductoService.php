@@ -248,4 +248,54 @@ class ProductoService
             200
         );
     }
+
+    public function obtenerActualizacionesPedido ($idPedido) {
+        $fechas = $this->productoRepository->obtenerFechasPedido($idPedido);
+
+        $hoy = Carbon::now();
+        foreach ($fechas as $index => $fecha) {
+            if ($fecha != null && $index != 'fkStatus') {
+                $fecha = Carbon::parse($fecha);
+
+                if ($index != 'fechaEntregaEstimada') {
+                    $diferenciaDias = $fecha->diffInDays($hoy);
+        
+                    if ($diferenciaDias === 0) {
+                        $fechas[$index] = $fecha->format('h:i A');
+                    } elseif ($diferenciaDias === 1) {
+                        $fechas[$index] = 'Ayer ' . $fecha->format('h:i A');
+                    } elseif ($diferenciaDias === 2) {
+                        $fechas[$index] = 'Antier ' . $fecha->format('h:i A');
+                    } else {
+                        $fechas[$index] = $fecha->format('d-m-Y');
+                    }
+                } else {
+                    if ( $fecha == $hoy ) {
+                        $fechas[$index] = $fecha->format('h:i A');
+                    } else if ($fecha > $hoy) {
+                        $diferenciaDias = $fecha->diffInDays($hoy);
+                        if ($diferenciaDias === 1) {
+                            $fechas[$index] = 'Mañana entre 9:00 AM y 6:00 PM';
+                        } elseif ($diferenciaDias === 2) {
+                            $fechas[$index] = 'Pasado mañana 9:00 AM y 6:00 PM';
+                        } else {
+                            $fechas[$index] = $fecha->format('d-m-Y');
+                        }
+                    } else {
+                        $fechas[$index] = null;
+                    }
+                }
+            }
+        }
+
+        return response()->json(
+            [
+                'data' => [
+                    'fechas' => $fechas
+                ],
+                'mensaje' => 'Se consultó el detalle del envio del pedido',
+            ],
+            200
+        );
+    }
 }

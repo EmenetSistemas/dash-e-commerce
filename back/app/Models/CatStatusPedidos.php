@@ -15,6 +15,7 @@ class CatStatusPedidos extends Model
     [
         'pkCatStatus',
         'nombreStatus',
+        'tituloStatus',
 	    'descripcionStatus'
     ];
 }

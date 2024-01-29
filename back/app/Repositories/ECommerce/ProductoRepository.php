@@ -161,4 +161,18 @@ class ProductoRepository
                   ])
                   ->delete();
     }
+
+    public function obtenerFechasPedido ($idPedido) {
+        $query = TblPedidos::select(
+                               'tblPedidos.fechaPedido',
+                               'tblPedidos.fechaEntregaEstimada',
+                               'tblPedidos.fechaEnvio',
+                               'tblPedidos.fechaEntrega',
+                               'tblPedidos.fkStatus'
+                           )
+                           ->leftJoin('catStatusPedido', 'catStatusPedido.pkCatStatus', 'tblPedidos.fkStatus')
+                           ->where('tblPedidos.pkTblPedido', $idPedido);
+
+        return (array)json_decode(json_encode($query->get()[0] ?? []));
+    }
 }

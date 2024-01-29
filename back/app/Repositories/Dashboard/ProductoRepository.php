@@ -230,8 +230,8 @@ class ProductoRepository
 
     public function entregaEstimada ($data) {
         TblPedidos::where('pkTblPedido', $data['idPedido'])
-        ->update([
-            'fechaEntregaEstimada' => Carbon::parse($data['fechaEntregaEstimada'])
-        ]);
+                  ->update([
+                      'fechaEntregaEstimada' => Carbon::parse($data['fechaEntregaEstimada'])
+                  ]);
     }
 }

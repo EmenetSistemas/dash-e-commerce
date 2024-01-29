@@ -212,4 +212,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerActualizacionesPedido ($idPedido) {
+        try{
+            return $this->productoService->obtenerActualizacionesPedido($idPedido);
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }
