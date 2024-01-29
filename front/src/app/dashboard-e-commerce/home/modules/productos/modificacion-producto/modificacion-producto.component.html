@@ -86,7 +86,7 @@
                                 <img [src]="this.imagenSeleccionada" alt="Imagen previsualizada" class="img-thumbnail">
                             </div>
 
-                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <div *ngIf="!imagenSeleccionada" class="alert alert-info alert-dismissible fade show" role="alert">
                                 <i class="bi bi-info-circle me-1"></i>
                                 Se recomienda públicar imagenes con dimensiones resultantes en un cuadrado (misma altura
                                 que ancho de la imagen).

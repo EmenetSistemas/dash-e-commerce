@@ -93,3 +93,8 @@ thead {
 th {
     vertical-align: middle !important;
 }
+
+input[type="date" i] {
+    height: 25px !important;
+    max-width: 150px;
+}
