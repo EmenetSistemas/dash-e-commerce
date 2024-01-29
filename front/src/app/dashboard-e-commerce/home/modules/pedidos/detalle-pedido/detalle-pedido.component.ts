@@ -16,6 +16,7 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 	@Input() idDetalle: number = 0;
 
 	protected formDatosPersonalesUsuario! : FormGroup;
+	protected formDatosPedido! : FormGroup;
 
 	protected columnasProductosPedidos : any = {
 		'identificador_mbp' : '#',
@@ -41,11 +42,12 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 	async ngOnInit(): Promise<any> {
 		this.mensajes.mensajeEsperar();
 		this.crearFormDatosPersonalesUsuario();
+		this.crearFormDatosPedido();
 		await this.obtenerDetallePedido();
 		this.mensajes.cerrarMensajes();
 	}
 
-	private crearFormDatosPersonalesUsuario() {
+	private crearFormDatosPersonalesUsuario () : void {
 		this.formDatosPersonalesUsuario = this.fb.group({
 			nombre 			: [{value:null, disabled:true}],
 			aPaterno 		: [{value:null, disabled:true}],
@@ -62,20 +64,28 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 		});
 	}
 
+	private crearFormDatosPedido () : void {
+		this.formDatosPedido = this.fb.group({
+			fechaPedido 		 : [{value:null, disabled:true}],
+			fechaEntregaEstimada : [{value:null, disabled:true}, Validators.required],
+			fechaEntrega 	 	 : [{value:null, disabled:true}]
+	});
+	}
+
 	private obtenerDetallePedido () : Promise<any> {
 		return this.apiProductos.obtenerDetallePedido(this.idDetalle).toPromise().then(
 			respuesta => {
 				this.datosUsuario = respuesta.data.datosUsuario[0];
 				this.productosPedido = respuesta.data.productosPedido;
 				this.pedido = respuesta.data.detallePedido[0];
-				this.cargarFormularioCliente();
+				this.cargarFormularios();
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}
 		);
 	}
 
-	private cargarFormularioCliente () : void {
+	private cargarFormularios () : void {
 		this.formDatosPersonalesUsuario.get('nombre')?.setValue(this.datosUsuario.nombre);
 		this.formDatosPersonalesUsuario.get('aPaterno')?.setValue(this.datosUsuario.aPaterno);
 		this.formDatosPersonalesUsuario.get('aMaterno')?.setValue(this.datosUsuario.aMaterno);
@@ -88,6 +98,43 @@ export class DetallePedidoComponent extends FGenerico implements OnInit{
 		this.formDatosPersonalesUsuario.get('municipio')?.setValue(this.datosUsuario.municipio);
 		this.formDatosPersonalesUsuario.get('estado')?.setValue(this.datosUsuario.estado);
 		this.formDatosPersonalesUsuario.get('referencias')?.setValue(this.datosUsuario.referencias);
+		this.formDatosPedido.get('fechaPedido')?.setValue(this.pedido.fechaPedido);
+		this.formDatosPedido.get('fechaEntregaEstimada')?.setValue(this.pedido.fechaEntregaEstimada);
+		this.formDatosPedido.get('fechaEntrega')?.setValue(this.pedido.fechaEntrega);
+		if (this.pedido.fechaEnvio == null) {
+			this.formDatosPedido.get('fechaEntregaEstimada')?.enable();
+		}
+	}
+
+	protected cambioFechaEntregaEstimada () : void {
+		if (this.formDatosPedido.invalid) {
+			this.mensajes.mensajeGenerico('Es necesario colocar una fecha válida para poder modificar la fecha estimada de entrega.', 'warning', 'Fecha invalida');
+			return;
+		}
+
+		this.mensajes.mensajeEsperar();
+
+		const data = {
+			'fechaEntregaEstimada' : this.formDatosPedido.value.fechaEntregaEstimada,
+			'idPedido' : this.idDetalle
+		};
+
+		this.apiProductos.actualizarFechaEstimadaEntrega(data).subscribe(
+			respuesta => {
+				if (respuesta.error == 203) {
+					this.formDatosPedido.get('fechaEntregaEstimada')?.setValue(this.pedido.fechaEntregaEstimada);
+					this.mensajes.mensajeGenerico(respuesta.mensaje, 'error', 'Fecha invalida');
+					return;
+				}
+
+				this.obtenerDetallePedido().then(() => {
+					this.dataService.realizarClickConsultaPedidos.emit();
+					this.mensajes.mensajeGenerico(respuesta.mensaje, 'success');
+				});
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	protected async enviarPedido () : Promise<void> {

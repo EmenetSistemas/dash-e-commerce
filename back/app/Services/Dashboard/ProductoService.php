@@ -6,6 +6,7 @@ use App\Repositories\Dashboard\ProductoRepository;
 use App\Repositories\ECommerce\ProductoRepository as ECommerceProductoRepository;
 use App\Repositories\ECommerce\UsuarioRepository;
 use App\Services\ECommerce\ProductoService as ECommerceProductoService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -182,6 +183,10 @@ class ProductoService
         $pedido = $this->productoRepository->obtenerDetallePedido($idPedido);
         $usuario = $this->usuarioRepository->obtenerInformacionUsuarioPorId($pedido[0]->fkTblUsuarioTienda);
 
+        $pedido[0]->fechaPedido          = $pedido[0]->fechaPedido != null ? Carbon::parse($pedido[0]->fechaPedido)->format('Y-m-d') : null;
+        $pedido[0]->fechaEntregaEstimada = $pedido[0]->fechaEntregaEstimada != null ? Carbon::parse($pedido[0]->fechaEntregaEstimada)->format('Y-m-d') : null;
+        $pedido[0]->fechaEntrega         = $pedido[0]->fechaEntrega != null ? Carbon::parse($pedido[0]->fechaEntrega)->format('Y-m-d') : null;
+
         return response()->json(
             [
                 'data' => [
@@ -212,6 +217,29 @@ class ProductoService
         return response()->json(
             [
                 'mensaje' => 'Se cambio el status del pedido a entregado con éxito',
+            ],
+            200
+        );
+    }
+
+    public function actualizarFechaEstimadaEntrega ($data) {
+        $fechaInvalida = $this->productoRepository->validarCambioFecha($data);
+
+        if ($fechaInvalida) {
+            return response()->json(
+                [
+                    'mensaje' => 'La fecha estimada de entrega debe ser mayor a la fecha en que se realizó el pedido, favor de validar la información.',
+                    'error' => 203
+                ],
+                200
+            );
+        }
+
+        $this->productoRepository->entregaEstimada($data);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó la fecha estimada de entrega con éxito',
             ],
             200
         );

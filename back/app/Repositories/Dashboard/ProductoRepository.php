@@ -218,4 +218,20 @@ class ProductoRepository
                       'fechaEntrega' => Carbon::now()
                   ]);
     }
+
+    public function validarCambioFecha ($data) {
+        $query = TblPedidos::where([
+                               ['pkTblPedido', $data['idPedido']]
+                           ])
+                           ->whereRaw("DATE_FORMAT(fechaPedido, '%Y-%m-%d') > '" . Carbon::parse($data['fechaEntregaEstimada'])->format('Y-m-d') . "'");
+        
+        return $query->count() > 0;
+    }
+
+    public function entregaEstimada ($data) {
+        TblPedidos::where('pkTblPedido', $data['idPedido'])
+        ->update([
+            'fechaEntregaEstimada' => Carbon::parse($data['fechaEntregaEstimada'])
+        ]);
+    }
 }

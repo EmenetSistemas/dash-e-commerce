@@ -29,6 +29,7 @@ Route::post('/dashboard/pedidos/obtenerPedidosPorStatus', 'App\Http\Controllers\
 Route::get('/dashboard/pedidos/obtenerDetallePedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerDetallePedido');
 Route::get('/dashboard/pedidos/enviarPedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@enviarPedido');
 Route::get('/dashboard/pedidos/entregarPedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@entregarPedido');
+Route::post('/dashboard/pedidos/actualizarFechaEstimadaEntrega', 'App\Http\Controllers\Dashboard\ProductoController@actualizarFechaEstimadaEntrega');
 
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');

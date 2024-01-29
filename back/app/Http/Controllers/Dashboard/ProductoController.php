@@ -212,4 +212,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function actualizarFechaEstimadaEntrega (Request $request) {
+        try{
+            return $this->productoService->actualizarFechaEstimadaEntrega($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

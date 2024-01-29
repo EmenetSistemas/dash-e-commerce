@@ -64,4 +64,8 @@ export class ProductosService {
 	public entregarPedido (idPedido : number) : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/pedidos/entregarPedido/'+idPedido);
 	}
+
+	public actualizarFechaEstimadaEntrega (data : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/pedidos/actualizarFechaEstimadaEntrega', data);
+	}
 }
