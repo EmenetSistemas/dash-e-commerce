@@ -196,7 +196,18 @@ class ProductoService
             }
 
             foreach ($pedido['productos'] as $producto) {
-                $this->productoRepository->agregarDetallePedido($producto, $pkPedido);
+                $dp = $this->dashboardProductoRepository->obtenerdetalleProducto($producto['id']);
+                if ($dp->cantidad >= $producto['cantidad']) {
+                    $this->productoRepository->agregarDetallePedido($producto, $pkPedido);
+                } else {
+                    return response()->json(
+                        [
+                            'mensaje' => 'Al parecer el stock cambio para el producto "'.$dp->nombre.'", ahora solo contamos con '.$dp->cantidad.' disponibles',
+                            'error' => 204
+                        ],
+                        200
+                    );
+                }
             }
         DB::commit();
 
