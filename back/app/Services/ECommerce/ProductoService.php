@@ -9,6 +9,8 @@ use App\Services\Dashboard\ProductoService as DashboardProductoService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class ProductoService
 {
@@ -180,6 +182,19 @@ class ProductoService
 
         DB::beginTransaction();
             $pkPedido = $this->productoRepository->agregarPedido($pedido, $datosSesion[0]->pkTblUsuarioTienda);
+
+            $respuestaPago = $this->ventaStripe($pedido['total_pagar'], $pedido['token_id'], $pkPedido);
+
+            if (!$respuestaPago) {
+                return response()->json(
+                    [
+                        'mensaje' => 'El pago fue rechazado, favor de validar la información de la tarjeta o intentar con una diferente',
+                        'error' => 402
+                    ],
+                    200
+                );
+            }
+
             foreach ($pedido['productos'] as $producto) {
                 $this->productoRepository->agregarDetallePedido($producto, $pkPedido);
             }
@@ -192,6 +207,35 @@ class ProductoService
             200
         );
     }
+
+    private function ventaStripe($amount, $token_id, $pkPedido) {
+        try {
+            $amount = $amount * 100;
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+    
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $amount,
+                'currency' => 'mxn',
+                'payment_method_data' => [
+                    'type' => 'card',
+                    'card' => ['token' => $token_id],
+                ],
+                'confirmation_method' => 'manual',
+                'confirm' => true,
+                'return_url' => 'https://your-website.com/success',
+                'description' => 'Pago pedido #PE-'.$pkPedido
+            ]);
+    
+            if ($paymentIntent->status === 'succeeded') {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }    
 
     public function obtenerNoPedidos ($token) {
         $datosSesion = $this->usuarioRepository->obtenerDatosSesion($token);
