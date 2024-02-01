@@ -313,7 +313,7 @@ class ProductoService
         foreach ($fechas as $index => $fecha) {
             if ($fecha != null && $index != 'fkStatus') {
                 $fecha = Carbon::parse($fecha);
-
+                
                 if ($index != 'fechaEntregaEstimada') {
                     $diferenciaDias = $fecha->diffInDays($hoy);
         
@@ -327,8 +327,10 @@ class ProductoService
                         $fechas[$index] = $fecha->format('d-m-Y');
                     }
                 } else {
+                    $fecha = Carbon::parse($fecha->format('d-m-Y'));
+                    $hoy = Carbon::parse($hoy->format('d-m-Y'));
                     if ( $fecha == $hoy ) {
-                        $fechas[$index] = $fecha->format('h:i A');
+                        $fechas[$index] = 'Hoy entre 9:00 AM y 6:00 PM';
                     } else if ($fecha > $hoy) {
                         $diferenciaDias = $fecha->diffInDays($hoy);
                         if ($diferenciaDias === 1) {
@@ -340,6 +342,7 @@ class ProductoService
                         }
                     } else {
                         $fechas[$index] = null;
+                        $fechas['fechaRetrazo'] = $hoy->format('d-m-Y');
                     }
                 }
             }

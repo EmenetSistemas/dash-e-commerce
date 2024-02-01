@@ -26,10 +26,10 @@ export class ModalService {
 
 	cerrarModal() {
 		if (this.modalRef) {
-			document.body.classList.remove('modal-open');
-			document.body.style.paddingRight = '';
-			document.body.style.overflow = '';
 			this.modalRef.hide();
 		}
+		document.body.classList.remove('modal-open');
+		document.body.style.paddingRight = '';
+		document.body.style.overflow = '';
 	}
 }
