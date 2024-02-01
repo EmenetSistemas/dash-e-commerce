@@ -11,6 +11,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
 import { PedidosComponent } from "./modules/pedidos/consulta-pedidos/consulta-pedidos.component";
 import { DropdownComponent } from "./components/dropdown/dropdown.component";
 import { DetallePedidoComponent } from "./modules/pedidos/detalle-pedido/detalle-pedido.component";
+import { ConsultaClientesComponent } from './modules/clientes/consulta-clientes/consulta-clientes.component';
 
 @NgModule({
     imports:[
@@ -27,7 +28,8 @@ import { DetallePedidoComponent } from "./modules/pedidos/detalle-pedido/detalle
         ModificacionProductoComponent,
         PedidosComponent,
         DropdownComponent,
-        DetallePedidoComponent
+        DetallePedidoComponent,
+        ConsultaClientesComponent
     ]
 })
 

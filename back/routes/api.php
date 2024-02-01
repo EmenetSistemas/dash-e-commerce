@@ -9,6 +9,7 @@ Route::post('/auth', 'App\Http\Controllers\Auth\LoginController@auth');
 Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
 Route::post('/dashboard/usuarios/obtenerInformacionUsuarioPorToken', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerInformacionUsuarioPorToken');
 Route::get('/dashboard/usuarios/obtenerCantidadUsuariosTienda', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerCantidadUsuariosTienda');
+Route::post('/dashboard/usuarios/obtenerClientesPorStatus', 'App\Http\Controllers\Dashboard\UsuarioController@obtenerClientesPorStatus');
 
 // porductos dash
 Route::get('/dashboard/productos/obtenerProductos/{variante}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductos');

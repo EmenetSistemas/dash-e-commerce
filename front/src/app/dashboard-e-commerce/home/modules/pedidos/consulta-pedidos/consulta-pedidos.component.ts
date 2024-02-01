@@ -100,11 +100,11 @@ export class PedidosComponent implements OnInit{
 		);
 	}
 
-	protected async refreshStatusPedidos(): Promise<void> {
+	/*protected async refreshStatusPedidos(): Promise<void> {
 		this.mensajes.mensajeEsperar();
 		await this.obtenerStatusPedidosSelect();
 		this.mensajes.mensajeGenericoToast('Se actualizó la lista de Status Pedidos', 'success');
-	}
+	}*/
 
 	protected cambioDeSeleccion(data: any): void {
 		if (data.from == 'statusPedidos') {
@@ -120,8 +120,8 @@ export class PedidosComponent implements OnInit{
 	}
 
 	private obtenerPedidosPorStatusFunction () : Promise<any> {
-		const arregloSocios = { status : this.statusSeleccionados.map(({value}) => value) };
-		return this.apiProductos.obtenerPedidosPorStatus(arregloSocios).toPromise().then(
+		const arrStatus = { status : this.statusSeleccionados.map(({value}) => value) };
+		return this.apiProductos.obtenerPedidosPorStatus(arrStatus).toPromise().then(
 			respuesta => {
 				this.listaPedidosStatus = respuesta.data;
 			}, error => {

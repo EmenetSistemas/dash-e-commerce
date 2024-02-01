@@ -47,4 +47,19 @@ class UsuarioController extends Controller
             );
         }
     }
+
+    public function obtenerClientesPorStatus(Request $request){
+        try{
+            return $this->usuarioService->obtenerClientesPorStatus($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

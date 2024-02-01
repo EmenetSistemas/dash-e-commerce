@@ -7,6 +7,7 @@ use App\Models\TblMetodosPago;
 use App\Models\TblSesionesAdmin;
 use App\Models\TblUsuariosTienda;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -163,12 +164,27 @@ class UsuarioRepository
     }
 
     public function obtenerInformacionUsuarioPorId ($idUsuario) {
-        $query = TblUsuariosTienda::join('tblDirecciones', function ($join) {
+        $query = TblUsuariosTienda::leftJoin('tblDirecciones', function ($join) {
                                       $join->on('tblDirecciones.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
                                           ->where('tblDirecciones.statusActual', '=', 1);
                                   })
                                   ->where('tblUsuariosTienda.pkTblUsuarioTienda', $idUsuario);
 
         return $query->get() ?? [];
+    }
+
+    public function obtenerClientesPorStatus ($status) {
+        $query = TblUsuariosTienda::select(
+                                      DB::raw("CONCAT(tblUsuariosTienda.nombre,' ',tblUsuariosTienda.aPaterno) as nombre"),
+                                      'tblUsuariosTienda.pkTblUsuarioTienda as pkTblUsuarioTienda',
+                                      'tblUsuariosTienda.telefono as telefono',
+                                      'tblUsuariosTienda.correo as correo',
+                                      'tbldirecciones.municipio as municipio',
+                                      DB::raw("CASE WHEN tblUsuariosTienda.activo = 1 THEN 'Activo' ELSE 'Inactivo' END as activo")
+                                  )
+                                  ->leftJoin('tbldirecciones', 'tbldirecciones.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
+                                  ->whereIn('tblUsuariosTienda.activo', $status);
+
+        return $query->get();
     }
 }

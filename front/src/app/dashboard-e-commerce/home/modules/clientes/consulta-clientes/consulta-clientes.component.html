@@ -1,9 +1,9 @@
 <div class="pagetitle">
-    <h1>Consultar Pedidos</h1>
+    <h1>Consultar Clientes</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Pedidos</a></li>
-            <li class="breadcrumb-item active">Consulta de pedidos por status</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Clientes</a></li>
+            <li class="breadcrumb-item active">Consulta de clientes por status</li>
         </ol>
     </nav>
 </div>
@@ -14,18 +14,17 @@
             <div class="form-group drop-space col-sm-6 col-12">
                 <label for="dropDown" class="form-label t-bold">Status Pedidos(s) <b style="color: brown;">*</b>:</label><br>
                 <div class="btn-group group-dropdown-form" role="group">
-                    <app-dropdown [options]="statusPedidos" [font]="'statusPedidos'" (selectionChange)="cambioDeSeleccion($event)"></app-dropdown>
-                    <!--button class="btn btn-outline-primary" (click)="refreshStatusPedidos()"><i class="bi bi-arrow-repeat"></i></!--button-->
+                    <app-dropdown [options]="statusClientes" (selectionChange)="cambioDeSeleccion($event)"></app-dropdown>
                 </div>
             </div>
 
             <div class="botonera">
-                <button class="btn btn-primary t-bold" [disabled]="canGet()" (click)="obtenerPedidosPorStatus()">Consultar</button>
+                <button class="btn btn-primary t-bold" [disabled]="canGet()" (click)="obtenerClientesPorStatus()">Consultar</button>
                 <button class="btn btn-success t-bold" [disabled]="canExport()">Excel</button>
                 <button class="btn btn-danger t-bold" [disabled]="canClean()" (click)="limpiarTabla()">Limpiar</button>
             </div>
         </div>
     </div>
-    
-    <app-datatable [columnasTabla]="columnasPedidos" [datosTabla]="listaPedidosStatus" [tableConfig]="tableConfig"></app-datatable>
+
+    <app-datatable [columnasTabla]="columnasClientes" [datosTabla]="listaClientesStatus" [tableConfig]="tableConfig"></app-datatable>
 </div>

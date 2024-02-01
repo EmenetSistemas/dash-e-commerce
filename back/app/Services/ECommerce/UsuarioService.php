@@ -175,4 +175,19 @@ class UsuarioService
     public function obtenerCantidadUsuariosTienda(){
         return $this->usuarioRepository->obtenerCantidadUsuariosTienda();
     }
+
+    public function obtenerClientesPorStatus ($data) {
+        $clientes = $this->usuarioRepository->obtenerClientesPorStatus($data['status']);
+
+        return response()->json(
+            [
+                'data' => [
+                    'clientes' => $clientes
+                ],
+                'mensaje' => 'Se consultaron los Clientes por status seleccionados con éxito',
+                'status' => 200
+            ],
+            200
+        );
+    }
 }
