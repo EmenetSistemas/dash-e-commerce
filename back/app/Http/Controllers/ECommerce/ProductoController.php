@@ -78,9 +78,9 @@ class ProductoController extends Controller
         }
     }
 
-    public function obtenerNoItemsCarritoCompras ($token) {
+    public function obtenerNoItemsCarritoCompras (Request $request) {
         try{
-            return $this->productoService->obtenerNoItemsCarritoCompras($token);
+            return $this->productoService->obtenerNoItemsCarritoCompras($request->all()['token']);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
@@ -93,9 +93,9 @@ class ProductoController extends Controller
         }
     }
 
-    public function obtenerItemsCarritoCompras ($token) {
+    public function obtenerItemsCarritoCompras (Request $request) {
         try{
-            return $this->productoService->obtenerItemsCarritoCompras($token);
+            return $this->productoService->obtenerItemsCarritoCompras($request->all()['token']);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
@@ -123,9 +123,9 @@ class ProductoController extends Controller
         }
     }
 
-    public function vaciarCarrito ($token) {
+    public function vaciarCarrito (Request $request) {
         try{
-            return $this->productoService->vaciarCarrito($token);
+            return $this->productoService->vaciarCarrito($request->all()['token']);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
@@ -153,9 +153,9 @@ class ProductoController extends Controller
         }
     }
 
-    public function obtenerNoPedidos ($token) {
+    public function obtenerNoPedidos (Request $request) {
         try{
-            return $this->productoService->obtenerNoPedidos($token);
+            return $this->productoService->obtenerNoPedidos($request->all()['token']);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(
@@ -168,9 +168,9 @@ class ProductoController extends Controller
         }
     }
 
-    public function obtenerPedidos ($token) {
+    public function obtenerPedidos (Request $request) {
         try{
-            return $this->productoService->obtenerPedidos($token);
+            return $this->productoService->obtenerPedidos($request->all()['token']);
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(

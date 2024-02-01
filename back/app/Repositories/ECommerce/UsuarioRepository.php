@@ -6,6 +6,7 @@ use App\Models\TblDirecciones;
 use App\Models\TblMetodosPago;
 use App\Models\TblSesionesAdmin;
 use App\Models\TblUsuariosTienda;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -79,6 +80,8 @@ class UsuarioRepository
         $registro->municipio    = $datosUsuario['municipio'];
         $registro->estado       = $datosUsuario['estado'];
         $registro->cp           = $datosUsuario['cp'];
+        $registro->fechaAlta    = Carbon::now();
+        $registro->statusActual = 1;
         $registro->save();
     }
 
@@ -136,10 +139,10 @@ class UsuarioRepository
                                       $join->on('tblDirecciones.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
                                            ->where('tblDirecciones.statusActual', '=', 1);
                                   })
-                                  ->join('tblMetodosPago', function ($join) {
+                                  /*->join('tblMetodosPago', function ($join) {
                                         $join->on('tblMetodosPago.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
                                              ->where('tblMetodosPago.statusActual', '=', 1);
-                                  })
+                                  })*/
                                   ->where('tblUsuariosTienda.token', $token);
 
         return $query->get() ?? [];

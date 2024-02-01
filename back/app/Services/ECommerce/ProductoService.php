@@ -178,6 +178,7 @@ class ProductoService
     }
 
     public function agregarPedido ($pedido) {
+        $this->dashboardProductoService->actualizarProductos();
         $datosSesion = $this->usuarioRepository->obtenerDatosSesion($pedido['token']);
 
         DB::beginTransaction();
@@ -197,12 +198,13 @@ class ProductoService
 
             foreach ($pedido['productos'] as $producto) {
                 $dp = $this->dashboardProductoRepository->obtenerdetalleProducto($producto['id']);
-                if ($dp->cantidad >= $producto['cantidad']) {
+                
+                if ($dp[0]->stock >= $producto['cantidad']) {
                     $this->productoRepository->agregarDetallePedido($producto, $pkPedido);
                 } else {
                     return response()->json(
                         [
-                            'mensaje' => 'Al parecer el stock cambio para el producto "'.$dp->nombre.'", ahora solo contamos con '.$dp->cantidad.' disponibles',
+                            'mensaje' => 'Al parecer el stock cambio para el producto "'.$dp[0]->nombre.'", ahora solo contamos con '.$dp[0]->stock.' disponibles',
                             'error' => 204
                         ],
                         200

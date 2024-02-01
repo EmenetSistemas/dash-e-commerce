@@ -91,7 +91,7 @@ class ProductoRepository
                                   'tblProductos.calificacion as calificacion',
                                   'tblProductos.calificaciones as calificaciones',
                                   'tblProductos.descripcion as descripcion',
-                                  'tblProductos.stock as stock',
+                                  'tblProductos.stock as stock'
                              )
                              ->leftJoin('catApartados', 'catApartados.pkCatApartado', 'tblProductos.fkCatApartado')
                              ->leftJoin('catCategorias', 'catCategorias.pkCatCategoria', 'catApartados.fkCatCategoria')

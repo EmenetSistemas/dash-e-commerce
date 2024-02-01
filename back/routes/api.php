@@ -44,15 +44,15 @@ Route::post('/e-commerce/productos/obtenerDetalleProductosVenta', 'App\Http\Cont
 
 // carrito compras
 Route::post('/e-commerce/carritoCompras/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');
-Route::get('/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
-Route::get('/e-commerce/carritoCompras/obtenerItemsCarritoCompras/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
-Route::get('/e-commerce/carritoCompras/eliminarItemCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
-Route::get('/e-commerce/carritoCompras/vaciarCarrito/{token}', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');
+Route::post('/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoItemsCarritoCompras');
+Route::post('/e-commerce/carritoCompras/obtenerItemsCarritoCompras', 'App\Http\Controllers\ECommerce\ProductoController@obtenerItemsCarritoCompras');
+Route::post('/e-commerce/carritoCompras/eliminarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@eliminarItemCarrito');
+Route::post('/e-commerce/carritoCompras/vaciarCarrito', 'App\Http\Controllers\ECommerce\ProductoController@vaciarCarrito');
 
 // pedidos
 Route::post('/e-commerce/pedidos/agregarPedido', 'App\Http\Controllers\ECommerce\ProductoController@agregarPedido');
-Route::get('/e-commerce/pedidos/obtenerNoPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoPedidos');
-Route::get('/e-commerce/pedidos/obtenerPedidos/{token}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerPedidos');
+Route::post('/e-commerce/pedidos/obtenerNoPedidos', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNoPedidos');
+Route::post('/e-commerce/pedidos/obtenerPedidos', 'App\Http\Controllers\ECommerce\ProductoController@obtenerPedidos');
 Route::get('/e-commerce/pedidos/cancelarPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarPedido');
 Route::get('/e-commerce/pedidos/cancelarProductoPedido/{idPedido}/{idProducto}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarProductoPedido');
 Route::get('/e-commerce/pedidos/obtenerActualizacionesPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerActualizacionesPedido');
