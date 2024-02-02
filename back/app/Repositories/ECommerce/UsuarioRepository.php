@@ -136,7 +136,7 @@ class UsuarioRepository
     }
 
     public function obtenerDatosSesion ( $token ) {
-        $query = TblUsuariosTienda::join('tblDirecciones', function ($join) {
+        $query = TblUsuariosTienda::leftJoin('tblDirecciones', function ($join) {
                                       $join->on('tblDirecciones.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
                                            ->where('tblDirecciones.statusActual', '=', 1);
                                   })

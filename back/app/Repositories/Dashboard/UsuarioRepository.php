@@ -3,6 +3,7 @@
 namespace App\Repositories\Dashboard;
 
 use App\Models\TblSesionesAdmin;
+use App\Models\TblUsuariosTienda;
 
 class UsuarioRepository
 {
@@ -12,5 +13,15 @@ class UsuarioRepository
 							       ->where('tblSesionesAdmin.token', '=', $token);
 
         return $usuario->get();
+    }
+
+    public function obtenerDetalleCliente ($idUsuario) {
+        $query = TblUsuariosTienda::leftJoin('tblDirecciones', function ($join) {
+                                      $join->on('tblDirecciones.fkTblUsuario', 'tblUsuariosTienda.pkTblUsuarioTienda')
+                                           ->where('tblDirecciones.statusActual', '=', 1);
+                                  })
+                                  ->where('tblUsuariosTienda.pkTblUsuarioTienda', $idUsuario);
+
+        return $query->get();
     }
 }
