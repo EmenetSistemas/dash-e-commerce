@@ -1,0 +1,119 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Detalle Cliente</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Cliente</li>
+                <li class="breadcrumb-item active">Detalle</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body card-w-title">
+            <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist" style="margin-top: 10px;">
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Información personal</button>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">Detalle de domicilio</button>
+                </li>
+                <!--li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">Método de pago</button>
+                </!--li-->
+            </ul>
+            <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+                    <h5 class="card-title" align="center">Información personal</h5>
+                    <form autocomplete="off" class="row g-3" [formGroup]="formDatosPersonales">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <label for="nombre" class="form-label required">Nombre(s):</label>
+                            <input formControlName="nombre" type="text" placeholder="Nombre(s)" maxlength="50" class="form-control" id="nombre" (keypress)="soloLetras($event)">
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <label for="aPaterno" class="form-label required">Apellido Paterno:</label>
+                            <input formControlName="aPaterno" type="text" placeholder="Apellido Paterno" maxlength="50" class="form-control" id="aPaterno" (keypress)="soloLetras($event)">
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <label for="aMaterno" class="form-label">Apellido Materno:</label>
+                            <input formControlName="aMaterno" type="text" placeholder="Apellido Materno" maxlength="50" class="form-control" id="aMaterno" (keypress)="soloLetras($event)">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="telefono" class="form-label required">Teléfono:</label>
+                            <input formControlName="telefono" type="text" placeholder="Teléfono" maxlength="10" class="form-control" id="telefono" (keypress)="soloNumeros($event)">
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label for="correo" class="form-label required">Correo:</label>
+                            <input formControlName="correo" type="email" placeholder="Correo" maxlength="100" class="form-control" id="correo" (keypress)="soloTexto($event)">
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h5 class="card-title" align="center">Detalles de domicilio</h5>
+                    <form autocomplete="off" class="row g-3" [formGroup]="formDetalleDomicilio">
+                        <div class="col-lg-7 col-12">
+                            <label for="calle" class="form-label required">Calle:</label>
+                            <input formControlName="calle" type="text" placeholder="Calle" maxlength="200" class="form-control" id="calle" (keypress)="soloTexto($event)">
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <label for="noExterior" class="form-label required">No. Exterior:</label>
+                            <input formControlName="noExterior" type="text" placeholder="No. Exterior" maxlength="10" class="form-control" id="noExterior" (keypress)="soloTexto($event)">
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-12">
+                            <label for="cp" class="form-label required">CP:</label>
+                            <input formControlName="cp" type="text" placeholder="CP" maxlength="5" class="form-control" id="cp" (keypress)="soloNumeros($event)">
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <label for="localidad" class="form-label required">Localidad:</label>
+                            <input formControlName="localidad" type="text" placeholder="Localidad" maxlength="50" class="form-control" id="localidad" (keypress)="soloLetras($event)">
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <label for="municipio" class="form-label required">Municipio:</label>
+                            <input formControlName="municipio" type="text" placeholder="Municipio" maxlength="50" class="form-control" id="municipio" (keypress)="soloLetras($event)">
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <label for="estado" class="form-label required">Estado:</label>
+                            <input formControlName="estado" type="text" placeholder="Estado" maxlength="50" class="form-control" id="estado" (keypress)="soloLetras($event)">
+                        </div>
+                        <div class="col-12">
+                            <label for="referencias" class="form-label">Referencias:</label>
+                            <textarea formControlName="referencias" id="referencias" placeholder="Referencias" class="form-control" style="height: 65px;" (keypress)="soloTexto($event)"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <!--div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <h5 class="card-title" align="center">Método de pago</h5>
+                    <div *ngIf="this.usuario.metodoPago && this.usuario.metodoPago.noTarjeta == null" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Aunque por ahora puede ser un apartado opcional será requerido más a delante para futuras compras
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="col-12" *ngIf="this.usuario.metodoPago && this.usuario.metodoPago.noTarjeta == null">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" id="registroMetodoPago" class="form-check-input" (change)="this.registrarMetodoPago()">
+                            <label for="registroMetodoPago" class="form-check-label">Registrar ahora</label>
+                        </div>
+                    </div>
+                    <form autocomplete="off" class="row g-3" [formGroup]="formMetodoPago">
+                        <div class="col-lg-6 col-12">
+                            <label for="noTarjeta" class="form-label">No. Tarjeta:</label>
+                            <input formControlName="noTarjeta" type="text" placeholder="No. Tarjeta" maxlength="19" class="form-control" id="noTarjeta" (input)="obtenerFormatoYDatosTarjeta()" (keypress)="soloNumeros($event)">
+                        </div>
+                        <div class="col-lg-2 col-md-5 col-12">
+                            <label for="tipo" class="form-label">Tipo:</label>
+                            <input formControlName="tipo" type="text" placeholder="Tipo" class="form-control" id="tipo" readonly>
+                        </div>
+                        <div class="col-lg-4 col-md-7 col-12">
+                            <label for="emisor" class="form-label">Emisor:</label>
+                            <input formControlName="emisor" type="text" placeholder="Emisor" class="form-control" id="emisor" readonly>
+                        </div>
+                    </form>
+                </!--div-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="text-align: center;">
+    <button type="button" class="btn btn-danger" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

@@ -28,4 +28,8 @@ export class UsuariosService {
 	public obtenerPedidosPorStatus(arrStatus : any) : Observable<any> {
 		return this.http.post<any>(this.url + '/dashboard/usuarios/obtenerClientesPorStatus', arrStatus);
 	}
+
+	public obtenerDetalleCliente (idUsuario : number) : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/usuarios/obtenerDetalleCliente/'+idUsuario);
+	}
 }

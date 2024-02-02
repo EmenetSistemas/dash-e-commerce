@@ -32,7 +32,7 @@ export class ConsultaClientesComponent implements OnInit{
 
 	protected tableConfig : any = {
 		"pkTblUsuarioTienda" : {
-			"detailColumn" : true,
+			"updateColumn" : true,
 			"value" : "pkTblUsuarioTienda",
 			"idModal" : "detalleCliente"
 		},
