@@ -80,4 +80,16 @@ export class ProductosService {
 	public obtenerProductosAgregadosRecientes () : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/productos/obtenerProductosAgregadosRecientes');
 	}
+
+	public registrarCategoriaProducto (categoria : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/productos/registrarCategoriaProducto', categoria);
+	}
+
+	public obtenerCategoriasProductos () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerCategoriasProductos');
+	}
+
+	public actualizarCategoriaProducto (categoria : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/productos/actualizarCategoriaProducto', categoria);
+	}
 }

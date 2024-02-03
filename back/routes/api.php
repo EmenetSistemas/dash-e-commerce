@@ -18,6 +18,9 @@ Route::get('/dashboard/productos/obtenerdetalleProducto/{pkProducto}', 'App\Http
 Route::get('/dashboard/productos/obtenerCategoriasApartados', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasApartados');
 Route::post('/dashboard/productos/actualizarImagen', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
 Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dashboard\ProductoController@modificarProducto');
+Route::post('/dashboard/productos/registrarCategoriaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCategoriaProducto');
+Route::get('/dashboard/productos/obtenerCategoriasProductos', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasProductos');
+Route::post('/dashboard/productos/actualizarCategoriaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCategoriaProducto');
 
     //caracteristicas
     Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');

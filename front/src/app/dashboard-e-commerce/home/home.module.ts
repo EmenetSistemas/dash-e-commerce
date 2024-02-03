@@ -13,6 +13,7 @@ import { DropdownComponent } from "./components/dropdown/dropdown.component";
 import { DetallePedidoComponent } from "./modules/pedidos/detalle-pedido/detalle-pedido.component";
 import { ConsultaClientesComponent } from './modules/clientes/consulta-clientes/consulta-clientes.component';
 import { DetalleClienteComponent } from './modules/clientes/detalle-cliente/detalle-cliente.component';
+import { CatalogoCategoriasComponent } from './modules/catalogos/catalogo-categorias/catalogo-categorias.component';
 
 @NgModule({
     imports:[
@@ -31,7 +32,8 @@ import { DetalleClienteComponent } from './modules/clientes/detalle-cliente/deta
         DropdownComponent,
         DetallePedidoComponent,
         ConsultaClientesComponent,
-        DetalleClienteComponent
+        DetalleClienteComponent,
+        CatalogoCategoriasComponent
     ]
 })
 

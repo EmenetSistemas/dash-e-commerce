@@ -30,6 +30,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		'descripcion' 	: 'Descripción',
 		'actions' 		: 'Acciones'
 	};
+	
 	protected tableConfig : any = {
 		"actions" : {
 			"noFilter" : true,

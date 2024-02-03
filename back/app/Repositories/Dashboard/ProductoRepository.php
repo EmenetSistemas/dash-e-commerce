@@ -292,4 +292,31 @@ class ProductoRepository
 
         return $query->get();
     }
+
+    public function registrarCategoriaProducto ($categoria) {
+        $registro = new CatCategorias();
+        $registro->nombre      = $categoria['nombre'];
+        $registro->descripcion = $categoria['descripcion'] ?? null;
+        $registro->save();
+        return;
+    }
+
+    public function obtenerCategoriasProductos () {
+        return CatCategorias::get();
+    }
+
+    public function actualizarCategoriaProducto ($caracteristica) {
+        CatCategorias::where('pkCatCategoria', $caracteristica['id'])
+                     ->update([
+                         'nombre' => $caracteristica['nombre'],
+                         'descripcion' => $caracteristica['descripcion'] ?? null
+                     ]);
+        return;
+    }
+
+    public function eliminarCategoriaProducto ($pkCategoria) {
+        CatCategorias::where('pkCatCategoria', $pkCategoria)
+                     ->delete();
+        return;
+    }
 }

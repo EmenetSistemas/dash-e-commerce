@@ -272,4 +272,49 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function registrarCategoriaProducto (Request $request) {
+        try{
+            return $this->productoService->registrarCategoriaProducto( $request->all() );
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+    
+    public function obtenerCategoriasProductos () {
+        try{
+            return $this->productoService->obtenerCategoriasProductos();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+    
+    public function actualizarCategoriaProducto (Request $request) {
+        try{
+            return $this->productoService->actualizarCategoriaProducto( $request->all() );
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

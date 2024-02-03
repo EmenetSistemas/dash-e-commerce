@@ -1,0 +1,53 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Catálogo de categorías</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Productos</li>
+                <li class="breadcrumb-item active">Categorías</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body card-w-title">
+            <form class="row g-3" autocomplete="off" [formGroup]="formCategoria">
+                <div class="col-lg-4">
+                    <label for="nombreCategoria" class="form-label required">Nombre:</label>
+                    <input type="text" class="form-control" formControlName="nombreCategoria"
+                        id="nombreCategoria" placeholder="Nombre" (keypress)="soloTexto($event)" maxlength="255">
+                </div>
+                <div class="col-lg-6">
+                    <label for="descripcionCategoria" class="form-label">Descripción:</label>
+                    <textarea formControlName="descripcionCategoria" id="descripcionCategoria"
+                        placeholder="Descripción" class="form-control" rows="1"></textarea>
+                </div>
+                <div class="col-lg-2" *ngIf="!mostrarUpdate">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-primary form-control t-bold" (click)="registrarCategoriaProducto()"><i
+                            class="bi bi-plus-circle"></i></button>
+                </div>
+                <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-warning form-control t-bold"
+                        (click)="actualizarCategoriaProducto()"><i
+                            class="bi bi-arrow-clockwise"></i></button>
+                </div>
+                <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-danger form-control t-bold"
+                        (click)="ocultarModificacionCategoria()"><i class="bi bi-x-lg"></i></button>
+                </div>
+    
+                <app-datatable [columnasTabla]="columnasCategorias"
+                    [datosTabla]="listaCategorias"
+                    [tableConfig]="tableConfig"
+                    (actionSelected)="realizarAccion($event)"></app-datatable>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="text-align: center;">
+    <button type="button" class="btn btn-danger" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

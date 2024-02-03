@@ -98,6 +98,7 @@ class ProductoService
             200
         );
     }
+
     public function registrarCaracteristicaProducto ($caracteristica) {
         $this->productoRepository->registrarCaracteristicaProducto($caracteristica);
 
@@ -278,6 +279,42 @@ class ProductoService
                     'productosRecientes' => $productosRecientes
                 ],
                 'mensaje' => 'Se consultaron los productos agregados recientemente'
+            ],
+            200
+        );
+    }
+
+    public function registrarCategoriaProducto ($categoria) {
+        $this->productoRepository->registrarCategoriaProducto($categoria);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se agregó la categoría con éxito'
+            ],
+            200
+        );
+    }
+
+    public function obtenerCategoriasProductos () {
+        $categoriasProductos = $this->productoRepository->obtenerCategoriasProductos();
+
+        return response()->json(
+            [
+                'data' => [
+                    'categoriasProductos' => $categoriasProductos
+                ],
+                'mensaje' => 'Se consultaron los productos agregados recientemente'
+            ],
+            200
+        );
+    }
+
+    public function actualizarCategoriaProducto ($categoria) {
+        $this->productoRepository->actualizarCategoriaProducto($categoria);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó la categoría con éxito'
             ],
             200
         );
