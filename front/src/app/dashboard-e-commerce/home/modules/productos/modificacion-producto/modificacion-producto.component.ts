@@ -21,6 +21,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 	protected apartados : any = [];
 	protected categoriasApartados : any = [];
 	protected imagenSeleccionada: any = null;
+	private imagenBase64 : string = '';
 
 	protected mostrarUpdate : boolean = false;
 	private idCaracteristicaMod : number = 0;
@@ -149,7 +150,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		
 			reader.onloadend = () => {
 			  	const base64Image = reader.result as string;
-				this.formProducto.value.imagen = base64Image;
+				this.imagenBase64 = base64Image;
 			  	this.urlImagen(base64Image);
 			};
 
@@ -182,6 +183,7 @@ export class ModificacionProductoComponent extends FGenerico implements OnInit{
 		}
 
 		this.mensajes.mensajeEsperar();
+		this.formProducto.value.imagen = this.imagenBase64;
 		this.formProducto.value.pkProducto = this.idDetalle;
 
 		this.apiProductos.modificarProducto(this.formProducto.value).subscribe(
