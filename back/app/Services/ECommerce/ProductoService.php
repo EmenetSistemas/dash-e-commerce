@@ -316,33 +316,13 @@ class ProductoService
                 
                 if ($index != 'fechaEntregaEstimada') {
                     $diferenciaDias = $fecha->diffInDays($hoy);
-        
-                    if ($diferenciaDias === 0) {
-                        $fechas[$index] = $fecha->format('h:i A');
-                    } elseif ($diferenciaDias === 1) {
-                        $fechas[$index] = 'Ayer ' . $fecha->format('h:i A');
-                    } elseif ($diferenciaDias === 2) {
-                        $fechas[$index] = 'Antier ' . $fecha->format('h:i A');
-                    } else {
-                        $fechas[$index] = $fecha->format('d-m-Y');
-                    }
+                    $fechas[$index] = $this->fechasAnteriores($diferenciaDias, $fecha);
                 } else {
-                    $fecha = Carbon::parse($fecha->format('d-m-Y'));
-                    $hoy = Carbon::parse($hoy->format('d-m-Y'));
-                    if ( $fecha == $hoy ) {
-                        $fechas[$index] = 'Hoy entre 9:00 AM y 6:00 PM';
-                    } else if ($fecha > $hoy) {
-                        $diferenciaDias = $fecha->diffInDays($hoy);
-                        if ($diferenciaDias === 1) {
-                            $fechas[$index] = 'Mañana entre 9:00 AM y 6:00 PM';
-                        } elseif ($diferenciaDias === 2) {
-                            $fechas[$index] = 'Pasado mañana 9:00 AM y 6:00 PM';
-                        } else {
-                            $fechas[$index] = $fecha->format('d-m-Y');
-                        }
-                    } else {
+                    if ($fecha < $hoy) {
                         $fechas[$index] = null;
-                        $fechas['fechaRetrazo'] = $hoy->format('d-m-Y');
+                        $fechas['fechaRetrazo'] = $hoy->isWeekend() ? $this->fechasPosteriores($fecha->nextWeekday(), $hoy) : $this->fechasPosteriores($hoy, $hoy);
+                    } else {
+                        $fechas[$index] = $this->fechasPosteriores($fecha, $hoy);
                     }
                 }
             }
@@ -357,5 +337,37 @@ class ProductoService
             ],
             200
         );
+    }
+
+    private function fechasAnteriores ($diferenciaDias, $fecha) {
+        $fecha = Carbon::parse($fecha);
+        if ($diferenciaDias === 0) {
+            return 'Hoy ' . $fecha->format('h:i A');
+        } elseif ($diferenciaDias === 1) {
+            return 'Ayer ' . $fecha->format('h:i A');
+        } elseif ($diferenciaDias === 2) {
+            return 'Antier ' . $fecha->format('h:i A');
+        } else {
+            return $fecha->format('d-m-Y');
+        }
+    }
+
+    private function fechasPosteriores ($fecha, $hoy) {
+        $fecha = Carbon::parse(Carbon::parse($fecha)->format('d-m-Y'));
+        $hoy = Carbon::parse(Carbon::parse($hoy)->format('d-m-Y'));
+
+        $diferenciaDias = $fecha->diffInDays($hoy);
+
+        if ($diferenciaDias === 0) {
+            return 'Hoy entre 9:00 AM y 6:00 PM';
+        } else if ($fecha > $hoy) {
+            if ($diferenciaDias === 1) {
+                return 'Mañana entre 9:00 AM y 6:00 PM';
+            } elseif ($diferenciaDias === 2) {
+                return 'Pasado mañana 9:00 AM y 6:00 PM';
+            } else {
+                return $fecha->format('d-m-Y');
+            }
+        }
     }
 }
