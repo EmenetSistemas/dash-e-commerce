@@ -82,8 +82,8 @@ export class CatalogoCategoriasComponent extends FGenerico implements OnInit{
 			return;
 		}
 
-		const validaCaract = this.listaCategorias.filter(caract => caract.nombre.replace(/\s+/g, '').toLowerCase() == nombre.replace(/\s+/g, '').toLowerCase());
-		if (validaCaract.length > 0) {
+		const validaCategoria = this.listaCategorias.filter(caract => caract.nombre.replace(/\s+/g, '').toLowerCase() == nombre.replace(/\s+/g, '').toLowerCase());
+		if (validaCategoria.length > 0) {
 			this.limpiarForm();
 			this.mensajes.mensajeGenerico('Al parecer ya existe una categoría con el mismo nombre, se debe ocupar uno diferente', 'warning', 'Categoría existente');
 			return;
@@ -91,12 +91,12 @@ export class CatalogoCategoriasComponent extends FGenerico implements OnInit{
 		
 		this.mensajes.mensajeEsperar();
 
-		const caracteristica = {
+		const categoria = {
 			nombre : nombre,
 			descripcion : descripcion
 		};
 
-		this.apiProductos.registrarCategoriaProducto(caracteristica).subscribe(
+		this.apiProductos.registrarCategoriaProducto(categoria).subscribe(
 			respuesta => {
 				this.obtenerCategoriasProductos().then(() => {
 					this.limpiarForm();
@@ -118,8 +118,8 @@ export class CatalogoCategoriasComponent extends FGenerico implements OnInit{
 			return;
 		}
 
-		const validaCaract = this.listaCategorias.filter(caract => caract.nombre.replace(/\s+/g, '').toLowerCase() == nombre.replace(/\s+/g, '').toLowerCase() && caract.pkCatCategoria != this.idCaracteristicaMod);
-		if (validaCaract.length > 0) {
+		const validaCategoria = this.listaCategorias.filter(categoria => categoria.nombre.replace(/\s+/g, '').toLowerCase() == nombre.replace(/\s+/g, '').toLowerCase() && categoria.pkCatCategoria != this.idCaracteristicaMod);
+		if (validaCategoria.length > 0) {
 			this.mensajes.mensajeGenerico('Al parecer ya existe una categoría con el mismo nombre, se debe ocupar uno diferente', 'warning', 'Categoría existente');
 			return;
 		}
@@ -128,13 +128,13 @@ export class CatalogoCategoriasComponent extends FGenerico implements OnInit{
 			respuesta => {
 				if (respuesta.isConfirmed) {
 					this.mensajes.mensajeEsperar();
-					const caracteristicaUpdate = {
+					const categoria = {
 						id : this.idCaracteristicaMod,
 						nombre : nombre,
 						descripcion : descripcion
 					};
 
-					this.apiProductos.actualizarCategoriaProducto(caracteristicaUpdate).subscribe(
+					this.apiProductos.actualizarCategoriaProducto(categoria).subscribe(
 						respuesta => {
 							this.obtenerCategoriasProductos().then(() => {
 								this.ocultarModificacionCategoria();

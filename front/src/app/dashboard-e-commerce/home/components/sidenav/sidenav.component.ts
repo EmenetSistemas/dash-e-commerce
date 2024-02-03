@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/services/modal/modal.service';
 import { CatalogoCategoriasComponent } from '../../modules/catalogos/catalogo-categorias/catalogo-categorias.component';
+import { CatalogoApartadosComponent } from '../../modules/catalogos/catalogo-apartados/catalogo-apartados.component';
 
 @Component({
 	selector: 'app-sidenav',
@@ -20,6 +21,9 @@ export class SidenavComponent implements OnInit{
 		switch (modal) {
 			case 'catalogoCategorias':
 				this.modalService.abrirModalConComponente(CatalogoCategoriasComponent);
+			break;
+			case 'catalogoApartados':
+				this.modalService.abrirModalConComponente(CatalogoApartadosComponent);
 			break;
 		}
 	}

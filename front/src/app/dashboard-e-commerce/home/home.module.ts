@@ -14,6 +14,7 @@ import { DetallePedidoComponent } from "./modules/pedidos/detalle-pedido/detalle
 import { ConsultaClientesComponent } from './modules/clientes/consulta-clientes/consulta-clientes.component';
 import { DetalleClienteComponent } from './modules/clientes/detalle-cliente/detalle-cliente.component';
 import { CatalogoCategoriasComponent } from './modules/catalogos/catalogo-categorias/catalogo-categorias.component';
+import { CatalogoApartadosComponent } from './modules/catalogos/catalogo-apartados/catalogo-apartados.component';
 
 @NgModule({
     imports:[
@@ -33,7 +34,8 @@ import { CatalogoCategoriasComponent } from './modules/catalogos/catalogo-catego
         DetallePedidoComponent,
         ConsultaClientesComponent,
         DetalleClienteComponent,
-        CatalogoCategoriasComponent
+        CatalogoCategoriasComponent,
+        CatalogoApartadosComponent
     ]
 })
 

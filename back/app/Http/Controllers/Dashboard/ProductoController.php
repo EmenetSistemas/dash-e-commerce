@@ -317,4 +317,49 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function registrarApartadpProducto (Request $request) {
+        try{
+            return $this->productoService->registrarApartadpProducto( $request->all() );
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+    
+    public function obtenerApartadosProductos () {
+        try{
+            return $this->productoService->obtenerApartadosProductos();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+    
+    public function actualizarApartadoProducto (Request $request) {
+        try{
+            return $this->productoService->actualizarApartadoProducto( $request->all() );
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

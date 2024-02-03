@@ -21,6 +21,9 @@ Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dash
 Route::post('/dashboard/productos/registrarCategoriaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCategoriaProducto');
 Route::get('/dashboard/productos/obtenerCategoriasProductos', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCategoriasProductos');
 Route::post('/dashboard/productos/actualizarCategoriaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCategoriaProducto');
+Route::post('/dashboard/productos/registrarApartadpProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarApartadpProducto');
+Route::get('/dashboard/productos/obtenerApartadosProductos', 'App\Http\Controllers\Dashboard\ProductoController@obtenerApartadosProductos');
+Route::post('/dashboard/productos/actualizarApartadoProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarApartadoProducto');
 
     //caracteristicas
     Route::post('/dashboard/productos/registrarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarCaracteristicaProducto');

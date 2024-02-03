@@ -303,7 +303,7 @@ class ProductoService
                 'data' => [
                     'categoriasProductos' => $categoriasProductos
                 ],
-                'mensaje' => 'Se consultaron los productos agregados recientemente'
+                'mensaje' => 'Se consultaron las categorías con éxito'
             ],
             200
         );
@@ -315,6 +315,42 @@ class ProductoService
         return response()->json(
             [
                 'mensaje' => 'Se actualizó la categoría con éxito'
+            ],
+            200
+        );
+    }
+
+    public function registrarApartadpProducto ($apartado) {
+        $this->productoRepository->registrarApartadpProducto($apartado);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se agregó el apartado con éxito'
+            ],
+            200
+        );
+    }
+
+    public function obtenerApartadosProductos () {
+        $apartadosProductos = $this->productoRepository->obtenerApartadosProductos();
+
+        return response()->json(
+            [
+                'data' => [
+                    'apartadosProductos' => $apartadosProductos
+                ],
+                'mensaje' => 'Se consultaron los apartados con éxito'
+            ],
+            200
+        );
+    }
+
+    public function actualizarApartadoProducto ($apartado) {
+        $this->productoRepository->actualizarApartadoProducto($apartado);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se actualizó el apartado con éxito'
             ],
             200
         );

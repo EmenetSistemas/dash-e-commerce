@@ -314,9 +314,35 @@ class ProductoRepository
         return;
     }
 
-    public function eliminarCategoriaProducto ($pkCategoria) {
-        CatCategorias::where('pkCatCategoria', $pkCategoria)
-                     ->delete();
+    public function registrarApartadpProducto ($apartado) {
+        $registro = new CatApartados();
+        $registro->nombre         = $apartado['nombre'];
+        $registro->descripcion    = $apartado['descripcion'] ?? null;
+        $registro->fkCatCategoria = $apartado['categoria'];
+        $registro->save();
+        return;
+    }
+
+    public function obtenerApartadosProductos () {
+        $query = CatApartados::select(
+                                 'catApartados.pkCatApartado as pkCatApartado',
+                                 'catApartados.nombre as nombre',
+                                 'catApartados.descripcion as descripcion',
+                                 'catCategorias.nombre as nombreCategoria',
+                                 'catCategorias.pkCatCategoria as pkCatCategoria'
+                             )
+                             ->leftJoin('catCategorias', 'catCategorias.pkCatCategoria', 'catApartados.fkCatCategoria');
+
+        return $query->get();
+    }
+
+    public function actualizarApartadoProducto ($caracteristica) {
+        CatApartados::where('pkCatApartado', $caracteristica['id'])
+                    ->update([
+                        'nombre' => $caracteristica['nombre'],
+                        'descripcion' => $caracteristica['descripcion'] ?? null,
+                        'fkCatCategoria' => $caracteristica['apartado']
+                    ]);
         return;
     }
 }
