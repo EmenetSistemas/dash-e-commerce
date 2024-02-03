@@ -244,4 +244,42 @@ class ProductoService
             200
         );
     }
+
+    public function obtenerCantidadPedidosPendientes () {
+        return $this->productoRepository->obtenerCantidadPedidosStatus(1);
+    }
+
+    public function obtenerTotalesDashboard () {
+        $pedidosEntregados = $this->productoRepository->obtenerCantidadPedidosStatus(3);
+        $productosVendidos = $this->productoRepository->obtenerProductosVendidos();
+        $articulosVendidos = $this->productoRepository->obtenerArticulosVendidos();
+        $totalGanancias    = $this->productoRepository->obtenerTotalGananciasVentas();
+
+        return response()->json(
+            [
+                'data' => [
+                    'pedidosEntregados' => $pedidosEntregados,
+                    'productosVendidos' => $productosVendidos,
+                    'articulosVendidos' => $articulosVendidos,
+                    'totalGanancias'    => $totalGanancias
+                ],
+                'mensaje' => 'Se consultaron los totales con éxito'
+            ],
+            200
+        );
+    }
+
+    public function obtenerProductosAgregadosRecientes () {
+        $productosRecientes = $this->productoRepository->obtenerProductosAgregadosRecientes();
+
+        return response()->json(
+            [
+                'data' => [
+                    'productosRecientes' => $productosRecientes
+                ],
+                'mensaje' => 'Se consultaron los productos agregados recientemente'
+            ],
+            200
+        );
+    }
 }

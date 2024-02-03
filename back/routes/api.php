@@ -24,6 +24,7 @@ Route::post('/dashboard/productos/modificarProducto', 'App\Http\Controllers\Dash
     Route::get('/dashboard/productos/obtenerCaracteristicasProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCaracteristicasProducto');
     Route::post('/dashboard/productos/actualizarCaracteristicaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCaracteristicaProducto');
     Route::get('/dashboard/productos/eliminarCaracteristicaProducto/{pkProducto}', 'App\Http\Controllers\Dashboard\ProductoController@eliminarCaracteristicaProducto');
+    Route::get('/dashboard/productos/obtenerProductosAgregadosRecientes', 'App\Http\Controllers\Dashboard\ProductoController@obtenerProductosAgregadosRecientes');
 
 //pedidos dash
 Route::get('/dashboard/pedidos/obtenerStatusPedidosSelect', 'App\Http\Controllers\Dashboard\ProductoController@obtenerStatusPedidosSelect');
@@ -32,6 +33,8 @@ Route::get('/dashboard/pedidos/obtenerDetallePedido/{idPedido}', 'App\Http\Contr
 Route::get('/dashboard/pedidos/enviarPedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@enviarPedido');
 Route::get('/dashboard/pedidos/entregarPedido/{idPedido}', 'App\Http\Controllers\Dashboard\ProductoController@entregarPedido');
 Route::post('/dashboard/pedidos/actualizarFechaEstimadaEntrega', 'App\Http\Controllers\Dashboard\ProductoController@actualizarFechaEstimadaEntrega');
+Route::get('/dashboard/pedidos/obtenerCantidadPedidosPendientes', 'App\Http\Controllers\Dashboard\ProductoController@obtenerCantidadPedidosPendientes');
+Route::get('/dashboard/pedidos/obtenerTotalesDashboard', 'App\Http\Controllers\Dashboard\ProductoController@obtenerTotalesDashboard');
 
 // rutas e-commerce
 Route::post('/usuarios/obtenerDatosSesion', 'App\Http\Controllers\ECommerce\UsuarioController@obtenerDatosSesion');

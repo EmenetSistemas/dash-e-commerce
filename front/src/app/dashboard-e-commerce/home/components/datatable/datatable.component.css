@@ -78,10 +78,6 @@ thead {
     text-align: center;
 }
 
-.card {
-    margin-bottom: -20px !important;
-}
-
 .warning {
     background-color: wheat;
 }

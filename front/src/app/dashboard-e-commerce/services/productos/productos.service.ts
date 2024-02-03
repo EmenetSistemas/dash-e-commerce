@@ -68,4 +68,16 @@ export class ProductosService {
 	public actualizarFechaEstimadaEntrega (data : any) : Observable<any> {
 		return this.http.post<any>(this.url + '/dashboard/pedidos/actualizarFechaEstimadaEntrega', data);
 	}
+
+	public obtenerCantidadPedidosPendientes () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/pedidos/obtenerCantidadPedidosPendientes');
+	}
+
+	public obtenerTotalesDashboard () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/pedidos/obtenerTotalesDashboard');
+	}
+
+	public obtenerProductosAgregadosRecientes () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerProductosAgregadosRecientes');
+	}
 }

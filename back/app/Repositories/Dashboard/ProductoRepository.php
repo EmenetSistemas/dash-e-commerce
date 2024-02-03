@@ -18,7 +18,11 @@ class ProductoRepository
     public function obtenerProductosServidor () {
         $url = 'http://45.174.108.252:8085/api/obtenerProductos';
 
-        $response = Http::get($url);
+        $token = [
+            "token" => env('STRIPE_SECRET')
+        ];
+
+        $response = Http::post($url, $token);
         $data = $response->json();
         return $data;
     }
@@ -28,7 +32,8 @@ class ProductoRepository
         $query->update([
                   'descripcion'   => $producto['descripcion'],
                   'precio'        => $producto['precio'],
-                  'stock'         => $producto['stock']
+                  'stock'         => $producto['stock'],
+                  'fechaAlta'     => Carbon::now()
               ]);
 
         return $query->select('pkTblProducto')->count();
@@ -233,5 +238,58 @@ class ProductoRepository
                   ->update([
                       'fechaEntregaEstimada' => Carbon::parse($data['fechaEntregaEstimada'])
                   ]);
+    }
+
+    public function obtenerCantidadPedidosStatus ($status) {
+        $query = TblPedidos::where('fkStatus', $status);
+
+        return $query->count();
+    }
+
+    public function obtenerProductosVendidos () {
+        $query = TblProductos::selectRaw("COUNT(DISTINCT tblproductos.pkTblProducto) AS totalProductosDiferentes")
+                             ->join('tbldetallepedido', 'tbldetallepedido.fkTblProducto', '=', 'tblproductos.pkTblProducto');
+
+        return $query->get()[0]->totalProductosDiferentes ?? 0;
+    }
+
+    public function obtenerArticulosVendidos () {
+        $query = TblProductos::selectRaw("SUM(tbldetallepedido.cantidad) as totalCantidad")
+                             ->join('tbldetallepedido', 'tbldetallepedido.fkTblProducto', '=', 'tblproductos.pkTblProducto');
+
+        return $query->get()[0]->totalCantidad ?? 0;
+    }
+
+    public function obtenerTotalGananciasVentas () {
+        $query = TblProductos::selectRaw("sum((precio - (precio*IFNULL(descuento, 0))) * cantidad) as total")
+                             ->join('tbldetallepedido', 'tbldetallepedido.fkTblProducto', '=', 'tblproductos.pkTblProducto');
+                            
+        return $query->get()[0]->total ?? 0;
+    }
+
+    public function obtenerProductosAgregadosRecientes () {
+        $query = TblProductos::select(
+                                 'tblProductos.pkTblProducto as id',
+                                 'tblProductos.identificador_mbp as identificador_mbp',
+                                 'tblProductos.nombre as nombre',
+                                 'tblProductos.imagen as imagen',
+                                 'tblProductos.precio as precio',
+                                 'tblProductos.descuento as descuento',
+                                 'catCategorias.nombre as categoria',
+                                 'catCategorias.pkCatCategoria as idCategoria',
+                                 'catApartados.nombre as apartado',
+                                 'catApartados.pkCatApartado as idApartado',
+                                 'tblProductos.calificacion as calificacion',
+                                 'tblProductos.calificaciones as calificaciones',
+                                 'tblProductos.descripcion as descripcion',
+                                 'tblProductos.stock as stock',
+                             )
+                             ->leftJoin('catApartados', 'catApartados.pkCatApartado', 'tblProductos.fkCatApartado')
+                             ->leftJoin('catCategorias', 'catCategorias.pkCatCategoria', 'catApartados.fkCatCategoria')
+                             ->whereNotNull('tblProductos.nombre')
+                             ->orderBy('tblProductos.fechaAlta', 'desc')
+                             ->take(10);
+
+        return $query->get();
     }
 }

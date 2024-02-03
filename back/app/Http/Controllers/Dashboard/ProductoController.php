@@ -227,4 +227,49 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerCantidadPedidosPendientes () {
+        try{
+            return $this->productoService->obtenerCantidadPedidosPendientes();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerTotalesDashboard () {
+        try{
+            return $this->productoService->obtenerTotalesDashboard();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerProductosAgregadosRecientes () {
+        try{
+            return $this->productoService->obtenerProductosAgregadosRecientes();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

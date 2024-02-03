@@ -23,6 +23,7 @@ class TblProductos extends Model
         'calificacion',
         'calificaciones',
         'descripcion',
-        'stock'
+        'stock',
+        'fechaAlta'
     ];
 }

@@ -9,23 +9,53 @@ import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 	styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-	protected cantidadProductosPendientes : number = 0;
-	protected cantidadProductosTienda : number = 0;
-	protected cantidadUsuariosTienda : number = 0;
+	protected columnasProductosTienda = {
+		'id': '#',
+		'nombre': 'Producto',
+		'apartado': 'Apartado',
+		'categoria': 'Categoría',
+		'precio': 'Precio',
+		'stock': 'Stock'
+	};
+
+	protected tableConfig = {
+		"precio": {
+			"moneyColumn": true,
+			"style": {
+				"font-weight": "bold"
+			}
+		},
+		"apartado": {
+			"selectColumn": true,
+			"selectOptions": []
+		},
+		"categoria": {
+			"selectColumn": true,
+			"selectOptions": []
+		}
+	};
+
+	protected listaProductosRecientes: any[] = [];
+
+	protected cantidadProductosPendientes : string = '';
+	protected cantidadUsuariosTienda : string = '';
+	protected cantidadPedidosPendientes : string = '';
+	protected totalesVentas : any = {};
+	protected cantidadProductosTienda : string = '';
 
 	constructor(
 		private mensajes : MensajesService,
 		private apiProductos : ProductosService,
 		private apiUsuarios : UsuariosService
 	) { }
-	async ngOnInit(): Promise<any> {
-		this.mensajes.mensajeEsperar();
-		await Promise.all([
-			this.obtenerCantidadProductos('cantidadPendientes'),
-			this.obtenerCantidadProductos('cantidadTienda'),
-			this.obtenerCantidadUsuariosTienda()
-		]);
-		this.mensajes.cerrarMensajes();
+	ngOnInit(): void {
+		this.obtenerCategoriasApartados();
+		this.obtenerProductosAgregadosRecientes();
+		this.obtenerCantidadProductos('cantidadPendientes');
+		this.obtenerCantidadUsuariosTienda();
+		this.obtenerCantidadPedidosPendientes();
+		this.obtenerTotalesDashboard();
+		this.obtenerCantidadProductos('cantidadTienda');
 	}
 
 	private obtenerCantidadProductos (section : string) : Promise<any> {
@@ -46,6 +76,48 @@ export class InicioComponent implements OnInit {
 		return this.apiUsuarios.obtenerCantidadUsuariosTienda().toPromise().then(
 			respuesta => {
 				this.cantidadUsuariosTienda = respuesta;
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
+	}
+
+	private obtenerCantidadPedidosPendientes () : Promise<any> {
+		return this.apiProductos.obtenerCantidadPedidosPendientes().toPromise().then(
+			respuesta => {
+				this.cantidadPedidosPendientes = respuesta;
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
+	}
+
+	private obtenerTotalesDashboard () : Promise<any> {
+		return this.apiProductos.obtenerTotalesDashboard().toPromise().then(
+			respuesta => {
+				this.totalesVentas = respuesta.data;
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
+	}
+
+	private obtenerCategoriasApartados (): Promise<any> {
+		return this.apiProductos.obtenerCategoriasApartados().toPromise().then(
+			respuesta => {
+				const data = respuesta.data.categoriasApartados;
+				this.tableConfig.apartado.selectOptions = data.flatMap((categoria: any) => categoria.apartados.map((apartado: any) => apartado.nombre));
+				this.tableConfig.categoria.selectOptions = data.map((categoria: any) => categoria.nombre);
+			}, error => {
+				this.mensajes.mensajeGenerico('error', 'error');
+			}
+		);
+	}
+
+	private obtenerProductosAgregadosRecientes () : Promise<any> {
+		return this.apiProductos.obtenerProductosAgregadosRecientes().toPromise().then(
+			respuesta => {
+				this.listaProductosRecientes = respuesta.data.productosRecientes;
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}
