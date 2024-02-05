@@ -15,6 +15,7 @@ import { ConsultaClientesComponent } from './modules/clientes/consulta-clientes/
 import { DetalleClienteComponent } from './modules/clientes/detalle-cliente/detalle-cliente.component';
 import { CatalogoCategoriasComponent } from './modules/catalogos/catalogo-categorias/catalogo-categorias.component';
 import { CatalogoApartadosComponent } from './modules/catalogos/catalogo-apartados/catalogo-apartados.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     imports:[

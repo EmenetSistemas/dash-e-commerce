@@ -12,6 +12,7 @@ import { NavbarComponent } from './dashboard-e-commerce/home/components/navbar/n
 import { HomeModule } from './dashboard-e-commerce/home/home.module';
 import { SidenavComponent } from './dashboard-e-commerce/home/components/sidenav/sidenav.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FooterComponent } from './dashboard-e-commerce/home/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     LoginComponent,
     HomeComponent,
     NavbarComponent,
-    SidenavComponent
+    SidenavComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
