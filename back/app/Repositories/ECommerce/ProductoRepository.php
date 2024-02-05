@@ -175,4 +175,29 @@ class ProductoRepository
 
         return (array)json_decode(json_encode($query->get()[0] ?? []));
     }
+
+    public function obtenerNombresProductosTienda () {
+        $query = TblProductos::select('nombre')
+                             ->whereNotNull('nombre');
+
+        return $query->get();
+    }
+
+    public function obtenerProductosBusqueda ($producto, $palabras) {
+        $query = TblProductos::select(
+                                 'pkTblProducto as id',
+                                 'nombre as nombre',
+                                 'precio as precio',
+                                 'descuento as descuento',
+                                 'imagen as imagen'
+                             )
+                             ->where('nombre', $producto)
+                             ->orWhere('nombre', 'like', '%'.$producto.'%');
+                             
+        foreach ($palabras as $palabra) {
+            $query->orWhere('nombre', 'like', '%'.$palabra.'%');
+        }
+
+        return $query->get();
+    }
 }

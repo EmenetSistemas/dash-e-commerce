@@ -227,4 +227,34 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerNombresProductosTienda () {
+        try{
+            return $this->productoService->obtenerNombresProductosTienda();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function obtenerProductosBusqueda (Request $request) {
+        try{
+            return $this->productoService->obtenerProductosBusqueda($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

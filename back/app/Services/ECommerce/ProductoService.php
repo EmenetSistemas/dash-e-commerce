@@ -370,4 +370,74 @@ class ProductoService
             }
         }
     }
+
+    public function obtenerNombresProductosTienda () {
+        $nombres = $this->productoRepository->obtenerNombresProductosTienda();
+        $datos = json_decode($nombres, true);
+    
+        $nombresProductos = [];
+        foreach ($datos as $elemento) {
+            if (isset($elemento['nombre'])) {
+                $nombresProductos[] = $elemento['nombre'];
+            }
+        }
+
+        return response()->json(
+            [
+                'data' => [
+                    'nombresProductos' => $nombresProductos
+                ],
+                'mensaje' => 'Se consultarón los nombres de productos en tienda con éxito',
+            ],
+            200
+        );
+    }
+
+    public function obtenerProductosBusqueda ($data) {
+        $palabras = $this->obtenerPalabrasTitulo($data['producto']);
+        $productos = $this->productoRepository->obtenerProductosBusqueda($data['producto'], $palabras);
+
+        return response()->json(
+            [
+                'data' => [
+                    'productos' => $productos
+                ],
+                'mensaje' => 'Se consultarón los nombres de productos en tienda con éxito',
+            ],
+            200
+        );
+    }
+    
+    function obtenerPalabrasTitulo($titulo) {
+        $palabras = str_word_count($titulo, 1);
+    
+        $palabrasUnicas = [];
+        foreach ($palabras as $palabra) {
+            if (strlen($palabra) > 2) {
+                if ($this->esPlural($palabra)) {
+                    $formaSingular = $this->obtenerFormaSingular($palabra);
+                    $palabrasUnicas[] = $formaSingular ?: strtolower($palabra);
+                } else {
+                    $palabrasUnicas[] = strtolower($palabra);
+                }
+            }
+        }
+    
+        return $palabrasUnicas;
+    }
+    
+    function esPlural($palabra) {
+        $terminacion = 's';
+    
+        if (substr($palabra, -strlen($terminacion)) === $terminacion) {
+            return true;
+        }
+    
+        return false;
+    }
+    
+    function obtenerFormaSingular($palabraPlural) {
+        return rtrim($palabraPlural, 's');
+    }
+    
 }
