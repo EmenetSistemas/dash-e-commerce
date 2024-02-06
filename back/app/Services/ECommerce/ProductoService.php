@@ -395,12 +395,16 @@ class ProductoService
 
     public function obtenerProductosBusqueda ($data) {
         $palabras = $this->obtenerPalabrasTitulo($data['producto']);
-        $productos = $this->productoRepository->obtenerProductosBusqueda($data['producto'], $palabras);
+        $productoExacto = $this->productoRepository->obtenerProductosBusquedaInput($data['producto']);
+        $busquedaFonetica = $this->productoRepository->obtenerProductosBusquedaFonetica($data['producto'], $palabras);
+
+        $productos = array_merge($productoExacto, $busquedaFonetica);
+        $productosUnicos = array_unique($productos, SORT_REGULAR);
 
         return response()->json(
             [
                 'data' => [
-                    'productos' => $productos
+                    'productos' => array_merge([], $productosUnicos)
                 ],
                 'mensaje' => 'Se consultarón los nombres de productos en tienda con éxito',
             ],
@@ -427,17 +431,18 @@ class ProductoService
     }
     
     function esPlural($palabra) {
-        $terminacion = 's';
+        $terminacionesPlural = ['s', 'es'];
     
-        if (substr($palabra, -strlen($terminacion)) === $terminacion) {
-            return true;
+        foreach ($terminacionesPlural as $terminacion) {
+            if (substr($palabra, -strlen($terminacion)) === $terminacion) {
+                return true;
+            }
         }
     
         return false;
     }
     
     function obtenerFormaSingular($palabraPlural) {
-        return rtrim($palabraPlural, 's');
+        return rtrim($palabraPlural, 'es');
     }
-    
 }

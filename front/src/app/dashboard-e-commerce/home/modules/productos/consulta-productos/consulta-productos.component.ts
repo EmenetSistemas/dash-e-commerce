@@ -74,6 +74,7 @@ export class ConsultaProductosComponent {
 		this.dataService.realizarClickConsultaPorductos.subscribe(() => {
 			this.obtenerProductosFunction().then(() => {
 				this.mensajes.mensajeGenerico('Se actualizó con éxito, ahora el producto se puede visualizar en tienda en línea y en el apartado de productos en tienda', 'success', 'Producto en tienda');
+				return;
 			});
 		});
 	}
@@ -112,6 +113,7 @@ export class ConsultaProductosComponent {
 		return this.apiProductos.obtenerProductos(this.datosMostrar).toPromise().then(
 			respuesta => {
 				this.listaProductos = respuesta.data.productos;
+				return;
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}

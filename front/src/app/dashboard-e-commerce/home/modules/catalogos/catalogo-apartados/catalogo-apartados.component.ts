@@ -36,7 +36,7 @@ export class CatalogoApartadosComponent extends FGenerico implements OnInit{
 					"bg" : 'warning'
 				}
 			],
-			"value" : "pkCatCategoria"
+			"value" : "pkCatApartado"
 		}
 	};
 
@@ -180,7 +180,7 @@ export class CatalogoApartadosComponent extends FGenerico implements OnInit{
 		switch (data.action) {
 			case 'update':
 				this.idCaracteristicaMod = data.idAccion;
-				const dataActualizar = this.listaApartados.find(categoria => categoria.pkCatCategoria == data.idAccion);
+				const dataActualizar = this.listaApartados.find(categoria => categoria.pkCatApartado == data.idAccion);
 				this.mostrarUpdate = true;
 				this.formApartado.get('nombreApartado')?.setValue(dataActualizar.nombre);
 				this.formApartado.get('descripcionApartado')?.setValue(dataActualizar.descripcion);

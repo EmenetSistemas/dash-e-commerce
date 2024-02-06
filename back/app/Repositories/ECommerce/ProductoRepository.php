@@ -183,7 +183,7 @@ class ProductoRepository
         return $query->get();
     }
 
-    public function obtenerProductosBusqueda ($producto, $palabras) {
+    public function obtenerProductosBusquedaInput ($producto) {
         $query = TblProductos::select(
                                  'pkTblProducto as id',
                                  'nombre as nombre',
@@ -193,11 +193,23 @@ class ProductoRepository
                              )
                              ->where('nombre', $producto)
                              ->orWhere('nombre', 'like', '%'.$producto.'%');
+
+        return (array)json_decode(json_encode($query->get()));
+    }
+
+    public function obtenerProductosBusquedaFonetica ($producto, $palabras) {
+        $query = TblProductos::select(
+                                 'pkTblProducto as id',
+                                 'nombre as nombre',
+                                 'precio as precio',
+                                 'descuento as descuento',
+                                 'imagen as imagen'
+                             );
                              
         foreach ($palabras as $palabra) {
             $query->orWhere('nombre', 'like', '%'.$palabra.'%');
         }
 
-        return $query->get();
+        return (array)json_decode(json_encode($query->get()));
     }
 }
