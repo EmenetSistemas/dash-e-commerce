@@ -312,17 +312,18 @@ class ProductoService
         $hoy = Carbon::now();
         foreach ($fechas as $index => $fecha) {
             if ($fecha != null && $index != 'fkStatus') {
-                $fecha = Carbon::parse($fecha);
+                $fechaReg = Carbon::parse($fecha);
+                $fechaComp = Carbon::parse(Carbon::parse($fecha)->format('d-m-Y'));
                 
                 if ($index != 'fechaEntregaEstimada') {
-                    $diferenciaDias = $fecha->diffInDays($hoy);
-                    $fechas[$index] = $this->fechasAnteriores($diferenciaDias, $fecha);
+                    $diferenciaDias = $fechaComp->diffInDays($hoy);
+                    $fechas[$index] = $this->fechasAnteriores($diferenciaDias, $fechaReg);
                 } else {
-                    if ($fecha < $hoy) {
+                    if ($fechaReg < $hoy) {
                         $fechas[$index] = null;
-                        $fechas['fechaRetrazo'] = $hoy->isWeekend() ? $this->fechasPosteriores($fecha->nextWeekday(), $hoy) : $this->fechasPosteriores($hoy, $hoy);
+                        $fechas['fechaRetrazo'] = $hoy->isWeekend() ? $this->fechasPosteriores($fechaReg->nextWeekday(), $hoy) : $this->fechasPosteriores($hoy, $hoy);
                     } else {
-                        $fechas[$index] = $this->fechasPosteriores($fecha, $hoy);
+                        $fechas[$index] = $this->fechasPosteriores($fechaReg, $hoy);
                     }
                 }
             }
