@@ -23,6 +23,7 @@ Route::get('/dashboard/productos/obtenerCategoriasProductos', 'App\Http\Controll
 Route::post('/dashboard/productos/actualizarCategoriaProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarCategoriaProducto');
 Route::post('/dashboard/productos/registrarApartadpProducto', 'App\Http\Controllers\Dashboard\ProductoController@registrarApartadpProducto');
 Route::get('/dashboard/productos/obtenerApartadosProductos', 'App\Http\Controllers\Dashboard\ProductoController@obtenerApartadosProductos');
+Route::get('/e-commerce/productos/obtenerProductosDestacados', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosDestacados');
 Route::post('/dashboard/productos/actualizarApartadoProducto', 'App\Http\Controllers\Dashboard\ProductoController@actualizarApartadoProducto');
 
     //caracteristicas

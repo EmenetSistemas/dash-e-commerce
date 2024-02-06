@@ -183,6 +183,29 @@ class ProductoRepository
         return $query->get();
     }
 
+    public function obtenerProductosDestacados () {
+        $query = TblDetallePedido::select(
+                                     'tbldetallepedido.fkTblProducto as id',
+                                     'tblproductos.nombre as nombre',
+                                     'tblproductos.precio as precio',
+                                     'tblproductos.descuento as descuento',
+                                     'tblproductos.imagen as imagen'
+                                 )
+                                 ->selectRaw('SUM(tbldetallepedido.cantidad) as totalVentas')
+                                 ->leftJoin('tblproductos', 'tblproductos.pkTblProducto', 'tbldetallepedido.fkTblProducto')
+                                 ->groupBy(
+                                     'tbldetallepedido.fkTblProducto',
+                                     'tblproductos.nombre',
+                                     'tblproductos.precio',
+                                     'tblproductos.descuento',
+                                     'tblproductos.imagen'
+                                 )
+                                 ->orderByDesc('totalVentas')
+                                 ->limit(10);
+
+        return $query->get();
+    }
+
     public function obtenerProductosBusquedaInput ($producto) {
         $query = TblProductos::select(
                                  'pkTblProducto as id',

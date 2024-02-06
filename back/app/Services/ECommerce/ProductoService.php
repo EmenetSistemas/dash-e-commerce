@@ -388,7 +388,21 @@ class ProductoService
                 'data' => [
                     'nombresProductos' => $nombresProductos
                 ],
-                'mensaje' => 'Se consultarón los nombres de productos en tienda con éxito',
+                'mensaje' => 'Se consultaron los nombres de productos en tienda con éxito',
+            ],
+            200
+        );
+    }
+
+    public function obtenerProductosDestacados () {
+        $productosDestacados = $this->productoRepository->obtenerProductosDestacados();
+
+        return response()->json(
+            [
+                'data' => [
+                    'productosDestacados' => $productosDestacados
+                ],
+                'mensaje' => 'Se consultaron los productos destacados con éxito',
             ],
             200
         );
@@ -407,7 +421,7 @@ class ProductoService
                 'data' => [
                     'productos' => array_merge([], $productosUnicos)
                 ],
-                'mensaje' => 'Se consultarón los nombres de productos en tienda con éxito',
+                'mensaje' => 'Se consultaron los nombres de productos en tienda con éxito',
             ],
             200
         );

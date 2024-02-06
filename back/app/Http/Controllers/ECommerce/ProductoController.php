@@ -242,6 +242,21 @@ class ProductoController extends Controller
             );
         }
     }
+    
+    public function obtenerProductosDestacados () {
+        try{
+            return $this->productoService->obtenerProductosDestacados();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 
     public function obtenerProductosBusqueda (Request $request) {
         try{
