@@ -273,9 +273,9 @@ class ProductoController extends Controller
         }
     }
 
-    public function obtenerProductosPorApartados () {
+    public function obtenerProductosPorApartados (Request $request) {
         try{
-            return $this->productoService->obtenerProductosPorApartados();
+            return $this->productoService->obtenerProductosPorApartados($request->all());
         } catch( \Throwable $error ) {
             Log::alert($error);
             return response()->json(

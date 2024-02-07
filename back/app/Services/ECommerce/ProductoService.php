@@ -461,8 +461,7 @@ class ProductoService
         return rtrim($palabraPlural, 'es');
     }
 
-    public function obtenerProductosPorApartados () {
-        $data['apartados'] = [1,2,3];
+    public function obtenerProductosPorApartados ($data) {
         $productos = $this->productoRepository->obtenerProductosPorApartados($data['apartados']);
 
         return response()->json(
