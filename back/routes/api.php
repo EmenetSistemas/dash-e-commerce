@@ -55,6 +55,7 @@ Route::get('/e-commerce/productos/obtenerDetalleProductoPorId/{pkApartado}', 'Ap
 Route::post('/e-commerce/productos/obtenerDetalleProductosVenta', 'App\Http\Controllers\ECommerce\ProductoController@obtenerDetalleProductosVenta');
 Route::get('/e-commerce/productos/obtenerNombresProductosTienda', 'App\Http\Controllers\ECommerce\ProductoController@obtenerNombresProductosTienda');
 Route::post('/e-commerce/productos/obtenerProductosBusqueda', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosBusqueda');
+Route::get('/e-commerce/productos/obtenerProductosPorApartados', 'App\Http\Controllers\ECommerce\ProductoController@obtenerProductosPorApartados');
 
 // carrito compras
 Route::post('/e-commerce/carritoCompras/agregarItemCarrito', 'App\Http\Controllers\ECommerce\ProductoController@agregarItemCarrito');

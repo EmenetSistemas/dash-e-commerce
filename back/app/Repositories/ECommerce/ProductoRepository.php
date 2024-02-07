@@ -235,4 +235,18 @@ class ProductoRepository
 
         return (array)json_decode(json_encode($query->get()));
     }
+
+    public function obtenerProductosPorApartados ($apartados) {
+        $query = TblProductos::select(
+                                 'tblProductos.pkTblProducto as id',
+                                 'tblProductos.nombre as nombre',
+                                 'tblProductos.precio as precio',
+                                 'tblProductos.descuento as descuento',
+                                 'tblProductos.imagen as imagen'
+                             )
+                             ->leftJoin('catApartados', 'catApartados.pkCatApartado', 'tblProductos.fkCatApartado')
+                             ->whereIn('catApartados.pkCatApartado', $apartados);
+                
+        return $query->get();
+    }
 }

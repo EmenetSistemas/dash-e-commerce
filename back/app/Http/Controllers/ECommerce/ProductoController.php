@@ -272,4 +272,19 @@ class ProductoController extends Controller
             );
         }
     }
+
+    public function obtenerProductosPorApartados () {
+        try{
+            return $this->productoService->obtenerProductosPorApartados();
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
 }

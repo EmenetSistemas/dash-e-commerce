@@ -445,7 +445,7 @@ class ProductoService
         return $palabrasUnicas;
     }
     
-    function esPlural($palabra) {
+    private function esPlural($palabra) {
         $terminacionesPlural = ['s', 'es'];
     
         foreach ($terminacionesPlural as $terminacion) {
@@ -457,7 +457,22 @@ class ProductoService
         return false;
     }
     
-    function obtenerFormaSingular($palabraPlural) {
+    private function obtenerFormaSingular($palabraPlural) {
         return rtrim($palabraPlural, 'es');
+    }
+
+    public function obtenerProductosPorApartados () {
+        $data['apartados'] = [1,2,3];
+        $productos = $this->productoRepository->obtenerProductosPorApartados($data['apartados']);
+
+        return response()->json(
+            [
+                'data' => [
+                    'productosAgrupados' => $productos
+                ],
+                'mensaje' => 'Se consultaron los productos agrupados con éxito',
+            ],
+            200
+        );
     }
 }
