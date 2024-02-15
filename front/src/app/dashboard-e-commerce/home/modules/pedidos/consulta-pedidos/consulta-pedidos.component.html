@@ -21,7 +21,7 @@
 
             <div class="botonera">
                 <button class="btn btn-primary t-bold" [disabled]="canGet()" (click)="obtenerPedidosPorStatus()">Consultar</button>
-                <button class="btn btn-success t-bold" [disabled]="canExport()">Excel</button>
+                <button class="btn btn-success t-bold" [disabled]="canExport()" (click)="exportarExcel()">Excel</button>
                 <button class="btn btn-danger t-bold" [disabled]="canClean()" (click)="limpiarTabla()">Limpiar</button>
             </div>
         </div>

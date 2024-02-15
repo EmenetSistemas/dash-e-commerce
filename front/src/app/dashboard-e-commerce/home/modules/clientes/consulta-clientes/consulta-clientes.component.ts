@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from 'src/app/dashboard-e-commerce/services/usuarios/usuarios.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { ExcelService } from 'src/app/shared/util/excel.service';
+import FGenerico from 'src/app/shared/util/funciones-genericas';
 
 @Component({
 	selector: 'app-consulta-clientes',
 	templateUrl: './consulta-clientes.component.html',
 	styleUrls: ['./consulta-clientes.component.css']
 })
-export class ConsultaClientesComponent implements OnInit{
+export class ConsultaClientesComponent extends FGenerico implements OnInit{
 	protected statusClientes: any[] = [
 		{
 			checked: false,
@@ -60,8 +62,11 @@ export class ConsultaClientesComponent implements OnInit{
 	
 	constructor (
 		private mensajes : MensajesService,
-		private apiUsuarios : UsuariosService
-	) {}
+		private apiUsuarios : UsuariosService,
+		private excelService : ExcelService
+	) {
+		super();
+	}
 
 	ngOnInit(): void {
 		
@@ -86,6 +91,18 @@ export class ConsultaClientesComponent implements OnInit{
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}
+		);
+	}
+
+	protected exportarExcel () : void {
+		this.mensajes.mensajeEsperar();
+
+		const nombreExcel = 'Lista de Clientes: ' + this.getNowString();
+
+		this.excelService.exportarExcel(
+			this.listaClientesStatus,
+			this.columnasClientes,
+			nombreExcel
 		);
 	}
 

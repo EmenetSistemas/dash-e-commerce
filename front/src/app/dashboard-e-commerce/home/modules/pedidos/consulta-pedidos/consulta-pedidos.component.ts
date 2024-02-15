@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { ExcelService } from 'src/app/shared/util/excel.service';
+import FGenerico from 'src/app/shared/util/funciones-genericas';
 
 @Component({
 	selector: 'app-pedidos',
 	templateUrl: './consulta-pedidos.component.html',
 	styleUrls: ['./consulta-pedidos.component.css']
 })
-export class PedidosComponent implements OnInit{
+export class PedidosComponent extends FGenerico implements OnInit{
 	protected statusPedidos: any[] = [];
 	protected statusSeleccionados: any[] = [];
 
@@ -75,8 +77,10 @@ export class PedidosComponent implements OnInit{
 	constructor(
 		private mensajes: MensajesService,
 		private apiProductos: ProductosService,
-		private dataService: DataService
+		private dataService: DataService,
+		private excelService: ExcelService
 	) {
+		super();
 		this.dataService.realizarClickConsultaPedidos.subscribe(() => {
 			this.obtenerPedidosPorStatusFunction();
 		});
@@ -100,12 +104,6 @@ export class PedidosComponent implements OnInit{
 		);
 	}
 
-	/*protected async refreshStatusPedidos(): Promise<void> {
-		this.mensajes.mensajeEsperar();
-		await this.obtenerStatusPedidosSelect();
-		this.mensajes.mensajeGenericoToast('Se actualizó la lista de Status Pedidos', 'success');
-	}*/
-
 	protected cambioDeSeleccion(data: any): void {
 		if (data.from == 'statusPedidos') {
 			this.statusSeleccionados = data.selectedOptions;
@@ -127,6 +125,18 @@ export class PedidosComponent implements OnInit{
 			}, error => {
 				this.mensajes.mensajeGenerico('error', 'error');
 			}
+		);
+	}
+
+	protected exportarExcel () : void {
+		this.mensajes.mensajeEsperar();
+
+		const nombreExcel = 'Lista de Pedidos: ' + this.getNowString();
+
+		this.excelService.exportarExcel(
+			this.listaPedidosStatus,
+			this.columnasPedidos,
+			nombreExcel
 		);
 	}
 
