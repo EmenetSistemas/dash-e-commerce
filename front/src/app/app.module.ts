@@ -13,6 +13,7 @@ import { HomeModule } from './dashboard-e-commerce/home/home.module';
 import { SidenavComponent } from './dashboard-e-commerce/home/components/sidenav/sidenav.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FooterComponent } from './dashboard-e-commerce/home/components/footer/footer.component';
+import { InvalidRouteComponent } from './shared/invalid-route/invalid-route.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FooterComponent } from './dashboard-e-commerce/home/components/footer/f
     HomeComponent,
     NavbarComponent,
     SidenavComponent,
-    FooterComponent
+    FooterComponent,
+    InvalidRouteComponent
   ],
   imports: [
     BrowserModule,

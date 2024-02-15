@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductosService } from 'src/app/dashboard-e-commerce/services/productos/productos.service';
-import FGenerico from 'src/app/dashboard-e-commerce/shared/util/funciones-genericas';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
+import FGenerico from 'src/app/shared/util/funciones-genericas';
 
 @Component({
   selector: 'app-catalogo-apartados',
