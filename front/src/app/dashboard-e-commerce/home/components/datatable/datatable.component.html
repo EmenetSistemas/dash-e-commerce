@@ -164,10 +164,9 @@
         </nav>
 
         <div class="col-sm-12 text-center">
-            <span *ngIf="datosTabla.length > 0">
+            <span *ngIf="registrosBusqueda > 0">
                 <br>
-                Mostrando registros del {{ getStartIndex() }} al {{ getEndIndex() }} de un total de {{ registrosBusqueda
-                }} registros
+                Mostrando registros del {{ getStartIndex() }} al {{ getEndIndex() }} de un total de {{ registrosBusqueda }} registros
             </span>
         </div>
     </div>

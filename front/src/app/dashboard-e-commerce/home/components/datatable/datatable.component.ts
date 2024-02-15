@@ -53,7 +53,6 @@ export class DatatableComponent implements OnInit, OnChanges {
 		this.emitirDatos();
 		this.onItemsPerPageChange();
 		this.limpiarFiltros();
-		console.log(this.filterValues);
 	}
 
 	abrirModalModificacion(idDetalle: number, idModal: string) {
