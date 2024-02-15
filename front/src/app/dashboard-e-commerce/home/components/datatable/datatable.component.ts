@@ -31,6 +31,8 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 	private url = environment.api;
 
+	public registrosBusqueda = this.datosTabla.length;
+
 	constructor(
 		private mensajes: MensajesService,
 		private modalService: ModalService,
@@ -51,6 +53,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 		this.emitirDatos();
 		this.onItemsPerPageChange();
 		this.limpiarFiltros();
+		console.log(this.filterValues);
 	}
 
 	abrirModalModificacion(idDetalle: number, idModal: string) {
@@ -110,7 +113,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 		const startIndex = (this.currentPage - 1) * this.itemsPerPage;
 		const endIndex = startIndex + this.itemsPerPage;
 
-		return this.datosTabla.filter((registro: any) => {
+		const datosMostrar = this.datosTabla.filter((registro: any) => {
 			return Object.keys(this.filterValues).every((column: any) => {
 				const filter = this.filterValues[column].toLowerCase();
 				const value = registro[column.replace('_inicio', '').replace('_fin', '')];
@@ -136,11 +139,14 @@ export class DatatableComponent implements OnInit, OnChanges {
 					return value?.toString().toLowerCase().includes(filter);
 				}
 			});
-		}).slice(startIndex, endIndex);
+		});
+
+		this.registrosBusqueda = datosMostrar.length;
+		return datosMostrar.slice(startIndex, endIndex);
 	}
 
 	get totalPages() {
-		return Math.ceil(this.datosTabla.length / this.itemsPerPage);
+		return Math.ceil(this.registrosBusqueda / this.itemsPerPage);
 	}
 
 	get pagesArray() {
