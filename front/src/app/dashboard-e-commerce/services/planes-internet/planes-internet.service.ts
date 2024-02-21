@@ -25,6 +25,10 @@ export class PlanesInternetService {
 		return this.http.get<any>(this.url + '/dashboard/planes-internet/obtenerDetallePlan/'+idPlan);
 	}
 
+	public registrarPlan (data : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/planes-internet/registrarPlan', data)
+	}
+
 	public modificarPlan (data : any) : Observable<any> {
 		return this.http.post<any>(this.url + '/dashboard/planes-internet/modificarPlan', data)
 	}

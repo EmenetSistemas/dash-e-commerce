@@ -16,6 +16,29 @@ class PlanesService
         $this->planesRepository = $PlanesRepository;
     }
 
+    public function registrarPlan ($plan) {
+        $validaPlan = $this->planesRepository->validarPlanExistente($plan);
+
+        if ($validaPlan > 0) {
+            return response()->json(
+                [
+                    'mensaje' => 'Upss! Al parecer ya existe un plan similar',
+                    'status' => 203
+                ],
+                200
+            );
+        }
+
+        $this->planesRepository->registrarPlan($plan);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se registró el plan con éxito'
+            ],
+            200
+        );
+    }
+
     public function modificarPlan ($plan) {
         $validaPlan = $this->planesRepository->validarPlanExistente($plan);
 

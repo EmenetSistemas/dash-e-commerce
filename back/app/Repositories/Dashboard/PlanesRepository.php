@@ -9,14 +9,35 @@ use Illuminate\Support\Facades\DB;
 
 class PlanesRepository
 {
-    public function validarPlanExistente ($plan) {
+    public function validarPlanExistente ($plan, $id = 0) {
         $query = TblPlanes::where([
-                              ['pkTblPlan', '!=', $plan['pkTblPlan']],
+                              ['pkTblPlan', '!=', $plan['pkTblPlan'] ?? $id],
                               ['tipoPlan', $plan['tipoPlan']],
                               ['plan', $plan['plan']]
                           ]);
 
         return $query->count();
+    }
+
+    public function registrarPlan ($plan) {
+        $registro = new TblPlanes;
+        $registro->plan                    = $plan['plan'];
+        $registro->mensualidad             = $plan['mensualidad'] ?? null;
+        $registro->anualidad               = $plan['anualidad'] ?? null;
+        $registro->tipoPlan                = $plan['tipoPlan'];
+        $registro->dispositivosSimultaneos = $plan['dispositivosSimultaneos'];
+        $registro->estudioTrabajo          = $plan['estudioTrabajo'];
+        $registro->reproduccionVideo       = $plan['reproduccionVideo'];
+        $registro->juegoLinea              = $plan['juegoLinea'];
+        $registro->transmisiones           = $plan['transmisiones'];
+        $registro->save();
+
+        $registroCar = new TblPlanesCaracteristicas;
+        $registroCar->fkTblPlan           = $registro->pkTblPlan;
+        $registroCar->fkCatCaracteristica = 1;
+        $registroCar->save();
+
+        return $registro->pkTblPlan;
     }
 
     public function modificarPlan ($plan) {

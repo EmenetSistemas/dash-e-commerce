@@ -51,6 +51,21 @@ class PlanesController extends Controller
         }
     }
 
+    public function registrarPlan (Request $request) {
+        try{
+            return $this->planesService->registrarPlan($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
     public function modificarPlan (Request $request) {
         try{
             return $this->planesService->modificarPlan($request->all());

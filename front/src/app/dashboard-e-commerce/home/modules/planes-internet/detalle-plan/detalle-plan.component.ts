@@ -74,12 +74,12 @@ export class DetallePlanComponent extends FGenerico implements OnInit {
 			plan: [null, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
 			mensualidad: [null, []],
 			anualidad: [{ value: null, disabled: true }, []],
-			tipoPlan: [, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
+			tipoPlan: [false, [Validators.required]],
 			dispositivosSimultaneos: [null, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
 			estudioTrabajo: [null, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
 			reproduccionVideo: ['', [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
-			juegoLinea: [null, [Validators.required]],
-			transmisiones: [null, [Validators.required]],
+			juegoLinea: [false, [Validators.required]],
+			transmisiones: [false, [Validators.required]],
 			caracteristica: ['', []]
 		});
 	}
