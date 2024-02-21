@@ -5,6 +5,7 @@ import { ModalService } from 'src/app/services/modal/modal.service';
 import { ModificacionProductoComponent } from '../../modules/productos/modificacion-producto/modificacion-producto.component';
 import { DetallePedidoComponent } from '../../modules/pedidos/detalle-pedido/detalle-pedido.component';
 import { DetalleClienteComponent } from '../../modules/clientes/detalle-cliente/detalle-cliente.component';
+import { DetallePlanComponent } from '../../modules/planes-internet/detalle-plan/detalle-plan.component';
 
 @Component({
 	selector: 'app-datatable',
@@ -76,7 +77,10 @@ export class DatatableComponent implements OnInit, OnChanges {
 		switch (idModal) {
 			case 'detallePedido':
 				this.modalService.abrirModalConComponente(DetallePedidoComponent, dataModal, ' sp-large-modal');
-				break;
+			break;
+			case 'detallePlan':
+				this.modalService.abrirModalConComponente(DetallePlanComponent, dataModal);
+			break;
 		}
 	}
 

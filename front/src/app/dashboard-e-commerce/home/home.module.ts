@@ -16,6 +16,9 @@ import { DetalleClienteComponent } from './modules/clientes/detalle-cliente/deta
 import { CatalogoCategoriasComponent } from './modules/catalogos/catalogo-categorias/catalogo-categorias.component';
 import { CatalogoApartadosComponent } from './modules/catalogos/catalogo-apartados/catalogo-apartados.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ConsultaPlanesComponent } from './modules/planes-internet/consulta-planes/consulta-planes.component';
+import { RegistroPlanesComponent } from './modules/planes-internet/registro-planes/registro-planes.component';
+import { DetallePlanComponent } from './modules/planes-internet/detalle-plan/detalle-plan.component';
 
 @NgModule({
     imports:[
@@ -36,7 +39,10 @@ import { FooterComponent } from './components/footer/footer.component';
         ConsultaClientesComponent,
         DetalleClienteComponent,
         CatalogoCategoriasComponent,
-        CatalogoApartadosComponent
+        CatalogoApartadosComponent,
+        ConsultaPlanesComponent,
+        RegistroPlanesComponent,
+        DetallePlanComponent
     ]
 })
 

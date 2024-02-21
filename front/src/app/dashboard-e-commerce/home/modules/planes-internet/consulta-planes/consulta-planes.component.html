@@ -1,0 +1,21 @@
+<div class="pagetitle">
+    <h1>Consulta Planes</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Planes</a></li>
+            <li class="breadcrumb-item active">Consulta</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-body card-w-title botonera">
+            <button class="btn btn-primary t-bold" (click)="obtenerPlanesInternet()">Consultar</button>
+            <button class="btn btn-success t-bold" [disabled]="canExport()" (click)="exportarExcel()">Excel</button>
+            <button class="btn btn-danger t-bold" [disabled]="canClean()" (click)="limpiarTabla()">Limpiar</button>
+        </div>
+    </div>
+
+    <app-datatable [columnasTabla]="columnasPlanes" [datosTabla]="listaPlanes" [tableConfig]="tableConfig"></app-datatable>
+</div>

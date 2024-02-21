@@ -26,6 +26,24 @@
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#planesInternet" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-wifi"></i><span>Planes Internet</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="planesInternet" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a>
+                        <i class="bi bi-circle"></i><span>Registro</span>
+                    </a>
+                </li>
+                <li [routerLink]="['planesInternet']">
+                    <a>
+                        <i class="bi bi-circle"></i><span>Consultar</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         <li class="nav-heading">Gestión</li>
         <li class="nav-item">
             <a class="nav-link collapsed" [routerLink]="['clientes']">
@@ -52,6 +70,11 @@
                 <li (click)="abrirModal('catalogoApartados')">
                     <a>
                         <i class="bi bi-circle"></i><span>Apartados Productos</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <i class="bi bi-circle"></i><span>Extras planes internet</span>
                     </a>
                 </li>
             </ul>

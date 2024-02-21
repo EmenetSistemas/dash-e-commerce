@@ -5,6 +5,7 @@ import { PedidosComponent } from "./modules/pedidos/consulta-pedidos/consulta-pe
 import { ConsultaProductosComponent } from "./modules/productos/consulta-productos/consulta-productos.component";
 import { ConsultaClientesComponent } from "./modules/clientes/consulta-clientes/consulta-clientes.component";
 import { AdminGuard } from "../guards/admin.guard";
+import { ConsultaPlanesComponent } from "./modules/planes-internet/consulta-planes/consulta-planes.component";
 
 export const HomeRoutes: Routes = [
     {
@@ -24,6 +25,9 @@ export const HomeRoutes: Routes = [
             }, {
                 path: 'pedidos',
                 component: PedidosComponent
+            }, {
+                path: 'planesInternet',
+                component: ConsultaPlanesComponent
             }
         ]
     }

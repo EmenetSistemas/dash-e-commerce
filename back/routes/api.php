@@ -71,3 +71,14 @@ Route::post('/e-commerce/pedidos/obtenerPedidos', 'App\Http\Controllers\ECommerc
 Route::get('/e-commerce/pedidos/cancelarPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarPedido');
 Route::get('/e-commerce/pedidos/cancelarProductoPedido/{idPedido}/{idProducto}', 'App\Http\Controllers\ECommerce\ProductoController@cancelarProductoPedido');
 Route::get('/e-commerce/pedidos/obtenerActualizacionesPedido/{idPedido}', 'App\Http\Controllers\ECommerce\ProductoController@obtenerActualizacionesPedido');
+
+//planes internet
+Route::get('/internet/planes', 'App\Http\Controllers\Dashboard\PlanesController@consultarPlanesInternet');
+Route::post('/dashboard/planes-internet/registrarPlan', 'App\Http\Controllers\Dashboard\PlanesController@registrarPlan');
+Route::post('/dashboard/planes-internet/modificarPlan', 'App\Http\Controllers\Dashboard\PlanesController@modificarPlan');
+Route::get('/dashboard/planes-internet/obtenerPlanesInternet', 'App\Http\Controllers\Dashboard\PlanesController@obtenerPlanesInternet');
+Route::get('/dashboard/planes-internet/obtenerCaracteristicasPlanes', 'App\Http\Controllers\Dashboard\PlanesController@obtenerCaracteristicasPlanes');
+Route::get('/dashboard/planes-internet/obtenerDetallePlan/{idPlan}', 'App\Http\Controllers\Dashboard\PlanesController@obtenerDetallePlan');
+Route::post('/dashboard/planes-internet/registrarCaracteristicaPlan', 'App\Http\Controllers\Dashboard\PlanesController@registrarCaracteristicaPlan');
+Route::post('/dashboard/planes-internet/actualizarCaracteristicaPlan', 'App\Http\Controllers\Dashboard\PlanesController@actualizarCaracteristicaPlan');
+Route::get('/dashboard/planes-internet/eliminarCaracteristicaPlan/{idCaracteristica}', 'App\Http\Controllers\Dashboard\PlanesController@eliminarCaracteristicaPlan');

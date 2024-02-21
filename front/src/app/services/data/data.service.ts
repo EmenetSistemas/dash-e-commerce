@@ -7,4 +7,5 @@ export class DataService {
 	public claseSidebar: string = '';
 	public realizarClickConsultaPorductos: EventEmitter<void> = new EventEmitter<void>();
 	public realizarClickConsultaPedidos: EventEmitter<void> = new EventEmitter<void>();
+	public realizarClickConsultaPlanes: EventEmitter<void> = new EventEmitter<void>();
 }
