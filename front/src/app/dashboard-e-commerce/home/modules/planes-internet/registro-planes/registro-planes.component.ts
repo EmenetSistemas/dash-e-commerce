@@ -16,6 +16,7 @@ export class RegistroPlanesComponent extends FGenerico implements OnInit{
 
 	protected caracteristicas: any[] = [];
 	protected mostrarUpdate: boolean = false;
+	private idCaracteristicaMod: number = 0;
 
 	protected columnasCaracteristicas: any = {
 		'nombre'  : 'Característica',
@@ -39,7 +40,7 @@ export class RegistroPlanesComponent extends FGenerico implements OnInit{
 					"bg": 'danger'
 				}
 			],
-			"value": "pkPlanCaracteristica"
+			"value": "pkCatCaracteristica"
 		}
 	};
 
@@ -118,6 +119,7 @@ export class RegistroPlanesComponent extends FGenerico implements OnInit{
 		this.formPlan.value.tipoPlan = this.formPlan.value.tipoPlan ? 2 : 1;
 		this.formPlan.value.juegoLinea = this.formPlan.value.juegoLinea ? 'Sí' : 'No';
 		this.formPlan.value.transmisiones = this.formPlan.value.transmisiones ? 'Sí' : 'No';
+		this.formPlan.value.extras = this.listaCaracteristicas;
 
 		this.apiPlanes.registrarPlan(this.formPlan.value).subscribe(
 			respuesta => {
@@ -135,20 +137,68 @@ export class RegistroPlanesComponent extends FGenerico implements OnInit{
 	}
 
 	protected registrarCaracteristicaPlan(): void {
+		const idCaracteristica = this.formPlan.value.caracteristica;
+		const validaCaract = this.listaCaracteristicas.filter(caract => caract.pkCatCaracteristica == idCaracteristica);
 
+		if (validaCaract.length > 0) {
+			this.mensajes.mensajeGenerico('Al parecer el plan ya cuenta con está característica, se debe agregar una diferente', 'warning', 'Característica existente');
+			return;
+		}
+
+		const caracteristica = this.caracteristicas.find(caracteristica => caracteristica.pkCatCaracteristica == idCaracteristica);
+		this.listaCaracteristicas.push(caracteristica);
+		this.formPlan.get('caracteristica')?.setValue('');
 	}
 
 	protected realizarAccion(data: any): void {
-
+		switch (data.action) {
+			case 'update':
+				this.idCaracteristicaMod = data.idAccion;
+				const dataActualizar = this.listaCaracteristicas.find(caracteristica => caracteristica.pkCatCaracteristica == data.idAccion);
+				this.mostrarUpdate = true;
+				this.formPlan.get('caracteristica')?.setValue(dataActualizar.pkCatCaracteristica);
+			break;
+			case 'delete':
+				this.mensajes.mensajeConfirmacionCustom('Está por elminiar una característica del plan ¿Desea continar con la acción?', 'question', 'Eliminar característica').then(
+					respuesta => {
+						if (respuesta.isConfirmed) {
+							this.listaCaracteristicas = this.listaCaracteristicas.filter(caracteristica => caracteristica.pkCatCaracteristica != data.idAccion);
+							this.mensajes.mensajeGenericoToast('Se eliminó la característica con éxito', 'success');
+						}
+					}
+				);
+			break;
+		}
 	}
 
 	protected actualizarCaracteristicaPlan(): void {
+		const idCaracteristica = this.formPlan.value.caracteristica;
 
+		if (idCaracteristica == this.idCaracteristicaMod) {
+			this.ocultarModificacionCaracteristica();
+			return;
+		}
+
+		const validaCaract = this.listaCaracteristicas.filter(caract => caract.pkCatCaracteristica == idCaracteristica);
+
+		if (validaCaract.length > 0) {
+			this.mensajes.mensajeGenerico('Al parecer el plan ya cuenta con está característica, se debe agregar una diferente', 'warning', 'Característica existente');
+			return;
+		}
+
+		this.listaCaracteristicas = this.listaCaracteristicas.filter(caracteristica => caracteristica.pkCatCaracteristica != this.idCaracteristicaMod);
+		const caracteristica = this.caracteristicas.find(caracteristica => caracteristica.pkCatCaracteristica == idCaracteristica);
+		this.listaCaracteristicas.push(caracteristica);
+		this.ocultarModificacionCaracteristica();
 	}
 
 	protected ocultarModificacionCaracteristica() {
 		this.mostrarUpdate = false;
 		this.formPlan.get('caracteristica')?.setValue('');
+	}
+
+	protected canRegisterCaract (): boolean {
+		return !(this.formPlan.value.caracteristica != '');
 	}
 
 	protected cerrarModal(): void {

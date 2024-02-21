@@ -244,7 +244,7 @@ export class DetallePlanComponent extends FGenerico implements OnInit {
 		this.apiPlanes.actualizarCaracteristicaPlan(caracteristica).subscribe(
 			respuesta => {
 				this.obtenerDetallePlan().then(() => {
-					this.formPlan.get('caracteristica')?.setValue('');
+					this.ocultarModificacionCaracteristica();
 
 					this.mensajes.mensajeGenericoToast(respuesta.mensaje, 'success');
 				});
@@ -257,6 +257,10 @@ export class DetallePlanComponent extends FGenerico implements OnInit {
 	protected ocultarModificacionCaracteristica() {
 		this.mostrarUpdate = false;
 		this.formPlan.get('caracteristica')?.setValue('');
+	}
+
+	protected canRegisterCaract (): boolean {
+		return !(this.formPlan.value.caracteristica != '');
 	}
 
 	protected cerrarModal(): void {

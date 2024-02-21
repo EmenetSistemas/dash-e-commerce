@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard;
 
 use App\Repositories\Dashboard\PlanesRepository;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PlanesService
@@ -29,7 +30,12 @@ class PlanesService
             );
         }
 
-        $this->planesRepository->registrarPlan($plan);
+        DB::beginTransaction();
+            $pkPlan = $this->planesRepository->registrarPlan($plan);
+            foreach ($plan['extras'] as $extra) {
+                $this->planesRepository->registrarExtraPlan($pkPlan, $extra['pkCatCaracteristica']);
+            }
+        DB::commit();
 
         return response()->json(
             [
@@ -133,7 +139,7 @@ class PlanesService
         
         return response()->json(
             [
-                'mensaje' => 'Se eliminó la característica con éxiito'
+                'mensaje' => 'Se eliminó la característica con éxito'
             ],
             200
         );

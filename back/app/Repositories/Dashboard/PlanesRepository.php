@@ -40,6 +40,13 @@ class PlanesRepository
         return $registro->pkTblPlan;
     }
 
+    public function registrarExtraPlan ($pkPlan, $pkCaracteristica) {
+        $registro = new TblPlanesCaracteristicas;
+        $registro->fkTblPlan           = $pkPlan;
+        $registro->fkCatCaracteristica = $pkCaracteristica;
+        $registro->save();
+    }
+
     public function modificarPlan ($plan) {
         TblPlanes::where('pkTblPlan', $plan['pkTblPlan'])
                  ->update([

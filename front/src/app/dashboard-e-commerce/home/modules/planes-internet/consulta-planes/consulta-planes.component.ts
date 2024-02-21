@@ -58,7 +58,7 @@ export class ConsultaPlanesComponent extends FGenerico {
 		super();
 		this.dataService.realizarClickConsultaPlanes.subscribe(() => {
 			this.obtenerPlanesInternetFunction().then(() => {
-				this.mensajes.mensajeGenerico('Se actualizó el plan con éxito', 'success');
+				this.mensajes.mensajeGenericoToast('Se actualizó el plan con éxito', 'success');
 				return;
 			});
 		});
