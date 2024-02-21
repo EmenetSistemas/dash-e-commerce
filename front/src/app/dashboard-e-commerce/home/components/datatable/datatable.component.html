@@ -110,8 +110,13 @@
                                     </ng-container>
                                 </ng-template>
                                 <ng-template #dadges>
-                                    <ng-container *ngIf="tableConfig[columna]?.dadges; else deafult">
+                                    <ng-container *ngIf="tableConfig[columna]?.dadges; else icono">
                                         <span class="badge bg-{{obtenerColorDadges(columna, item[columna])}}">{{item[columna]}}</span>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #icono>
+                                    <ng-container *ngIf="tableConfig[columna]?.icono; else deafult">
+                                        <i class="{{item[columna]}}"></i>
                                     </ng-container>
                                 </ng-template>
                                 <ng-template #deafult>

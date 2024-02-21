@@ -82,6 +82,28 @@ class PlanesService
         );
     }
 
+    public function registrarCaracteristica ($caracteristica) {
+        $this->planesRepository->registrarCaracteristica($caracteristica);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se registró la característica con éxito'
+            ],
+            200
+        );
+    }
+
+    public function actualizarCaracteristica ($caracteristica) {
+        $this->planesRepository->actualizarCaracteristica($caracteristica);
+
+        return response()->json(
+            [
+                'mensaje' => 'Se registró la característica con éxito'
+            ],
+            200
+        );
+    }
+
     public function obtenerCaracteristicasPlanes () {
         $caracteristicas = $this->planesRepository->obtenerCaracteristicasPlanes();
 

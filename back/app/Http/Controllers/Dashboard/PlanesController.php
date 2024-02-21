@@ -96,6 +96,36 @@ class PlanesController extends Controller
         }
     }
 
+    public function registrarCaracteristica (Request $request) {
+        try{
+            return $this->planesService->registrarCaracteristica($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
+    public function actualizarCaracteristica (Request $request) {
+        try{
+            return $this->planesService->actualizarCaracteristica($request->all());
+        } catch( \Throwable $error ) {
+            Log::alert($error);
+            return response()->json(
+                [
+                    'error' => $error,
+                    'mensaje' => 'Ocurrió un error al consultar' 
+                ], 
+                500
+            );
+        }
+    }
+
     public function obtenerCaracteristicasPlanes () {
         try{
             return $this->planesService->obtenerCaracteristicasPlanes();

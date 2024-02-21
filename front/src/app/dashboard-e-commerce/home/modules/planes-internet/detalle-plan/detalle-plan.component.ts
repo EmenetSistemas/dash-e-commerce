@@ -22,11 +22,16 @@ export class DetallePlanComponent extends FGenerico implements OnInit {
 	protected caracteristicas: any[] = [];
 
 	protected columnasCaracteristicas: any = {
+		'icono'   : 'Icono',
 		'nombre'  : 'Característica',
 		'actions' : 'Acciones'
 	};
 
 	protected tableConfig: any = {
+		"icono": {
+			"icono" : true,
+			"center" : true
+		},
 		"actions": {
 			"noFilter": true,
 			"actionFilter": true,
@@ -257,6 +262,11 @@ export class DetallePlanComponent extends FGenerico implements OnInit {
 	protected ocultarModificacionCaracteristica() {
 		this.mostrarUpdate = false;
 		this.formPlan.get('caracteristica')?.setValue('');
+	}
+
+	protected obtenerIcono () : string {
+		const idCaracteristica = this.formPlan.value.caracteristica;
+		return this.caracteristicas.find(carac => carac.pkCatCaracteristica == idCaracteristica)?.icono ?? '';
 	}
 
 	protected canRegisterCaract (): boolean {

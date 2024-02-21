@@ -1,0 +1,53 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Catálogo características extra</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Planes</li>
+                <li class="breadcrumb-item active">Características extra</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body card-w-title">
+            <form class="row g-3" autocomplete="off" [formGroup]="formCaracteristica">
+                <div class="col-lg-3 col-11">
+                    <label for="icono" class="form-label required">Icono:</label>
+                    <input type="text" class="form-control" formControlName="icono" id="icono" placeholder="Icono"
+                        (keypress)="soloTexto($event)" maxlength="20">
+                </div>
+                <div class="col-1 d-flex justify-content-center align-items-center">
+                    <h4 style="margin-top: 40px;"><i class="bi {{this.formCaracteristica.value.icono}}"></i></h4>
+                </div>
+                <div class="col-lg-6">
+                    <label for="nombre" class="form-label required">Nombre:</label>
+                    <input type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Nombre"
+                        (keypress)="soloTexto($event)" maxlength="100">
+                </div>
+                <div class="col-lg-2" *ngIf="!mostrarUpdate">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-primary form-control t-bold" (click)="registrarCaracteristicaPlan()"><i
+                            class="bi bi-plus-circle"></i></button>
+                </div>
+                <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-warning form-control t-bold" (click)="actualizarCaracteristicaPlan()"><i
+                            class="bi bi-arrow-clockwise"></i></button>
+                </div>
+                <div class="col-lg-1 col-6" *ngIf="mostrarUpdate">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-danger form-control t-bold" (click)="ocultarModificacionCaracteristica()"><i
+                            class="bi bi-x-lg"></i></button>
+                </div>
+
+                <app-datatable [columnasTabla]="columnasCaracteristicas" [tableConfig]="tableConfig"
+                    [datosTabla]="listaCaracteristicas" (actionSelected)="realizarAccion($event)"></app-datatable>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="text-align: center;">
+    <button type="button" class="btn btn-danger" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

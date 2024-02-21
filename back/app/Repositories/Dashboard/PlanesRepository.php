@@ -62,6 +62,21 @@ class PlanesRepository
                  ]);
     }
 
+    public function registrarCaracteristica ($caracteristica) {
+        $registro = new CatCaracteristicas;
+        $registro->nombre = $caracteristica['nombre'];
+        $registro->icono = $caracteristica['icono'];
+        $registro->save();
+    }
+
+    public function actualizarCaracteristica ($caracteristica) {
+        CatCaracteristicas::where('pkCatCaracteristica', $caracteristica['fkCatCaracteristica'])
+                          ->update([
+                              'nombre' => $caracteristica['nombre'],
+                              'icono' => $caracteristica['icono']
+                          ]);
+    }
+
     public function obtenerPlanesInternet () {
         $query = TblPlanes::select(
                               'pkTblPlan',

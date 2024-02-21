@@ -3,6 +3,7 @@ import { ModalService } from 'src/app/services/modal/modal.service';
 import { CatalogoCategoriasComponent } from '../../modules/catalogos/catalogo-categorias/catalogo-categorias.component';
 import { CatalogoApartadosComponent } from '../../modules/catalogos/catalogo-apartados/catalogo-apartados.component';
 import { RegistroPlanesComponent } from '../../modules/planes-internet/registro-planes/registro-planes.component';
+import { CatalogoExtrasPlanesInternetComponent } from '../../modules/catalogos/catalogo-extras-planes-internet/catalogo-extras-planes-internet.component';
 
 @Component({
 	selector: 'app-sidenav',
@@ -28,6 +29,9 @@ export class SidenavComponent implements OnInit{
 			break;
 			case 'catalogoApartados':
 				this.modalService.abrirModalConComponente(CatalogoApartadosComponent);
+			break;
+			case 'catalogoExtrasPlanes':
+				this.modalService.abrirModalConComponente(CatalogoExtrasPlanesInternetComponent);
 			break;
 		}
 	}

@@ -17,6 +17,14 @@ export class PlanesInternetService {
 		return this.http.get<any>(this.url + '/dashboard/planes-internet/obtenerPlanesInternet');
 	}
 
+	public registrarCaracteristica (caracteristica : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/planes-internet/registrarCaracteristica', caracteristica);
+	}
+
+	public actualizarCaracteristica (caracteristica : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/dashboard/planes-internet/actualizarCaracteristica', caracteristica);
+	}
+
 	public obtenerCaracteristicasPlanes () : Observable<any> {
 		return this.http.get<any>(this.url + '/dashboard/planes-internet/obtenerCaracteristicasPlanes');
 	}

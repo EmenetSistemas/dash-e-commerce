@@ -77,6 +77,8 @@ Route::get('/internet/planes', 'App\Http\Controllers\Dashboard\PlanesController@
 Route::post('/dashboard/planes-internet/registrarPlan', 'App\Http\Controllers\Dashboard\PlanesController@registrarPlan');
 Route::post('/dashboard/planes-internet/modificarPlan', 'App\Http\Controllers\Dashboard\PlanesController@modificarPlan');
 Route::get('/dashboard/planes-internet/obtenerPlanesInternet', 'App\Http\Controllers\Dashboard\PlanesController@obtenerPlanesInternet');
+Route::post('/dashboard/planes-internet/registrarCaracteristica', 'App\Http\Controllers\Dashboard\PlanesController@registrarCaracteristica');
+Route::post('/dashboard/planes-internet/actualizarCaracteristica', 'App\Http\Controllers\Dashboard\PlanesController@actualizarCaracteristica');
 Route::get('/dashboard/planes-internet/obtenerCaracteristicasPlanes', 'App\Http\Controllers\Dashboard\PlanesController@obtenerCaracteristicasPlanes');
 Route::get('/dashboard/planes-internet/obtenerDetallePlan/{idPlan}', 'App\Http\Controllers\Dashboard\PlanesController@obtenerDetallePlan');
 Route::post('/dashboard/planes-internet/registrarCaracteristicaPlan', 'App\Http\Controllers\Dashboard\PlanesController@registrarCaracteristicaPlan');
